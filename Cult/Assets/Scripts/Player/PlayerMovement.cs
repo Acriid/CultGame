@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        GetInput();
+        //GetInput();
     }
     void FixedUpdate()
     {
@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         if (moveInputs == null)
         {
             moveInputs = InputManager.instance.inputActions.Player.Move;
+            moveInputs.performed += GetInput;
             moveInputs.Enable();
         }
     }
@@ -56,13 +57,14 @@ public class PlayerMovement : MonoBehaviour
         //MoveInputs
         if (moveInputs != null)
         {
+            moveInputs.performed -= GetInput;
             moveInputs.Dispose();
             moveInputs.Disable();
             moveInputs = null;
         }
     }
 
-    void GetInput()
+    void GetInput(InputAction.CallbackContext ctx)
     {
         //Reads inputs from the controls
         horizontalInput = moveInputs.ReadValue<Vector2>().x;

@@ -37,7 +37,7 @@ public class MouseMovement : MonoBehaviour
     }
     void Update()
     {
-        RotateCamera();
+        //RotateCamera();
     }
     void InitializeInput()
     {
@@ -45,6 +45,7 @@ public class MouseMovement : MonoBehaviour
         if (lookInput == null)
         {
             lookInput = InputManager.instance.inputActions.Player.Look;
+            lookInput.performed += RotateCamera;
             lookInput.Enable();
         }
 
@@ -54,13 +55,14 @@ public class MouseMovement : MonoBehaviour
         //lookInput
         if (lookInput != null)
         {
+            lookInput.performed -= RotateCamera;
             lookInput.Dispose();
             lookInput.Disable();
             lookInput = null;
         }
     }
 
-    void RotateCamera()
+    void RotateCamera(InputAction.CallbackContext ctx)
     {
         //Mouse Input
         float lookX = lookInput.ReadValue<Vector2>().x * LookSensitivity * Time.deltaTime;
