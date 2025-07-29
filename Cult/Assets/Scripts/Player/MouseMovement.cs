@@ -13,7 +13,6 @@ public class MouseMovement : MonoBehaviour
     private float xRotation = 0f;
     private float yRotation = 0f;
     //InputActions
-    private InputSystem_Actions inputActions;
     private InputAction lookInput;
 
 
@@ -42,15 +41,10 @@ public class MouseMovement : MonoBehaviour
     }
     void InitializeInput()
     {
-        //InputActions
-        if (inputActions == null)
-        {
-            inputActions = new InputSystem_Actions();
-        }
         //lookInput
         if (lookInput == null)
         {
-            lookInput = inputActions.Player.Look;
+            lookInput = InputManager.instance.inputActions.Player.Look;
             lookInput.Enable();
         }
 
@@ -63,13 +57,6 @@ public class MouseMovement : MonoBehaviour
             lookInput.Dispose();
             lookInput.Disable();
             lookInput = null;
-        }
-        //InputActions
-        if (inputActions != null)
-        {
-            inputActions.Dispose();
-            inputActions.Disable();
-            inputActions = null;
         }
     }
 

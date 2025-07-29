@@ -15,28 +15,15 @@ public class PlayerMovement : MonoBehaviour
     //RigidBody
     private Rigidbody rb;
     //Input
-    private InputSystem_Actions inputActions;
     private InputAction moveInputs;
     void Awake()
     {
-        //Get RigidBody
-        if (rb == null)
-        {
-            rb = GetComponent<Rigidbody>();
-            rb.freezeRotation = true;
-        }
-        //Input
+        GetRigidBody();
         InitializeInput();
     }
     void OnEnable()
     {
-        //Get RigidBody
-        if (rb == null)
-        {
-            rb = GetComponent<Rigidbody>();
-            rb.freezeRotation = true;
-        }
-        //Input
+        GetRigidBody();
         InitializeInput();
     }
     void OnDisable()
@@ -58,13 +45,9 @@ public class PlayerMovement : MonoBehaviour
     void InitializeInput()
     {
         //InputActions
-        if (inputActions == null)
-        {
-            inputActions = new InputSystem_Actions();
-        }
         if (moveInputs == null)
         {
-            moveInputs = inputActions.Player.Move;
+            moveInputs = InputManager.instance.inputActions.Player.Move;
             moveInputs.Enable();
         }
     }
@@ -76,13 +59,6 @@ public class PlayerMovement : MonoBehaviour
             moveInputs.Dispose();
             moveInputs.Disable();
             moveInputs = null;
-        }
-        //InputActions
-        if (inputActions != null)
-        {
-            inputActions.Dispose();
-            inputActions.Disable();
-            inputActions = null;
         }
     }
 
@@ -100,5 +76,14 @@ public class PlayerMovement : MonoBehaviour
         //Add Force used for an acceleration type movement.
         rb.linearVelocity = moveDirection * moveSpeed;
         //rb.AddForce(moveDirection * moveSpeed * 10, ForceMode.Force);
+    }
+
+    void GetRigidBody()
+    {
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+            rb.freezeRotation = true;
+        }
     }
 }

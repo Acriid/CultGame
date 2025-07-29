@@ -1,0 +1,46 @@
+using UnityEngine;
+
+public class InputManager : MonoBehaviour
+{
+    public InputSystem_Actions inputActions;
+    public static InputManager instance { get; private set; }
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.Log("More than one instance of inputsystem.");
+        }
+        instance = this;
+        InitializeInput();
+    }
+    void OnEnable()
+    {
+        InitializeInput();
+    }
+    void OnDisable()
+    {
+        CleanUpInput();
+    }
+
+    void OnDestroy()
+    {
+        CleanUpInput();
+    }
+
+    void InitializeInput()
+    {
+        if (inputActions == null)
+        {
+            inputActions = new InputSystem_Actions();
+        }
+    }
+    void CleanUpInput()
+    {
+        if (inputActions != null)
+        {
+            inputActions.Dispose();
+            inputActions.Disable();
+            inputActions = null;
+        }
+    }
+}
