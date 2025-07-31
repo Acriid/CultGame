@@ -67,8 +67,8 @@ public class PlayerMovement : MonoBehaviour
     void GetInput(InputAction.CallbackContext ctx)
     {
         //Reads inputs from the controls
-        horizontalInput = moveInputs.ReadValue<Vector2>().x;
-        verticalInput = moveInputs.ReadValue<Vector2>().y;
+        horizontalInput = ctx.ReadValue<Vector2>().x;
+        verticalInput = ctx.ReadValue<Vector2>().y;
     }
 
     void MovePlayer()

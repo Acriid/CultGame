@@ -65,8 +65,8 @@ public class MouseMovement : MonoBehaviour
     void RotateCamera(InputAction.CallbackContext ctx)
     {
         //Mouse Input
-        float lookX = lookInput.ReadValue<Vector2>().x * LookSensitivity * Time.deltaTime;
-        float lookY = lookInput.ReadValue<Vector2>().y * LookSensitivity * Time.deltaTime;
+        float lookX = ctx.ReadValue<Vector2>().x * LookSensitivity * Time.deltaTime;
+        float lookY = ctx.ReadValue<Vector2>().y * LookSensitivity * Time.deltaTime;
 
         //Change the rotation
         yRotation += lookX;

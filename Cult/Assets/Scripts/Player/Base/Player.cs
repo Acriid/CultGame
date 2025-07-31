@@ -8,7 +8,11 @@ public class Player : MonoBehaviour
     [SerializeField] public Transform oriantation;
     private Rigidbody playerRigidBody;
     public PlayerStateMachine playerStateMachine;
-
+    public WalkingState walkingState;
+    void Awake()
+    {
+        
+    }
     public void MovePlayer(Vector2 Direction)
     {
         Vector3 moveDirection = oriantation.forward * Direction.y + oriantation.right * Direction.x;
