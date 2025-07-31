@@ -2,7 +2,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public PlayerStateMachine playerStateMachine;
+    [Header("Player")]
+    [SerializeField] public float playerSpeed;
     [Header("Oriantation Transform")]
     [SerializeField] public Transform oriantation;
+    private Rigidbody playerRigidBody;
+    public PlayerStateMachine playerStateMachine;
+
+    public void MovePlayer(Vector2 Direction)
+    {
+        Vector3 moveDirection = oriantation.forward * Direction.y + oriantation.right * Direction.x;
+        playerRigidBody.linearVelocity = moveDirection * playerSpeed;
+    }
 }
