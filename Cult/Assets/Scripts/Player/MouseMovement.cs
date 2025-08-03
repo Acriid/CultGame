@@ -12,6 +12,8 @@ public class MouseMovement : MonoBehaviour
     //Rotations
     private float xRotation = 0f;
     private float yRotation = 0f;
+    private float lookX = 0f;
+    private float lookY = 0f;
     //InputActions
     private InputAction lookInput;
 
@@ -45,7 +47,9 @@ public class MouseMovement : MonoBehaviour
         if (lookInput == null)
         {
             lookInput = InputManager.instance.inputActions.Player.Look;
-            //lookInput.performed += RotateCamera;
+            lookInput.started += LookMovement;
+            lookInput.performed += LookMovement;
+            lookInput.canceled += LookMovement;
             lookInput.Enable();
         }
 
@@ -55,24 +59,27 @@ public class MouseMovement : MonoBehaviour
         //lookInput
         if (lookInput != null)
         {
-            //lookInput.performed -= RotateCamera;
+            lookInput.started -= LookMovement;
+            lookInput.performed -= LookMovement;
+            lookInput.canceled -= LookMovement;
             lookInput.Dispose();
             lookInput.Disable();
             lookInput = null;
         }
     }
-
-    void RotateCamera()
+    void LookMovement(InputAction.CallbackContext ctx)
     {
         //Mouse Input
-        float lookX = lookInput.ReadValue<Vector2>().x * LookSensitivity * Time.deltaTime;
-        float lookY = lookInput.ReadValue<Vector2>().y * LookSensitivity * Time.deltaTime;
+        lookX = ctx.ReadValue<Vector2>().x * LookSensitivity * Time.deltaTime;
+        lookY = ctx.ReadValue<Vector2>().y * LookSensitivity * Time.deltaTime;
 
         //Change the rotation
         yRotation += lookX;
         xRotation -= lookY;
         xRotation = Mathf.Clamp(xRotation, -MaxLookRange, MaxLookRange);
-
+    }
+    void RotateCamera()
+    {
         //Rotate 
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
         oriantation.rotation = Quaternion.Euler(0f, yRotation, 0f);

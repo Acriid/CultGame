@@ -1040,7 +1040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a545ce6853e3f4946a0603bba833e5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookSensitivity: 200
+  LookSensitivity: 75
   MaxLookRange: 90
   oriantation: {fileID: 1314556487}
 --- !u!1660057539 &9223372036854775807

@@ -24,7 +24,6 @@ public class WalkingState : PlayerState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
-        moveInputValue = moveInput.ReadValue<Vector2>();
     }
     public override void FixedUpdateLogic()
     {
@@ -41,6 +40,9 @@ public class WalkingState : PlayerState
         if (moveInput == null)
         {
             moveInput = InputManager.instance.inputActions.Player.Move;
+            moveInput.started += GetMoveValues;
+            moveInput.performed += GetMoveValues;
+            moveInput.canceled += GetMoveValues;
             moveInput.Enable();
         }
     }
@@ -48,10 +50,18 @@ public class WalkingState : PlayerState
     {
         if (moveInput != null)
         {
+            moveInput.started -= GetMoveValues;
+            moveInput.performed -= GetMoveValues;
+            moveInput.canceled -= GetMoveValues;
             moveInput.Dispose();
             moveInput.Disable();
             moveInput = null;
         }
+    }
+
+    void GetMoveValues(InputAction.CallbackContext ctx)
+    {
+        moveInputValue = ctx.ReadValue<Vector2>();
     }
         
 }
