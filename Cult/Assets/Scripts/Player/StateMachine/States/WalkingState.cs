@@ -4,8 +4,6 @@ using UnityEngine.InputSystem;
 
 public class WalkingState : PlayerState
 {
-    private InputAction moveInput;
-    private Vector2 moveInputValue;
     public WalkingState(Player player, PlayerStateMachine playerStateMachine) : base(player, playerStateMachine)
     {
 

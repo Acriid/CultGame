@@ -50,6 +50,7 @@ public class Player : MonoBehaviour
     }
     #endregion
     #region InputActions
+    #region All Inputs
     private void InitializeInputs()
     {
         InitializeCrouchInput();
@@ -61,6 +62,8 @@ public class Player : MonoBehaviour
         CleanUpCrouchInput();
         CleanUpMoveInput();
     }
+    #endregion
+    #region CrouchInput
     private void InitializeCrouchInput()
     {
         if (crouchInput == null)
@@ -82,6 +85,8 @@ public class Player : MonoBehaviour
             crouchInput = null;
         }
     }
+    #endregion
+    #region MoveInput
     private void InitializeMoveInput()
     {
         if (moveInput == null)
@@ -106,6 +111,8 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    #endregion
+    #region All Actions
     #region CrouchAction
     private void StartCrouch(InputAction.CallbackContext ctx)
     {
@@ -122,10 +129,14 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    #region MoveAction
     void GetMoveValues(InputAction.CallbackContext ctx)
     {
         moveInputValue = ctx.ReadValue<Vector2>();
     }
+    #endregion
+    #endregion
+    #region Movement
     public void MovePlayer(Vector2 Direction)
     {
         Vector3 moveDirection = oriantation.forward * Direction.y + oriantation.right * Direction.x;
@@ -134,6 +145,7 @@ public class Player : MonoBehaviour
         if (characterController.isGrounded && velocity.y < 0f) { velocity.y = -2f; }
         velocity.y += gravity * Time.deltaTime;
         velocity.y = Mathf.Clamp(velocity.y, gravity, 0f);
+
         characterController.Move(velocity);
 
     }
@@ -141,4 +153,5 @@ public class Player : MonoBehaviour
     {
         playerSpeed = newValue;
     }
+    #endregion
 }
