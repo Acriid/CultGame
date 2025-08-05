@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
@@ -8,22 +9,36 @@ public class Player : MonoBehaviour
     [SerializeField] public float playerSpeed = 1f;
     [Header("Oriantation Transform")]
     [SerializeField] public Transform oriantation;
+    [SerializeField] public Transform cameratransform;
     private CharacterController characterController;
     public PlayerStateMachine playerStateMachine { get; set; }
     public WalkingState walkingState { get; set; }
     public CrouchingState crouchingState { get; set; }
     private Vector3 velocity = Vector3.zero;
+    private InputAction crouchInput;
+    private InputAction moveInput;
+    public Vector2 moveInputValue { get; private set; }
     const float gravity = -9.81f;
+    #region Basic Unity Functions
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         playerStateMachine.Initialize(walkingState);
+        InitializeInputs();
     }
     void Awake()
     {
         playerStateMachine = new PlayerStateMachine();
         walkingState = new WalkingState(this, playerStateMachine);
         crouchingState = new CrouchingState(this, playerStateMachine);
+    }
+    void OnDisable()
+    {
+        CleanUpInputs();
+    }
+    void OnDestroy()
+    {
+        CleanUpInputs();
     }
     void Update()
     {
@@ -32,6 +47,84 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         playerStateMachine.CurrentPlayerState.FixedUpdateLogic();
+    }
+    #endregion
+    #region InputActions
+    private void InitializeInputs()
+    {
+        InitializeCrouchInput();
+        InitializeMoveInput();
+
+    }
+    private void CleanUpInputs()
+    {
+        CleanUpCrouchInput();
+        CleanUpMoveInput();
+    }
+    private void InitializeCrouchInput()
+    {
+        if (crouchInput == null)
+        {
+            crouchInput = InputManager.instance.inputActions.Player.Crouch;
+            crouchInput.started += StartCrouch;
+            crouchInput.canceled += CancelCrouch;
+            crouchInput.Enable();
+        }
+    }
+    private void CleanUpCrouchInput()
+    {
+        if (crouchInput != null)
+        {
+            crouchInput.started -= StartCrouch;
+            crouchInput.canceled -= CancelCrouch;
+            crouchInput.Dispose();
+            crouchInput.Disable();
+            crouchInput = null;
+        }
+    }
+    private void InitializeMoveInput()
+    {
+        if (moveInput == null)
+        {
+            moveInput = InputManager.instance.inputActions.Player.Move;
+            moveInput.started += GetMoveValues;
+            moveInput.performed += GetMoveValues;
+            moveInput.canceled += GetMoveValues;
+            moveInput.Enable();
+        }
+    }
+    private void CleanUpMoveInput()
+    {
+        if (moveInput != null)
+        {
+            moveInput.started -= GetMoveValues;
+            moveInput.performed -= GetMoveValues;
+            moveInput.canceled -= GetMoveValues;
+            moveInput.Dispose();
+            moveInput.Disable();
+            moveInput = null;
+        }
+    }
+    #endregion
+    #region CrouchAction
+    private void StartCrouch(InputAction.CallbackContext ctx)
+    {
+        if (playerStateMachine.CurrentPlayerState == walkingState)
+        {
+            playerStateMachine.ChangeState(crouchingState);
+        }
+    }
+    private void CancelCrouch(InputAction.CallbackContext ctx)
+    {
+        if (playerStateMachine.CurrentPlayerState == crouchingState)
+        {
+            playerStateMachine.ChangeState(walkingState);
+        }
+    }
+    #endregion
+    void GetMoveValues(InputAction.CallbackContext ctx)
+    {
+        moveInputValue = ctx.ReadValue<Vector2>();
     }
     public void MovePlayer(Vector2 Direction)
     {

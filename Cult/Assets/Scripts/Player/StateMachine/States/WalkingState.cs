@@ -14,12 +14,10 @@ public class WalkingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        InitializeInput();
     }
     public override void ExitState()
     {
         base.ExitState();
-        CleanUpInput();
     }
     public override void UpdateLogic()
     {
@@ -28,40 +26,11 @@ public class WalkingState : PlayerState
     public override void FixedUpdateLogic()
     {
         base.FixedUpdateLogic();
-        player.MovePlayer(moveInputValue);
+        player.MovePlayer(player.moveInputValue);
     }
     public override void AnimationTriggerEvent()
     {
         base.AnimationTriggerEvent();
-    }
-
-    private void InitializeInput()
-    {
-        if (moveInput == null)
-        {
-            moveInput = InputManager.instance.inputActions.Player.Move;
-            moveInput.started += GetMoveValues;
-            moveInput.performed += GetMoveValues;
-            moveInput.canceled += GetMoveValues;
-            moveInput.Enable();
-        }
-    }
-    private void CleanUpInput()
-    {
-        if (moveInput != null)
-        {
-            moveInput.started -= GetMoveValues;
-            moveInput.performed -= GetMoveValues;
-            moveInput.canceled -= GetMoveValues;
-            moveInput.Dispose();
-            moveInput.Disable();
-            moveInput = null;
-        }
-    }
-
-    void GetMoveValues(InputAction.CallbackContext ctx)
-    {
-        moveInputValue = ctx.ReadValue<Vector2>();
     }
         
 }

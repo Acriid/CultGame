@@ -441,6 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 1
   oriantation: {fileID: 1314556487}
+  cameratransform: {fileID: 1197672372}
 --- !u!143 &1271054362
 CharacterController:
   m_ObjectHideFlags: 0
