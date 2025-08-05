@@ -14,12 +14,12 @@ public class WalkingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        InitializeMoveInput();
+        InitializeInput();
     }
     public override void ExitState()
     {
         base.ExitState();
-        CleanUpMoveInput();
+        CleanUpInput();
     }
     public override void UpdateLogic()
     {
@@ -35,7 +35,7 @@ public class WalkingState : PlayerState
         base.AnimationTriggerEvent();
     }
 
-    private void InitializeMoveInput()
+    private void InitializeInput()
     {
         if (moveInput == null)
         {
@@ -46,7 +46,7 @@ public class WalkingState : PlayerState
             moveInput.Enable();
         }
     }
-    private void CleanUpMoveInput()
+    private void CleanUpInput()
     {
         if (moveInput != null)
         {
