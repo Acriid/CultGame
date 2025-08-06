@@ -504,11 +504,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f40d1e73fb8ec6145bd6785bc0552884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  oriantation: {fileID: 1314556487}
+  Camera: {fileID: 1913935278}
   itemMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  CheckLength: 10
+  CheckLength: 1
 --- !u!1 &1314556486
 GameObject:
   m_ObjectHideFlags: 0

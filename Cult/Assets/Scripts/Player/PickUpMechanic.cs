@@ -4,8 +4,9 @@ using UnityEngine.InputSystem;
 
 public class PickUpMechanic : MonoBehaviour
 {
-    [Header("Oriantation Transform")]
-    [SerializeField] public Transform oriantation;
+    [Header("Camera Transform")]
+    [SerializeField] public Transform Camera;
+    [SerializeField] private new Camera camera;
     [Header("LayerMasks")]
     [SerializeField] private LayerMask itemMask;
     private InputAction interactAction;
@@ -14,6 +15,7 @@ public class PickUpMechanic : MonoBehaviour
     public float CheckLength = 10f;
     void Awake()
     {
+        StartCoroutine(SendRayCast());
         InitializeInteractAction();
     }
     void OnDisable()
@@ -60,6 +62,8 @@ public class PickUpMechanic : MonoBehaviour
     }
     void ItemRayCast()
     {
-        hitItem = Physics.Raycast(oriantation.position, transform.forward, out hit, CheckLength, itemMask);
+        Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        hitItem = Physics.Raycast(ray, out hit, CheckLength, itemMask);
+        Debug.DrawLine(ray.origin, hit.point, Color.red);
     }
 }
