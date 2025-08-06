@@ -505,6 +505,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 1913935278}
+  camera: {fileID: 1913935277}
   itemMask:
     serializedVersion: 2
     m_Bits: 4294967295
