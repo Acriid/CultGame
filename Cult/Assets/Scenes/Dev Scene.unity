@@ -175,6 +175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1148520616}
   - component: {fileID: 1148520615}
+  - component: {fileID: 1148520617}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -262,6 +263,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1148520617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148520614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &1197672371
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +374,7 @@ GameObject:
   - component: {fileID: 1271054358}
   - component: {fileID: 1271054361}
   - component: {fileID: 1271054362}
+  - component: {fileID: 1271054363}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -467,6 +492,23 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1271054363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271054356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f40d1e73fb8ec6145bd6785bc0552884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  oriantation: {fileID: 1314556487}
+  itemMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  CheckLength: 10
 --- !u!1 &1314556486
 GameObject:
   m_ObjectHideFlags: 0
