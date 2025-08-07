@@ -1,11 +1,11 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PickUpMechanic : MonoBehaviour
 {
     [Header("Camera Transform")]
-    [SerializeField] public Transform Camera;
     [SerializeField] private new Camera camera;
     [Header("LayerMasks")]
     [SerializeField] private LayerMask itemMask;
@@ -54,20 +54,25 @@ public class PickUpMechanic : MonoBehaviour
     }
     void PickUpItem(InputAction.CallbackContext ctx)
     {
+        Debug.Log("Wow");
         if (carryItem && hitSurface)
         {
             carryItem = false;
+            pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
             pickUp.transform.SetParent(pickUpsGameObject.transform);
             pickUp.transform.position = surfaceHit.point;
-            
+            pickUp.layer = LayerMask.NameToLayer("PickUp");
         }
-        if (hitItem)
-            {
-                carryItem = true;
-                pickUp = itemHit.collider.transform.gameObject;
-                pickUp.transform.SetParent(this.transform);
-                pickUp.transform.localPosition = Vector3.zero;
-            }
+        else if (hitItem)
+        {
+            carryItem = true;
+            pickUp = itemHit.collider.transform.gameObject;
+            pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Player");
+            pickUp.transform.SetParent(this.transform);
+            pickUp.transform.localPosition = Vector3.zero;
+            pickUp.layer = LayerMask.NameToLayer("Equipped");
+        }
+
     }
     IEnumerator SendRayCast()
     {
@@ -82,5 +87,6 @@ public class PickUpMechanic : MonoBehaviour
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask);
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
+        Debug.DrawRay(ray.origin, ray.direction, Color.red,0.2f);
     }
 }
