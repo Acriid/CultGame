@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     [Header("Player")]
     [SerializeField] public float playerSpeed = 1f;
+    const float PlayerSpeedOffset = 0.2f;
     [Header("Oriantation Transform")]
     [SerializeField] public Transform oriantation;
     [SerializeField] public Transform cameratransform;
@@ -140,13 +141,13 @@ public class Player : MonoBehaviour
     public void MovePlayer(Vector2 Direction)
     {
         Vector3 moveDirection = oriantation.forward * Direction.y + oriantation.right * Direction.x;
-        characterController.Move(moveDirection * playerSpeed);
+        characterController.Move(moveDirection * playerSpeed * PlayerSpeedOffset);
 
         if (characterController.isGrounded && velocity.y < 0f) { velocity.y = -2f; }
         velocity.y += gravity * Time.deltaTime;
         velocity.y = Mathf.Clamp(velocity.y, gravity, 0f);
 
-        characterController.Move(velocity);
+        characterController.Move(velocity * PlayerSpeedOffset);
 
     }
     public void SetPlayerSpeed(float newValue)

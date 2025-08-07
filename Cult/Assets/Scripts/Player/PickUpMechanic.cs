@@ -9,9 +9,16 @@ public class PickUpMechanic : MonoBehaviour
     [SerializeField] private new Camera camera;
     [Header("LayerMasks")]
     [SerializeField] private LayerMask itemMask;
+    [SerializeField] private LayerMask surfaceMask;
     private InputAction interactAction;
-    private RaycastHit hit;
+    private RaycastHit itemHit;
+    private RaycastHit surfaceHit;
+    [Header("Pickup GameObject")]
+    [SerializeField] private GameObject pickUpsGameObject;
+    private GameObject pickUp;
     private bool hitItem;
+    private bool hitSurface;
+    private bool carryItem = false;
     public float CheckLength = 10f;
     void Awake()
     {
@@ -47,10 +54,20 @@ public class PickUpMechanic : MonoBehaviour
     }
     void PickUpItem(InputAction.CallbackContext ctx)
     {
-        if (hitItem)
+        if (carryItem && hitSurface)
         {
-
+            carryItem = false;
+            pickUp.transform.SetParent(pickUpsGameObject.transform);
+            pickUp.transform.position = surfaceHit.point;
+            
         }
+        if (hitItem)
+            {
+                carryItem = true;
+                pickUp = itemHit.collider.transform.gameObject;
+                pickUp.transform.SetParent(this.transform);
+                pickUp.transform.localPosition = Vector3.zero;
+            }
     }
     IEnumerator SendRayCast()
     {
@@ -63,7 +80,7 @@ public class PickUpMechanic : MonoBehaviour
     void ItemRayCast()
     {
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        hitItem = Physics.Raycast(ray, out hit, CheckLength, itemMask);
-        Debug.DrawLine(ray.origin, hit.point, Color.red);
+        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask);
+        hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
     }
 }
