@@ -14,15 +14,13 @@ public class CrouchingState : WalkingState
     {
         base.EnterState();
         player.SetPlayerSpeed(player.playerSpeed / speedDifference);
-        player.cameratransform.position = new Vector3(player.transform.position.x,
-        player.transform.position.y / cameraMovement, player.transform.position.z);
+        player.transform.localScale = new Vector3(1f, 0.5f, 1f);
     }
     public override void ExitState()
     {
         base.ExitState();
         player.SetPlayerSpeed(player.playerSpeed * speedDifference);
-        player.cameratransform.position = new Vector3(player.transform.position.x,
-        player.transform.position.y * cameraMovement, player.transform.position.z);
+        player.transform.localScale = new Vector3(1f, 1f, 1f);
     }
     public override void UpdateLogic()
     {

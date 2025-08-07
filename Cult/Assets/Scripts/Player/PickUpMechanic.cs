@@ -54,19 +54,20 @@ public class PickUpMechanic : MonoBehaviour
     }
     void PickUpItem(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Wow");
         if (carryItem && hitSurface)
         {
             carryItem = false;
+            pickUp.GetComponent<Rigidbody>().useGravity = true;
             pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
             pickUp.transform.SetParent(pickUpsGameObject.transform);
-            pickUp.transform.position = surfaceHit.point;
+            pickUp.transform.position = surfaceHit.point + new Vector3(0f,pickUp.transform.localScale.y /2f,0f);
             pickUp.layer = LayerMask.NameToLayer("PickUp");
         }
         else if (hitItem)
         {
             carryItem = true;
             pickUp = itemHit.collider.transform.gameObject;
+            pickUp.GetComponent<Rigidbody>().useGravity = false;
             pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Player");
             pickUp.transform.SetParent(this.transform);
             pickUp.transform.localPosition = Vector3.zero;
@@ -87,6 +88,6 @@ public class PickUpMechanic : MonoBehaviour
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask);
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
-        Debug.DrawRay(ray.origin, ray.direction, Color.red,0.2f);
+        Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red,0.2f);
     }
 }

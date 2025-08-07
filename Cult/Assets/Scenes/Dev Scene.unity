@@ -748,7 +748,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   pickUpsGameObject: {fileID: 786998605}
-  CheckLength: 2
+  CheckLength: 3
 --- !u!1 &1784507503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,6 +1124,7 @@ GameObject:
   - component: {fileID: 2039902936}
   - component: {fileID: 2039902935}
   - component: {fileID: 2039902934}
+  - component: {fileID: 2039902937}
   m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
@@ -1220,6 +1221,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2039902932}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &2039902937
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039902932}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
