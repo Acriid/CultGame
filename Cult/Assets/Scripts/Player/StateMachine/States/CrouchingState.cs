@@ -4,7 +4,6 @@ using UnityEngine.Rendering;
 public class CrouchingState : WalkingState
 {
     const float speedDifference = 4f;
-    const float cameraMovement = 2f;
     public CrouchingState(Player player, PlayerStateMachine playerStateMachine) : base(player, playerStateMachine)
     {
 
