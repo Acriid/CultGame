@@ -83,7 +83,7 @@ public class MenuEvents : MonoBehaviour
             eventID = EventTriggerType.PointerExit
         };
 
-        PointerEnter.callback.AddListener(OnPointerExit);
+        PointerExit.callback.AddListener(OnPointerExit);
         trigger.triggers.Add(PointerExit);
 
     }
@@ -103,13 +103,13 @@ public class MenuEvents : MonoBehaviour
         PointerEventData pointerEventData = eventData as PointerEventData;
         if (pointerEventData != null)
         {
-            /*Selectable sel = pointerEventData.pointerEnter.GetComponentInParent<Selectable>();
+            Selectable sel = pointerEventData.pointerEnter.GetComponentInParent<Selectable>();
             if (sel == null)
             {
                 sel = pointerEventData.pointerEnter.GetComponentInChildren<Selectable>();
             }
-            pointerEventData.selectedObject = sel.gameObject;*/
-            pointerEventData.selectedObject = pointerEventData.pointerEnter;
+            pointerEventData.selectedObject = sel.gameObject;
+            //pointerEventData.selectedObject = pointerEventData.pointerEnter;
 
         }
     }
