@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public InputSystem_Actions inputActions;
+    public CustomInputSystem inputActions;
     public static InputManager instance { get; private set; }
     void Awake()
     {
@@ -31,7 +31,7 @@ public class InputManager : MonoBehaviour
     {
         if (inputActions == null)
         {
-            inputActions = new InputSystem_Actions();
+            inputActions = new CustomInputSystem();
         }
     }
     void CleanUpInput()
