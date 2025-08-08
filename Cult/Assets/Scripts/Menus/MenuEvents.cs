@@ -32,6 +32,8 @@ public class MenuEvents : MonoBehaviour
     }
     public virtual void OnEnable()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         _navigateReference.action.performed += OnNavigate;
         StartCoroutine(SelectAfterDelay());
     }
@@ -101,12 +103,14 @@ public class MenuEvents : MonoBehaviour
         PointerEventData pointerEventData = eventData as PointerEventData;
         if (pointerEventData != null)
         {
-            Selectable sel = pointerEventData.pointerEnter.GetComponentInParent<Selectable>();
+            /*Selectable sel = pointerEventData.pointerEnter.GetComponentInParent<Selectable>();
             if (sel == null)
             {
                 sel = pointerEventData.pointerEnter.GetComponentInChildren<Selectable>();
             }
-            pointerEventData.selectedObject = sel.gameObject;
+            pointerEventData.selectedObject = sel.gameObject;*/
+            pointerEventData.selectedObject = pointerEventData.pointerEnter;
+
         }
     }
     public void OnPointerExit(BaseEventData eventData)

@@ -20,12 +20,14 @@ public class MouseMovement : MonoBehaviour
 
     void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
         InitializeInput();
     }
     void OnEnable()
     {
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
         InitializeInput();
     }
     void OnDisable()
