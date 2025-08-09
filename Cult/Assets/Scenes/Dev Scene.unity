@@ -313,8 +313,6 @@ MonoBehaviour:
   - {fileID: 147124781}
   - {fileID: 324169260}
   _firstSelected: {fileID: 259836077}
-  _navigateReference: {fileID: -7794348916194195535, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
-  _selectReference: {fileID: 6030122398595960607, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
 --- !u!114 &38068962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1577,7 +1575,7 @@ GameObject:
   - component: {fileID: 1423107827}
   - component: {fileID: 1423107826}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: PracticeMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
