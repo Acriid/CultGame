@@ -42,6 +42,9 @@ public class MenuEvents : MonoBehaviour
     }
     public virtual void OnDisable()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         navigateAction.action.performed -= OnNavigate;
         selectAction.action.performed -= OnButtonPress;
         Time.timeScale = 1;
