@@ -194,5 +194,8 @@ public class Player : MonoBehaviour
         playerSpeed = newValue;
     }
     #endregion
-    
+    public void SetCharacterControllerHeight(float newValue)
+    {
+        characterController.height = newValue;
+    }
 }

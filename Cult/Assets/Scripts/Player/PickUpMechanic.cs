@@ -68,7 +68,7 @@ public class PickUpMechanic : MonoBehaviour
             carryItem = true;
             pickUp = itemHit.collider.transform.gameObject;
             pickUp.GetComponent<Rigidbody>().useGravity = false;
-            pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Player");
+            pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
             pickUp.transform.SetParent(this.transform);
             pickUp.transform.localPosition = Vector3.zero;
             pickUp.layer = LayerMask.NameToLayer("Equipped");
