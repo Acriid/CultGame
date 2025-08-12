@@ -313,6 +313,8 @@ MonoBehaviour:
   - {fileID: 147124781}
   - {fileID: 324169260}
   _firstSelected: {fileID: 259836077}
+  navigateAction: {fileID: -7794348916194195535, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
+  selectAction: {fileID: -9021026004052246, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
 --- !u!114 &38068962
 MonoBehaviour:
   m_ObjectHideFlags: 0

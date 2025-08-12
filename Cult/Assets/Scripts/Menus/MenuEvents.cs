@@ -18,8 +18,8 @@ public class MenuEvents : MonoBehaviour
     [SerializeField] protected Selectable _firstSelected;
     protected Selectable _lastSelected;
     [Header("Controls")]
-    protected InputAction navigateAction;
-    protected InputAction selectAction;
+    [SerializeField] protected InputActionReference navigateAction;
+    [SerializeField] protected InputActionReference selectAction;
     public virtual void Awake()
     {
         foreach (var selectable in Selectables)
@@ -33,12 +33,18 @@ public class MenuEvents : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        InitializeActions();
+
+        navigateAction.action.performed += OnNavigate;
+        selectAction.action.performed += OnButtonPress;
+
+        Time.timeScale = 0;
         StartCoroutine(SelectAfterDelay());
     }
     public virtual void OnDisable()
     {
-        CleanUpActions();
+        navigateAction.action.performed -= OnNavigate;
+        selectAction.action.performed -= OnButtonPress;
+        Time.timeScale = 1;
     }
     protected virtual IEnumerator SelectAfterDelay()
     {
@@ -132,38 +138,5 @@ public class MenuEvents : MonoBehaviour
     protected virtual void OnButtonPress(InputAction.CallbackContext ctx)
     {
         EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>().onClick.Invoke();
-    }
-
-    protected virtual void InitializeActions()
-    {
-        if (selectAction == null)
-        {
-            selectAction = InputManager.instance.inputActions.UI.Submit;
-            selectAction.performed += OnButtonPress;
-            selectAction.Enable();
-        }
-        if (navigateAction == null)
-        {
-            navigateAction = InputManager.instance.inputActions.UI.Navigate;
-            navigateAction.performed += OnNavigate;
-            navigateAction.Enable();
-        }
-    }
-    protected virtual void CleanUpActions()
-    {
-        if (selectAction != null)
-        {
-            selectAction.performed -= OnButtonPress;
-            selectAction.Dispose();
-            selectAction.Disable();
-            selectAction = null;
-        }
-        if (navigateAction != null)
-        {
-            navigateAction.performed -= OnNavigate;
-            navigateAction.Dispose();
-            navigateAction.Disable();
-            navigateAction = null;
-        }
     }
 }
