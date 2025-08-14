@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4c23d10c838134498c0ccc10600d51, type: 3}
   m_Name: RedSquare
   m_EditorClassIdentifier: 
-  ItemName: RedSquare
   ItemDescription: Its a red square
+  ItemSprite: {fileID: 0}
+  IsInInventory: 1

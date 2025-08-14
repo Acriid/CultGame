@@ -6,6 +6,7 @@ public class ItemSO : ScriptableObject
     [Header("Properties")]
     [SerializeField] public string ItemDescription;
     [SerializeField] public Sprite ItemSprite;
+    [SerializeField] public bool IsInInventory;
 }
 
 public enum ItemType
