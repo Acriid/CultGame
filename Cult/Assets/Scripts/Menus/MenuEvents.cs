@@ -18,26 +18,36 @@ public class MenuEvents : MonoBehaviour
     [SerializeField] protected Selectable _firstSelected;
     protected Selectable _lastSelected;
     [Header("Controls")]
-    [SerializeField] protected InputActionReference _navigateReference;
-    [SerializeField] protected InputActionReference _selectReference;
+    [SerializeField] protected InputActionReference navigateAction;
+    [SerializeField] protected InputActionReference selectAction;
     public virtual void Awake()
     {
         foreach (var selectable in Selectables)
         {
             AddSelectionListners(selectable);
-
         }
 
 
     }
     public virtual void OnEnable()
     {
-        _navigateReference.action.performed += OnNavigate;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        navigateAction.action.performed += OnNavigate;
+        selectAction.action.performed += OnButtonPress;
+
+        Time.timeScale = 0;
         StartCoroutine(SelectAfterDelay());
     }
     public virtual void OnDisable()
     {
-        _navigateReference.action.performed -= OnNavigate;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        navigateAction.action.performed -= OnNavigate;
+        selectAction.action.performed -= OnButtonPress;
+        Time.timeScale = 1;
     }
     protected virtual IEnumerator SelectAfterDelay()
     {
@@ -81,7 +91,7 @@ public class MenuEvents : MonoBehaviour
             eventID = EventTriggerType.PointerExit
         };
 
-        PointerEnter.callback.AddListener(OnPointerExit);
+        PointerExit.callback.AddListener(OnPointerExit);
         trigger.triggers.Add(PointerExit);
 
     }
@@ -107,6 +117,8 @@ public class MenuEvents : MonoBehaviour
                 sel = pointerEventData.pointerEnter.GetComponentInChildren<Selectable>();
             }
             pointerEventData.selectedObject = sel.gameObject;
+            //pointerEventData.selectedObject = pointerEventData.pointerEnter;
+
         }
     }
     public void OnPointerExit(BaseEventData eventData)
