@@ -86,7 +86,7 @@ public class PickUpMechanic : MonoBehaviour
     void ItemRayCast()
     {
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask);
+        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask , QueryTriggerInteraction.UseGlobal);
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
         Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red,0.2f);
     }
