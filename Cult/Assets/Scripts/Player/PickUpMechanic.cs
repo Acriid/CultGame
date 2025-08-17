@@ -20,6 +20,7 @@ public class PickUpMechanic : MonoBehaviour
     private bool hitSurface;
     private bool carryItem = false;
     public float CheckLength = 10f;
+    public GameObject popupCanvas;
     void Awake()
     {
         StartCoroutine(SendRayCast());
@@ -86,8 +87,16 @@ public class PickUpMechanic : MonoBehaviour
     void ItemRayCast()
     {
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask , QueryTriggerInteraction.UseGlobal);
+        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask, QueryTriggerInteraction.UseGlobal);
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
-        Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red,0.2f);
+        Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red, 0.2f);
+        if (hitItem)
+        {
+            popupCanvas.SetActive(true);
+        }
+        else
+        {
+            popupCanvas.SetActive(false);
+        }
     }
 }
