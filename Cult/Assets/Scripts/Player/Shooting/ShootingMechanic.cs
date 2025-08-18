@@ -53,10 +53,12 @@ public class ShootingMechanic : MonoBehaviour
     void OnShootAction(InputAction.CallbackContext ctx)
     {
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        hit = Physics.Raycast(ray, out bulletHit, gunRange);
+        hit = Physics.Raycast(ray, out bulletHit, gunRange, targetMask);
+
         if (hit)
         {
             hitObject = bulletHit.collider.gameObject;
+            Debug.Log(bulletHit.collider.gameObject);
             shootable = hitObject.GetComponent<ShootAble>();
             if (shootable != null)
             {
