@@ -41,18 +41,6 @@ public class Player : MonoBehaviour
         walkingState = new WalkingState(this, playerStateMachine);
         crouchingState = new CrouchingState(this, playerStateMachine);
     }
-    void OnEnable()
-    {
-        
-        if (OptionsMenu == null)
-        {
-            Debug.LogWarning("Please put the menu prefab in the scene.");
-        }
-
-        characterController = GetComponent<CharacterController>();
-        playerStateMachine.Initialize(walkingState);
-        InitializeInputs();        
-    }
     void OnDisable()
     {
         CleanUpInputs();
