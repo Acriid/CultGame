@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [Header("Oriantation Transform")]
     [SerializeField] public Transform oriantation;
     [SerializeField] public Transform cameratransform;
+    [Header("Menus")]
+    [SerializeField] public GameObject OptionsMenu;
     private CharacterController characterController;
     public PlayerStateMachine playerStateMachine { get; set; }
     public WalkingState walkingState { get; set; }
@@ -18,20 +20,31 @@ public class Player : MonoBehaviour
     private Vector3 velocity = Vector3.zero;
     private InputAction crouchInput;
     private InputAction moveInput;
+    private InputAction optionsAction;
     public Vector2 moveInputValue { get; private set; }
     const float gravity = -9.81f;
     #region Basic Unity Functions
     void Start()
     {
-        characterController = GetComponent<CharacterController>();
-        playerStateMachine.Initialize(walkingState);
-        InitializeInputs();
+
     }
     void Awake()
     {
         playerStateMachine = new PlayerStateMachine();
         walkingState = new WalkingState(this, playerStateMachine);
         crouchingState = new CrouchingState(this, playerStateMachine);
+    }
+    void OnEnable()
+    {
+        
+        if (OptionsMenu == null)
+        {
+            Debug.LogWarning("Please put the menu prefab in the scene.");
+        }
+
+        characterController = GetComponent<CharacterController>();
+        playerStateMachine.Initialize(walkingState);
+        InitializeInputs();        
     }
     void OnDisable()
     {
@@ -56,12 +69,14 @@ public class Player : MonoBehaviour
     {
         InitializeCrouchInput();
         InitializeMoveInput();
+        InitializeOptionsAction();
 
     }
     private void CleanUpInputs()
     {
         CleanUpCrouchInput();
         CleanUpMoveInput();
+        CleanUpOptionsAction();
     }
     #endregion
     #region CrouchInput
@@ -112,6 +127,27 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    #region EscapeMenu
+    private void InitializeOptionsAction()
+    {
+        if (optionsAction == null)
+        {
+            optionsAction = InputManager.instance.inputActions.Player.Options;
+            optionsAction.performed += OpenOptionsMenu;
+            optionsAction.Enable();
+        }
+    }
+    private void CleanUpOptionsAction()
+    {
+        if (optionsAction != null)
+        {
+            optionsAction.performed -= OpenOptionsMenu;
+            optionsAction.Dispose();
+            optionsAction.Disable();
+            optionsAction = null;
+        }
+    }
+    #endregion
     #endregion
     #region All Actions
     #region CrouchAction
@@ -137,6 +173,19 @@ public class Player : MonoBehaviour
     }
     #endregion
     #endregion
+    #region OptionsAction
+    void OpenOptionsMenu(InputAction.CallbackContext ctx)
+    {
+        if (OptionsMenu.activeSelf)
+        {
+            OptionsMenu.SetActive(false);
+        }
+        else
+        {
+            OptionsMenu.SetActive(true);
+        }
+    }
+    #endregion
     #region Movement
     public void MovePlayer(Vector2 Direction)
     {
@@ -155,4 +204,8 @@ public class Player : MonoBehaviour
         playerSpeed = newValue;
     }
     #endregion
+    public void SetCharacterControllerHeight(float newValue)
+    {
+        characterController.height = newValue;
+    }
 }
