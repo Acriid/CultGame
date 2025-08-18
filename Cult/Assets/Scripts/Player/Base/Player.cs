@@ -26,7 +26,14 @@ public class Player : MonoBehaviour
     #region Basic Unity Functions
     void Start()
     {
+        if (OptionsMenu == null)
+        {
+            Debug.LogWarning("Please put the menu prefab in the scene.");
+        }
 
+        characterController = GetComponent<CharacterController>();
+        playerStateMachine.Initialize(walkingState);
+        InitializeInputs();   
     }
     void Awake()
     {
