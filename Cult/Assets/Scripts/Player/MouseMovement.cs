@@ -26,6 +26,8 @@ public class MouseMovement : MonoBehaviour
     }
     void OnEnable()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         InitializeInput();
     }
     void OnDisable()

@@ -20,6 +20,7 @@ public class PickUpMechanic : MonoBehaviour
     private bool hitSurface;
     private bool carryItem = false;
     public float CheckLength = 10f;
+    public GameObject popupCanvas;
     void Awake()
     {
         StartCoroutine(SendRayCast());
@@ -66,9 +67,9 @@ public class PickUpMechanic : MonoBehaviour
         else if (hitItem)
         {
             carryItem = true;
-            pickUp = itemHit.collider.transform.gameObject;
+            pickUp = itemHit.collider.gameObject;
             pickUp.GetComponent<Rigidbody>().useGravity = false;
-            pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Player");
+            pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
             pickUp.transform.SetParent(this.transform);
             pickUp.transform.localPosition = Vector3.zero;
             pickUp.layer = LayerMask.NameToLayer("Equipped");
@@ -86,8 +87,16 @@ public class PickUpMechanic : MonoBehaviour
     void ItemRayCast()
     {
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask);
+        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask, QueryTriggerInteraction.UseGlobal);
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
-        Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red,0.2f);
+        Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red, 0.2f);
+        if (hitItem)
+        {
+            popupCanvas.SetActive(true);
+        }
+        else
+        {
+            popupCanvas.SetActive(false);
+        }
     }
 }
