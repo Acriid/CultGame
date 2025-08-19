@@ -15,7 +15,7 @@ public class PickUpMechanic : MonoBehaviour
     private RaycastHit surfaceHit;
     [Header("Pickup GameObject")]
     [SerializeField] private GameObject pickUpsGameObject;
-    private GameObject pickUp;
+    private GameObject CurrentSelectedItem;
     private bool hitItem;
     private bool hitSurface;
     private bool carryItem = false;
@@ -57,22 +57,13 @@ public class PickUpMechanic : MonoBehaviour
     {
         if (carryItem && hitSurface)
         {
-            carryItem = false;
-            pickUp.GetComponent<Rigidbody>().useGravity = true;
-            pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
-            pickUp.transform.SetParent(pickUpsGameObject.transform);
-            pickUp.transform.position = surfaceHit.point + new Vector3(0f,pickUp.transform.localScale.y /2f,0f);
-            pickUp.layer = LayerMask.NameToLayer("PickUp");
+            PutDownItem(CurrentSelectedItem);
         }
         else if (hitItem)
         {
-            carryItem = true;
-            pickUp = itemHit.collider.gameObject;
-            pickUp.GetComponent<Rigidbody>().useGravity = false;
-            pickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
-            pickUp.transform.SetParent(this.transform);
-            pickUp.transform.localPosition = Vector3.zero;
-            pickUp.layer = LayerMask.NameToLayer("Equipped");
+            CurrentSelectedItem = itemHit.collider.gameObject;
+            PickUpItem(CurrentSelectedItem);
+            InventoryManager.instance.AddtoInventory(CurrentSelectedItem.GetComponent<Item>());
         }
 
     }
@@ -98,5 +89,32 @@ public class PickUpMechanic : MonoBehaviour
         {
             popupCanvas.SetActive(false);
         }
+    }
+    public void PickUpItem(GameObject itemToPickUp)
+    {
+        itemToPickUp.GetComponent<Rigidbody>().useGravity = false;
+        itemToPickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
+        itemToPickUp.transform.SetParent(this.transform);
+        itemToPickUp.transform.localPosition = Vector3.zero;
+        itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
+        carryItem = true;
+    }
+    public void PutDownItem(GameObject itemToPutDown)
+    {
+        itemToPutDown.GetComponent<Rigidbody>().useGravity = true;
+        itemToPutDown.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
+        itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
+        itemToPutDown.transform.position = surfaceHit.point + new Vector3(0f, itemToPutDown.transform.localScale.y / 2f, 0f);
+        itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
+        InventoryManager.instance.RemoveFromInventory();
+        carryItem = false;
+    }
+    public void SetCurrentSelected(GameObject currentselected)
+    {
+        CurrentSelectedItem = currentselected;
+    }
+    public void SetCarryItem(bool newValue)
+    {
+        carryItem = newValue;
     }
 }

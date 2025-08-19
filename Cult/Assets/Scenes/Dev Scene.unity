@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollInput: {fileID: -7768722565967467820, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
   inventorysizeLimit: 5
+  PickUpHolder: {fileID: 1845729980}
 --- !u!4 &1140207428
 Transform:
   m_ObjectHideFlags: 0
@@ -746,6 +747,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1845729980 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7988278049850185233, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+  m_PrefabInstance: {fileID: 7941898869690317824}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6838369815751639900
 PrefabInstance:
   m_ObjectHideFlags: 0
