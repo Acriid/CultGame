@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemDescription: Its a red square
   ItemSprite: {fileID: 0}
-  IsInInventory: 1
+  IsInInventory: 0
