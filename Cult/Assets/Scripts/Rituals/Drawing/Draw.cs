@@ -4,12 +4,17 @@
 //version 1
 //https://www.youtube.com/watch?app=desktop&v=XozHdfHrb1U
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Draw : MonoBehaviour
 {
+    private Mesh mesh;
+    public new Camera camera;
+    public LayerMask uiLayerMask;
+    private InputAction MouseInput;
     void Awake()
     {
-        Mesh mesh = new Mesh();
+        mesh = new Mesh();
 
         Vector3[] vertices = new Vector3[4];
         Vector2[] uv = new Vector2[4];
@@ -39,5 +44,18 @@ public class Draw : MonoBehaviour
         mesh.MarkDynamic();
 
         GetComponent<MeshFilter>().mesh = mesh;
+
+        
+    }
+    void Update()
+    {
+         
+        Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, uiLayerMask))
+        {
+            Vector3 mousePoint = hit.point;
+            mousePoint.z -= 0.1f;
+            transform.position = mousePoint;
+        }
     }
 }
