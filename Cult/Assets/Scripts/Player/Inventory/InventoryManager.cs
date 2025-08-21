@@ -78,6 +78,7 @@ public class InventoryManager : MonoBehaviour
                 addingItem.itemSO.IsInInventory = true;
                 CurrentSelected = i;
                 activeItems[CurrentSelected] = addingItem.gameObject;
+                break;
                // pickUpMechanic.SetCurrentSelected(addingItem.gameObject);
             }
         }
@@ -87,14 +88,14 @@ public class InventoryManager : MonoBehaviour
     public void RemoveFromInventory()
     {
         activeItems.TryGetValue(CurrentSelected, out GameObject result);
-        if (result != null)
+        if (result == null)
         {
             return;
         }
         if (activeItems.ContainsKey(CurrentSelected))
         {
             activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsInInventory = false;
-            activeItems.Remove(CurrentSelected);
+            activeItems[CurrentSelected] = null; 
         }
 
     }
@@ -120,9 +121,17 @@ public class InventoryManager : MonoBehaviour
             {
                 activeItems[CurrentSelected].SetActive(true);
             }
-            pickUpMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
             pickUpMechanic.SetCarryItem(false);
         }
+        if (activeItems[CurrentSelected] != null)
+        {
+            pickUpMechanic.SetCarryItem(true);
+        }
+        else
+        {
+            pickUpMechanic.SetCarryItem(false);
+        }
+        pickUpMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
         Debug.Log(activeItems[CurrentSelected]);
     }
     //759127

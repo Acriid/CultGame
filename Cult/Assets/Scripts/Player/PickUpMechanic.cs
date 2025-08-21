@@ -55,6 +55,7 @@ public class PickUpMechanic : MonoBehaviour
     }
     void PickUpItem(InputAction.CallbackContext ctx)
     {
+
         if (carryItem && hitSurface)
         {
             PutDownItem(CurrentSelectedItem);
@@ -92,7 +93,10 @@ public class PickUpMechanic : MonoBehaviour
     }
     public void PickUpItem(GameObject itemToPickUp)
     {
-        itemToPickUp.GetComponent<Rigidbody>().useGravity = false;
+        Rigidbody itenRigidbody = itemToPickUp.GetComponent<Rigidbody>();
+        itenRigidbody.useGravity = false;
+        itenRigidbody.linearVelocity = Vector3.zero;
+        itenRigidbody.freezeRotation = true;
         itemToPickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
         itemToPickUp.transform.SetParent(this.transform);
         itemToPickUp.transform.localPosition = Vector3.zero;
@@ -101,7 +105,9 @@ public class PickUpMechanic : MonoBehaviour
     }
     public void PutDownItem(GameObject itemToPutDown)
     {
-        itemToPutDown.GetComponent<Rigidbody>().useGravity = true;
+        Rigidbody itenRigidbody = itemToPutDown.GetComponent<Rigidbody>();
+        itenRigidbody.useGravity = true;
+        itenRigidbody.freezeRotation = false;
         itemToPutDown.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
         itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
         itemToPutDown.transform.position = surfaceHit.point + new Vector3(0f, itemToPutDown.transform.localScale.y / 2f, 0f);
