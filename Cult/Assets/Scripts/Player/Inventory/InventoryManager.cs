@@ -43,6 +43,7 @@ public class InventoryManager : MonoBehaviour
         int loopvariable = 0;
         _inventoryList = FindInventoryItems();
         pickUpMechanic = PickUpHolder.GetComponent<PickUpMechanic>();
+
         foreach (Item item in _inventoryList)
         {
             if (item.itemSO.IsInInventory)
@@ -56,6 +57,7 @@ public class InventoryManager : MonoBehaviour
                 else
                 {
                     pickUpMechanic.SetCurrentSelected(item.gameObject);
+                    _hotBar[CurrentSelected].color = Color.blue;
                 }
                 Debug.Log(activeItems[loopvariable].name);
                 loopvariable++;
@@ -75,19 +77,24 @@ public class InventoryManager : MonoBehaviour
     public void AddtoInventory(Item addingItem)
     {
         string DebugMessage = "Inventory Full";
+        
         for (int i = 0; i <= inventorysizeLimit; i++)
         {
             if (activeItems[i] == null)
             {
+
                 DebugMessage = "Added Item to Inventory";
+                _hotBar[CurrentSelected].color = Color.white;
                 addingItem.itemSO.IsInInventory = true;
                 CurrentSelected = i;
+                _hotBar[CurrentSelected].color = Color.red;
                 activeItems[CurrentSelected] = addingItem.gameObject;
                 break;
                 // pickUpMechanic.SetCurrentSelected(addingItem.gameObject);
             }
         }
         Debug.Log(DebugMessage);
+        
     }
 
     public void RemoveFromInventory()
@@ -109,12 +116,13 @@ public class InventoryManager : MonoBehaviour
     {
         Vector2 ScrollValue = ctx.ReadValue<Vector2>();
         activeItems.TryGetValue(CurrentSelected, out GameObject result);
-
+        _hotBar[CurrentSelected].color = Color.white;
         if (activeItems.ContainsKey(CurrentSelected) && result != null)
         {
             activeItems[CurrentSelected].SetActive(false);
+            _hotBar[CurrentSelected].color = Color.blue;
         }
-        _hotBar[CurrentSelected].color = Color.white;
+        
         CurrentSelected += (int)ScrollValue.y;
         CurrentSelected = Mathf.Clamp(CurrentSelected, 0, inventorysizeLimit);
 
@@ -132,17 +140,18 @@ public class InventoryManager : MonoBehaviour
             }
             pickUpMechanic.SetCarryItem(false);
         }
+        _hotBar[CurrentSelected].color = Color.red;
 
         if (activeItems[CurrentSelected] != null)
         {
-            pickUpMechanic.SetCarryItem(true);
+            pickUpMechanic.SetCarryItem(true); 
         }
         else
         {
             pickUpMechanic.SetCarryItem(false);
         }
         pickUpMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
-        _hotBar[CurrentSelected].color = Color.red;
+        
         //Debug.Log(activeItems[CurrentSelected]);
     }
     private List<Item> FindInventoryItems()
