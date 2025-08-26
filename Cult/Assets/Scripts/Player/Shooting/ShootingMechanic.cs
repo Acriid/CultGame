@@ -17,18 +17,21 @@ public class ShootingMechanic : MonoBehaviour
     public LayerMask targetMask;
     void Awake()
     {
-        EnableShootAction();
-        StartCoroutine(CheckForTarget());
+       // EnableShootAction();
     }
     void OnEnable()
     {
         EnableShootAction();
+        StartCoroutine(CheckForTarget());
     }
     void OnDisable()
     {
         DisableShootAction();
     }
-
+    void OnDestroy()
+    {
+        DisableShootAction();
+    }
     void EnableShootAction()
     {
         if (shootAction == null)
