@@ -152,7 +152,7 @@ public class InventoryManager : MonoBehaviour
         }
         pickUpMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
         
-        //Debug.Log(activeItems[CurrentSelected]);
+        Debug.Log(activeItems[CurrentSelected]);
     }
     private List<Item> FindInventoryItems()
     {

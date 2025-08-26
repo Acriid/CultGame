@@ -32,6 +32,7 @@ public class InputManager : MonoBehaviour
         if (inputActions == null)
         {
             inputActions = new CustomInputSystem();
+            inputActions.Enable();
         }
     }
     void CleanUpInput()

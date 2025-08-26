@@ -82,7 +82,6 @@ public class Player : MonoBehaviour
             crouchInput = InputManager.instance.inputActions.Player.Crouch;
             crouchInput.started += StartCrouch;
             crouchInput.canceled += CancelCrouch;
-            crouchInput.Enable();
         }
     }
     private void CleanUpCrouchInput()
@@ -91,8 +90,6 @@ public class Player : MonoBehaviour
         {
             crouchInput.started -= StartCrouch;
             crouchInput.canceled -= CancelCrouch;
-            crouchInput.Dispose();
-            crouchInput.Disable();
             crouchInput = null;
         }
     }
@@ -106,7 +103,6 @@ public class Player : MonoBehaviour
             moveInput.started += GetMoveValues;
             moveInput.performed += GetMoveValues;
             moveInput.canceled += GetMoveValues;
-            moveInput.Enable();
         }
     }
     private void CleanUpMoveInput()
@@ -116,8 +112,6 @@ public class Player : MonoBehaviour
             moveInput.started -= GetMoveValues;
             moveInput.performed -= GetMoveValues;
             moveInput.canceled -= GetMoveValues;
-            moveInput.Dispose();
-            moveInput.Disable();
             moveInput = null;
         }
     }
@@ -129,7 +123,6 @@ public class Player : MonoBehaviour
         {
             optionsAction = InputManager.instance.inputActions.Player.Options;
             optionsAction.performed += OpenOptionsMenu;
-            optionsAction.Enable();
         }
     }
     private void CleanUpOptionsAction()
@@ -137,8 +130,6 @@ public class Player : MonoBehaviour
         if (optionsAction != null)
         {
             optionsAction.performed -= OpenOptionsMenu;
-            optionsAction.Dispose();
-            optionsAction.Disable();
             optionsAction = null;
         }
     }

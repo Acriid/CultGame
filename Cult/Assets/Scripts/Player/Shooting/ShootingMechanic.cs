@@ -27,10 +27,14 @@ public class ShootingMechanic : MonoBehaviour
     void OnDisable()
     {
         DisableShootAction();
+        StopAllCoroutines();
+        Debug.Log("No more gun");
     }
     void OnDestroy()
     {
         DisableShootAction();
+        StopAllCoroutines();
+        Debug.Log("No more gun");
     }
     void EnableShootAction()
     {
@@ -38,7 +42,6 @@ public class ShootingMechanic : MonoBehaviour
         {
             shootAction = InputManager.instance.inputActions.Player.Attack;
             shootAction.performed += OnShootAction;
-            shootAction.Enable();
         }
     }
 
@@ -47,8 +50,6 @@ public class ShootingMechanic : MonoBehaviour
         if (shootAction != null)
         {
             shootAction.performed -= OnShootAction;
-            shootAction.Dispose();
-            shootAction.Disable();
             shootAction = null;
         }
     }
@@ -66,7 +67,7 @@ public class ShootingMechanic : MonoBehaviour
             if (shootable != null)
             {
                 shootable.gameObject.SetActive(false);
-                StartCoroutine(waitForRespawn());
+               StartCoroutine(waitForRespawn());
             }
         }
     }
