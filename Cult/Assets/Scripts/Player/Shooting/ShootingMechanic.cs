@@ -17,7 +17,7 @@ public class ShootingMechanic : MonoBehaviour
     public LayerMask targetMask;
     void Awake()
     {
-       // EnableShootAction();
+        // EnableShootAction();
     }
     void OnEnable()
     {
@@ -28,12 +28,14 @@ public class ShootingMechanic : MonoBehaviour
     {
         DisableShootAction();
         StopAllCoroutines();
+        SafetyDisable();
         Debug.Log("No more gun");
     }
     void OnDestroy()
     {
         DisableShootAction();
         StopAllCoroutines();
+        SafetyDisable();
         Debug.Log("No more gun");
     }
     void EnableShootAction()
@@ -67,7 +69,7 @@ public class ShootingMechanic : MonoBehaviour
             if (shootable != null)
             {
                 shootable.gameObject.SetActive(false);
-               StartCoroutine(waitForRespawn());
+                StartCoroutine(waitForRespawn());
             }
         }
     }
@@ -92,5 +94,17 @@ public class ShootingMechanic : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         shootable.gameObject.SetActive(true);
+    }
+
+    private void SafetyDisable()
+    {
+        if (popupCanvas.activeInHierarchy)
+        {
+            popupCanvas.SetActive(false);
+        }
+        if (!shootable.gameObject.activeInHierarchy)
+        {
+            shootable.gameObject.SetActive(true);
+        }
     }
 }

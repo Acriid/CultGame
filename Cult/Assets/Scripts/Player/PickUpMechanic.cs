@@ -102,6 +102,12 @@ public class PickUpMechanic : MonoBehaviour
         itemToPickUp.transform.localPosition = Vector3.zero;
         itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
         carryItem = true;
+
+        //Gun Exception
+        if (itemToPickUp.name == "Gun")
+        {
+            itemToPickUp.GetComponent<ShootingMechanic>().enabled = true;
+        }
     }
     public void PutDownItem(GameObject itemToPutDown)
     {
@@ -114,6 +120,12 @@ public class PickUpMechanic : MonoBehaviour
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
         InventoryManager.instance.RemoveFromInventory();
         carryItem = false;
+
+        //Gun Exception
+        if (itemToPutDown.name == "Gun")
+        {
+            itemToPutDown.GetComponent<ShootingMechanic>().enabled = false;
+        }
     }
     public void SetCurrentSelected(GameObject currentselected)
     {

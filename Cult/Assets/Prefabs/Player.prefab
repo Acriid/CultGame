@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a545ce6853e3f4946a0603bba833e5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LookSensitivity: 75
+  LookSensitivity: 30
   MaxLookRange: 90
   oriantation: {fileID: 215065343778523288}
 --- !u!1 &3197417330485345348
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4329153293141905103}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c623613fb802f254ca9fe9eb54bb1ba8, type: 3}
   m_Name: 

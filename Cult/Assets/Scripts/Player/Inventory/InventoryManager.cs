@@ -13,6 +13,7 @@ public class InventoryManager : MonoBehaviour
     [Header("InputAction")]
     public InputActionReference scrollInput;
     [Header("InventorySize Limit")]
+    public int hotBarSizeLimit = 4;
     public int inventorysizeLimit = 4;
     [Header("HoldTransform")]
     public GameObject PickUpHolder;
@@ -78,7 +79,7 @@ public class InventoryManager : MonoBehaviour
     {
         string DebugMessage = "Inventory Full";
         
-        for (int i = 0; i <= inventorysizeLimit; i++)
+        for (int i = 0; i <= hotBarSizeLimit; i++)
         {
             if (activeItems[i] == null)
             {
@@ -124,7 +125,7 @@ public class InventoryManager : MonoBehaviour
         }
         
         CurrentSelected += (int)ScrollValue.y;
-        CurrentSelected = Mathf.Clamp(CurrentSelected, 0, inventorysizeLimit);
+        CurrentSelected = Mathf.Clamp(CurrentSelected, 0, hotBarSizeLimit);
 
         if (!activeItems.ContainsKey(CurrentSelected))
         {

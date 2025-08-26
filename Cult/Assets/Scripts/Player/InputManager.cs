@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour
     public static InputManager instance { get; private set; }
     void Awake()
     {
-        if (instance != null)
+        if (instance != null || instance != this)
         {
             Debug.LogWarning("More than one instance of inputsystem.");
         }
@@ -15,6 +15,11 @@ public class InputManager : MonoBehaviour
     }
     void OnEnable()
     {
+        if (instance != null || instance != this)
+        {
+            Debug.LogWarning("More than one instance of inputsystem.");
+        }
+        instance = this;
         InitializeInput();
     }
     void OnDisable()
