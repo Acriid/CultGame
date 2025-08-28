@@ -37,20 +37,30 @@ public class InventoryManager : MonoBehaviour
     void OnEnable()
     {
         InitializeInventory();
-        InitializeScrollInput();
+        InitializeActions();
     }
     void OnDisable()
     {
-        CleanupScrollInput();
+        CleanUpActions();
     }
+    void OnDestroy()
+    {
+        OnDisable();
+    }
+    #region  All Actions
+    #region Initialize Actions
     void InitializeActions()
     {
-
+        InitializeScrollInput();
+        InitializeInventoryAction();
     }
     void CleanUpActions()
     {
-        
+        CleanupScrollInput();
+        CleanupInventoryAction();
     }
+    #endregion
+    #region ScrollWheel
     void InitializeScrollInput()
     {
         if (scrollInput == null)
@@ -61,12 +71,13 @@ public class InventoryManager : MonoBehaviour
     }
     void CleanupScrollInput()
     {
-        if (scrollInput == null)
+        if (scrollInput != null)
         {
             scrollInput.performed -= ReadScrollValue;
             scrollInput = null;
         }
     }
+    #endregion
     #region Inventory
     private void InitializeInventoryAction()
     {
@@ -92,12 +103,15 @@ public class InventoryManager : MonoBehaviour
         if (InventoryMenu.activeSelf)
         {
             InventoryMenu.SetActive(false);
+            InitializeScrollInput();
         }
         else
         {
             InventoryMenu.SetActive(true);
+            CleanupScrollInput();
         }
     }
+    #endregion
     #endregion
     private void InitializeInventory()
     {
@@ -118,9 +132,10 @@ public class InventoryManager : MonoBehaviour
                 else
                 {
                     pickUpMechanic.SetCurrentSelected(item.gameObject);
-                    _hotBar[CurrentSelected].color = Color.blue;
+                    
                 }
                 Debug.Log(activeItems[loopvariable].name);
+                _hotBar[loopvariable].color = Color.blue;
                 loopvariable++;
             }
         }

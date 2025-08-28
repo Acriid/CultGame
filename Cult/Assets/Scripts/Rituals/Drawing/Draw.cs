@@ -8,21 +8,29 @@ using UnityEngine.InputSystem;
 
 public class Draw : MonoBehaviour
 {
-    [SerializeField] private float MouseChangeDistance = 1f;
+    [SerializeField] private float MouseChangeDistance = 0.1f;
     private Mesh mesh;
     public new Camera camera;
     public LayerMask uiLayerMask;
     private InputAction MouseInput;
     private Vector3 lastMousePosition = Vector3.zero;
     private bool MouseDown = false;
-    public float LineThickness = 1f;
+    public float LineThickness = 0.05f;
     void Awake()
     {
-        MouseInput = InputManager.instance.inputActions.Player.Attack;
-        MouseInput.performed += MouseHold;
-        MouseInput.canceled += MouseUp;
-
-        
+        InitializeMouseInput();
+    }
+    void OnEnable()
+    {
+        Awake();
+    }
+    void OnDisable()
+    {
+        CleanUpMouseInput();
+    }
+    void OnDestroy()
+    {
+        OnDisable();
     }
     void Update()
     {
@@ -31,7 +39,7 @@ public class Draw : MonoBehaviour
         {
             Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
             bool drawHit = Physics.Raycast(ray, out RaycastHit hit, 100f, uiLayerMask);
-            if (drawHit && Vector3.Distance(hit.point,lastMousePosition) > MouseChangeDistance)
+            if (drawHit && Vector3.Distance(hit.point, lastMousePosition) > MouseChangeDistance)
             {
                 Vector3[] vertices = new Vector3[mesh.vertices.Length + 2];
                 Vector2[] uv = new Vector2[mesh.uv.Length + 2];
@@ -47,12 +55,10 @@ public class Draw : MonoBehaviour
                 int vIndex2 = vIndex + 2;
                 int vIndex3 = vIndex + 3;
 
-
-
-                Vector3 mouseForwardVector = (hit.point  - lastMousePosition).normalized;
-                Vector3 normal = new Vector3(0, 0, -1f);
-                Vector3 newVertexUp = hit.point  + Vector3.Cross(mouseForwardVector, normal) * LineThickness;
-                Vector3 newVertexDown = hit.point  + Vector3.Cross(mouseForwardVector, -normal) * LineThickness;
+                Vector3 mouseForwardVector = (hit.point - lastMousePosition).normalized;
+                Vector3 normal = new Vector3(0f, 0f, -1f);
+                Vector3 newVertexUp = hit.point + Vector3.Cross(mouseForwardVector, normal) * LineThickness;
+                Vector3 newVertexDown = hit.point + Vector3.Cross(mouseForwardVector, -normal) * LineThickness;
 
                 vertices[vIndex2] = newVertexUp;
                 vertices[vIndex3] = newVertexDown;
@@ -74,15 +80,29 @@ public class Draw : MonoBehaviour
                 mesh.uv = uv;
                 mesh.triangles = triangles;
 
-                lastMousePosition = hit.point ;
+                lastMousePosition = hit.point;
             }
 
         }
     }
-    void OnDisable()
+
+    void InitializeMouseInput()
     {
-        MouseInput.performed -= MouseHold;
-        MouseInput.performed -= MouseUp;
+        if (MouseInput == null)
+        {
+            MouseInput = InputManager.instance.inputActions.Player.Attack;
+            MouseInput.performed += MouseHold;
+            MouseInput.canceled += MouseUp;
+        }
+    }
+    void CleanUpMouseInput()
+    {
+        if (MouseInput != null)
+        {
+            MouseInput.performed -= MouseHold;
+            MouseInput.performed -= MouseUp;
+            MouseInput = null;
+        }
     }
     void MouseHold(InputAction.CallbackContext ctx)
     {
@@ -123,7 +143,6 @@ public class Draw : MonoBehaviour
             mesh.MarkDynamic();
 
             GetComponent<MeshFilter>().mesh = mesh;
-
         }
     }
     void MouseUp(InputAction.CallbackContext ctx)

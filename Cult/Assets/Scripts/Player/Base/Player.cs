@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     [SerializeField] public Transform cameratransform;
     [Header("Menus")]
     [SerializeField] public GameObject OptionsMenu;
-    [SerializeField] public GameObject InventoryMenu;
     private CharacterController characterController;
     public PlayerStateMachine playerStateMachine { get; set; }
     public WalkingState walkingState { get; set; }
@@ -22,7 +21,6 @@ public class Player : MonoBehaviour
     private InputAction crouchInput;
     private InputAction moveInput;
     private InputAction optionsAction;
-    private InputAction inventoryAction;
     public Vector2 moveInputValue { get; private set; }
     const float gravity = -9.81f;
     #region Basic Unity Functions
@@ -49,7 +47,7 @@ public class Player : MonoBehaviour
     }
     void OnDestroy()
     {
-        CleanUpInputs();
+        OnDisable();
     }
     void Update()
     {
@@ -67,7 +65,6 @@ public class Player : MonoBehaviour
         InitializeCrouchInput();
         InitializeMoveInput();
         InitializeOptionsAction();
-        InitializeInventoryAction();
 
     }
     private void CleanUpInputs()
@@ -75,7 +72,6 @@ public class Player : MonoBehaviour
         CleanUpCrouchInput();
         CleanUpMoveInput();
         CleanUpOptionsAction();
-        CleanupInventoryAction();
     }
     #endregion
     #region CrouchInput
@@ -138,25 +134,6 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-    #region Inventory
-    private void InitializeInventoryAction()
-    {
-        if (inventoryAction == null)
-        {
-            inventoryAction = InputManager.instance.inputActions.Player.Inventory;
-            inventoryAction.performed += OpenInventory;
-        }
-    }
-    private void CleanupInventoryAction()
-    {
-        if (inventoryAction != null)
-        {
-            inventoryAction.performed -= OpenInventory;
-            inventoryAction = null;
-            
-        }
-    }
-    #endregion
     #endregion
     #region All Actions
     #region CrouchAction
@@ -191,19 +168,6 @@ public class Player : MonoBehaviour
         else
         {
             OptionsMenu.SetActive(true);
-        }
-    }
-    #endregion
-    #region InventoryAction
-    void OpenInventory(InputAction.CallbackContext ctx)
-    {
-        if (InventoryMenu.activeSelf)
-        {
-            InventoryMenu.SetActive(false);
-        }
-        else
-        {
-            InventoryMenu.SetActive(true);
         }
     }
     #endregion
