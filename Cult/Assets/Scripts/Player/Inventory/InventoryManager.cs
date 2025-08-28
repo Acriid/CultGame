@@ -11,12 +11,16 @@ public class InventoryManager : MonoBehaviour
     [Header("Hotbar Images")]
     [SerializeField] private List<Image> _hotBar;
     [Header("InputAction")]
-    public InputActionReference scrollInput;
+    //public InputActionReference scrollInput;
+    private InputAction scrollInput;
+    private InputAction inventoryAction;
     [Header("InventorySize Limit")]
     public int hotBarSizeLimit = 4;
     public int inventorysizeLimit = 4;
     [Header("HoldTransform")]
     public GameObject PickUpHolder;
+    [Header("Menus")]
+    [SerializeField] public GameObject InventoryMenu;
     private PickUpMechanic pickUpMechanic;
     private int CurrentSelected = 0;
     private Dictionary<int, GameObject> activeItems = new Dictionary<int, GameObject>() { };
@@ -33,12 +37,68 @@ public class InventoryManager : MonoBehaviour
     void OnEnable()
     {
         InitializeInventory();
-        scrollInput.action.performed += ReadScrollValue;
+        InitializeScrollInput();
     }
     void OnDisable()
     {
-        scrollInput.action.performed -= ReadScrollValue;
+        CleanupScrollInput();
     }
+    void InitializeActions()
+    {
+
+    }
+    void CleanUpActions()
+    {
+        
+    }
+    void InitializeScrollInput()
+    {
+        if (scrollInput == null)
+        {
+            scrollInput = InputManager.instance.inputActions.UI.ScrollWheel;
+            scrollInput.performed += ReadScrollValue;
+        }
+    }
+    void CleanupScrollInput()
+    {
+        if (scrollInput == null)
+        {
+            scrollInput.performed -= ReadScrollValue;
+            scrollInput = null;
+        }
+    }
+    #region Inventory
+    private void InitializeInventoryAction()
+    {
+        if (inventoryAction == null)
+        {
+            inventoryAction = InputManager.instance.inputActions.Player.Inventory;
+            inventoryAction.performed += OpenInventory;
+        }
+    }
+    private void CleanupInventoryAction()
+    {
+        if (inventoryAction != null)
+        {
+            inventoryAction.performed -= OpenInventory;
+            inventoryAction = null;
+            
+        }
+    }
+    #endregion
+    #region InventoryAction
+    void OpenInventory(InputAction.CallbackContext ctx)
+    {
+        if (InventoryMenu.activeSelf)
+        {
+            InventoryMenu.SetActive(false);
+        }
+        else
+        {
+            InventoryMenu.SetActive(true);
+        }
+    }
+    #endregion
     private void InitializeInventory()
     {
         int loopvariable = 0;

@@ -102,7 +102,7 @@ public class ShootingMechanic : MonoBehaviour
         {
             popupCanvas.SetActive(false);
         }
-        if (!shootable.gameObject.activeInHierarchy)
+        if (shootable != null && !shootable.gameObject.activeInHierarchy )
         {
             shootable.gameObject.SetActive(true);
         }
