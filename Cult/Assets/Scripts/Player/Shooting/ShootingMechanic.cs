@@ -33,10 +33,7 @@ public class ShootingMechanic : MonoBehaviour
     }
     void OnDestroy()
     {
-        DisableShootAction();
-        StopAllCoroutines();
-        SafetyDisable();
-        Debug.Log("No more gun");
+        OnDisable();
     }
     void EnableShootAction()
     {

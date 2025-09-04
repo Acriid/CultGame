@@ -18,7 +18,7 @@ public class InventoryManager : MonoBehaviour
     private InputAction inventoryAction;
     [Header("InventorySize Limit")]
     public int hotBarSizeLimit = 4;
-    public int inventorysizeLimit = 4;
+    public int inventorysizeLimit = 9;
     [Header("HoldTransform")]
     public GameObject PickUpHolder;
     [Header("Menus")]
