@@ -100,7 +100,7 @@ public class Draw : MonoBehaviour
         if (MouseInput != null)
         {
             MouseInput.performed -= MouseHold;
-            MouseInput.performed -= MouseUp;
+            MouseInput.canceled -= MouseUp;
             MouseInput = null;
         }
     }
