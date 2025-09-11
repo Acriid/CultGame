@@ -59,6 +59,8 @@ public class PickUpMechanic : MonoBehaviour
         if (carryItem && hitSurface)
         {
             PutDownItem(CurrentSelectedItem);
+            InventoryManager.instance.RemoveFromInventory();
+            CurrentSelectedItem = null;
         }
         else if (hitItem)
         {
@@ -79,8 +81,9 @@ public class PickUpMechanic : MonoBehaviour
     void ItemRayCast()
     {
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask, QueryTriggerInteraction.UseGlobal);
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
+        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask, QueryTriggerInteraction.UseGlobal);
+        
         Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red, 0.2f);
         if (hitItem)
         {
@@ -118,7 +121,6 @@ public class PickUpMechanic : MonoBehaviour
         itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
         itemToPutDown.transform.position = surfaceHit.point + new Vector3(0f, itemToPutDown.transform.localScale.y / 2f, 0f);
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
-        InventoryManager.instance.RemoveFromInventory();
         carryItem = false;
 
         //Gun Exception

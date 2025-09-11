@@ -3973,6 +3973,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5172584816697679562, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+      propertyPath: itemMask.m_Bits
+      value: 2056
+      objectReference: {fileID: 0}
+    - target: {fileID: 5172584816697679562, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
       propertyPath: pickUpsGameObject
       value: 
       objectReference: {fileID: 1260804501}
