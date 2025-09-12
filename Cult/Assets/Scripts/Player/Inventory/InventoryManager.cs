@@ -23,7 +23,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject PickUpHolder;
     [Header("Menus")]
     [SerializeField] public GameObject InventoryMenu;
-    private PickUpMechanic pickUpMechanic;
+    private InteractMechanic interactMechanic;
     private int CurrentSelected = 0;
     private Dictionary<int, GameObject> activeItems = new Dictionary<int, GameObject>() { };
     public static InventoryManager instance { get; private set; }
@@ -119,21 +119,21 @@ public class InventoryManager : MonoBehaviour
     {
         int loopvariable = 0;
         _inventoryList = FindInventoryItems();
-        pickUpMechanic = PickUpHolder.GetComponent<PickUpMechanic>();
+        interactMechanic = PickUpHolder.GetComponent<InteractMechanic>();
 
         foreach (Item item in _inventoryList)
         {
             if (item.itemSO.IsInInventory)
             {
                 activeItems.Add(loopvariable, item.gameObject);
-                pickUpMechanic.PickUpItem(item.gameObject);
+                interactMechanic.PickUpItem(item.gameObject);
                 if (loopvariable != CurrentSelected)
                 {
                     activeItems[loopvariable].SetActive(false);
                 }
                 else
                 {
-                    pickUpMechanic.SetCurrentSelected(item.gameObject);
+                    interactMechanic.SetCurrentSelected(item.gameObject);
 
                 }
                 Debug.Log(activeItems[loopvariable].name);
@@ -170,7 +170,7 @@ public class InventoryManager : MonoBehaviour
                 activeItems[CurrentSelected] = addingItem.gameObject;
                 changeText();
                 break;
-                // pickUpMechanic.SetCurrentSelected(addingItem.gameObject);
+                // interactMechanic.SetCurrentSelected(addingItem.gameObject);
             }
         }
         Debug.Log(DebugMessage);
@@ -189,6 +189,7 @@ public class InventoryManager : MonoBehaviour
             activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsInInventory = false;
             activeItems[CurrentSelected] = null;
         }
+        changeText();
 
     }
 
@@ -218,19 +219,19 @@ public class InventoryManager : MonoBehaviour
             {
                 activeItems[CurrentSelected].SetActive(true);
             }
-            pickUpMechanic.SetCarryItem(false);
+            interactMechanic.SetCarryItem(false);
         }
         _hotBar[CurrentSelected].color = Color.red;
 
         if (activeItems[CurrentSelected] != null)
         {
-            pickUpMechanic.SetCarryItem(true);
+            interactMechanic.SetCarryItem(true);
         }
         else
         {
-            pickUpMechanic.SetCarryItem(false);
+            interactMechanic.SetCarryItem(false);
         }
-        pickUpMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
+        interactMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
 
         Debug.Log(activeItems[CurrentSelected]);
         changeText();
@@ -250,6 +251,14 @@ public class InventoryManager : MonoBehaviour
         {
             inventoryText.text = "Empty";
         }
+    }
+    public bool InventoryFull()
+    {
+        for (int i = 0; i < inventorysizeLimit; i++)
+        {
+            if (activeItems[i] == null) return false;
+        }
+        return true;
     }
 
 

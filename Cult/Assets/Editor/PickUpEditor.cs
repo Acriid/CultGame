@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PickUpMechanic))]
+[CustomEditor(typeof(InteractMechanic))]
 public class PickUpEditor : Editor
 {
     void OnSceneGUI()

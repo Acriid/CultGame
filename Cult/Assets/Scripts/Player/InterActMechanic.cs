@@ -3,7 +3,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PickUpMechanic : MonoBehaviour
+public class InteractMechanic : MonoBehaviour
 {
     [Header("Camera Transform")]
     [SerializeField] private new Camera camera;
@@ -16,7 +16,7 @@ public class PickUpMechanic : MonoBehaviour
     [Header("Pickup GameObject")]
     [SerializeField] private GameObject pickUpsGameObject;
     private GameObject CurrentSelectedItem;
-    private bool hitItem;
+    private bool hitInteractable;
     private bool hitSurface;
     private bool carryItem = false;
     public float CheckLength = 10f;
@@ -62,11 +62,32 @@ public class PickUpMechanic : MonoBehaviour
             InventoryManager.instance.RemoveFromInventory();
             CurrentSelectedItem = null;
         }
-        else if (hitItem)
+        else if (hitInteractable)
         {
             CurrentSelectedItem = itemHit.collider.gameObject;
-            PickUpItem(CurrentSelectedItem);
-            InventoryManager.instance.AddtoInventory(CurrentSelectedItem.GetComponent<Item>());
+            Debug.Log("WOW");
+            if (CurrentSelectedItem.CompareTag("PickUp"))
+            {
+                if (!InventoryManager.instance.InventoryFull())
+                {
+                    PickUpItem(CurrentSelectedItem);
+                    InventoryManager.instance.AddtoInventory(CurrentSelectedItem.GetComponent<Item>());
+                }
+            }
+            else if (CurrentSelectedItem.GetComponent<Interactable>() != null)
+            {
+                Interactable interactable = CurrentSelectedItem.GetComponent<Interactable>();
+                if (interactable.CanvasShown())
+                {
+                    interactable.HideCanvas();
+                }
+                else
+                {
+                    interactable.ShowCanvas();
+                }
+
+            }
+
         }
 
     }
@@ -82,10 +103,10 @@ public class PickUpMechanic : MonoBehaviour
     {
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
-        hitItem = Physics.Raycast(ray, out itemHit, CheckLength, itemMask, QueryTriggerInteraction.UseGlobal);
+        hitInteractable = Physics.Raycast(ray, out itemHit, CheckLength, itemMask, QueryTriggerInteraction.UseGlobal);
         
         Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red, 0.2f);
-        if (hitItem)
+        if (hitInteractable)
         {
             popupCanvas.SetActive(true);
         }
