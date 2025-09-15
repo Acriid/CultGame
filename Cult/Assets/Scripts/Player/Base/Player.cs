@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour
 {
     [Header("Player")]
     [SerializeField] public float playerSpeed = 1f;
+    [SerializeField] public float jumpheight = 1f;
     const float PlayerSpeedOffset = 0.2f;
     [Header("Oriantation Transform")]
     [SerializeField] public Transform oriantation;
@@ -21,6 +23,8 @@ public class Player : MonoBehaviour
     private InputAction crouchInput;
     private InputAction moveInput;
     private InputAction optionsAction;
+    private InputAction jumpAction;
+    private bool KyoteTime = true;
     public Vector2 moveInputValue { get; private set; }
     const float gravity = -9.81f;
     #region Basic Unity Functions
@@ -33,7 +37,8 @@ public class Player : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         playerStateMachine.Initialize(walkingState);
-        InitializeInputs();   
+        StartCoroutine(kyoteTime());
+        InitializeInputs();
     }
     void Awake()
     {
@@ -134,6 +139,22 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    public void InitializeJumpAction()
+    {
+        if (jumpAction == null)
+        {
+            jumpAction = InputManager.instance.inputActions.Player.Jump;
+            jumpAction.performed += OnJumpAction;
+        }
+    }
+    public void CleanUpJumpAction()
+    {
+        if (jumpAction != null)
+        {
+            jumpAction.performed -= OnJumpAction;
+            jumpAction = null;
+        }
+    }
     #endregion
     #region All Actions
     #region CrouchAction
@@ -171,6 +192,14 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    void OnJumpAction(InputAction.CallbackContext ctx)
+    {
+        if (KyoteTime)
+        {
+            velocity.y = MathF.Sqrt(jumpheight * -gravity);
+            KyoteTime = false;
+        }
+    }
     #endregion
     #region Movement
     public void MovePlayer(Vector2 Direction)
@@ -180,7 +209,7 @@ public class Player : MonoBehaviour
 
         if (characterController.isGrounded && velocity.y < 0f) { velocity.y = -2f; }
         velocity.y += gravity * Time.deltaTime;
-        velocity.y = Mathf.Clamp(velocity.y, gravity, 0f);
+        velocity.y = Mathf.Clamp(velocity.y, gravity, jumpheight * -gravity);
 
         characterController.Move(velocity * PlayerSpeedOffset);
 
@@ -193,5 +222,20 @@ public class Player : MonoBehaviour
     public void SetCharacterControllerHeight(float newValue)
     {
         characterController.height = newValue;
+    }
+    private IEnumerator kyoteTime()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+            if (!characterController.isGrounded)
+            {
+                KyoteTime = false;
+            }
+            else
+            {
+                KyoteTime = true;
+            }
+        }
     }
 }

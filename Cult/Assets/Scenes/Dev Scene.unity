@@ -4833,6 +4833,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 241206154177950888, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+      propertyPath: jumpheight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 241206154177950888, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
       propertyPath: OptionsMenu
       value: 
       objectReference: {fileID: 1423107824}
