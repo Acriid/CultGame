@@ -22,6 +22,7 @@ public class WalkingState : PlayerState
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        player.CheckIfCanJump();
     }
     public override void FixedUpdateLogic()
     {

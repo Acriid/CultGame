@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private InputAction optionsAction;
     private InputAction jumpAction;
     private bool KyoteTime = true;
+    private float timeSinceGround = 0f;
     public Vector2 moveInputValue { get; private set; }
     const float gravity = -9.81f;
     #region Basic Unity Functions
@@ -37,7 +38,6 @@ public class Player : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         playerStateMachine.Initialize(walkingState);
-        StartCoroutine(kyoteTime());
         InitializeInputs();
     }
     void Awake()
@@ -223,19 +223,23 @@ public class Player : MonoBehaviour
     {
         characterController.height = newValue;
     }
-    private IEnumerator kyoteTime()
+    public void CheckIfCanJump()
     {
-        while (true)
+        if (characterController.isGrounded)
         {
-            yield return new WaitForSeconds(0.2f);
-            if (!characterController.isGrounded)
-            {
-                KyoteTime = false;
-            }
-            else
-            {
-                KyoteTime = true;
-            }
+            KyoteTime = true;
+            timeSinceGround = 0f;
         }
+        else
+        {
+            timeSinceGround += Time.deltaTime;
+        }
+
+        if (timeSinceGround > 0.25f)
+        {
+            KyoteTime = false;
+            timeSinceGround = 0f;
+        }
+
     }
 }
