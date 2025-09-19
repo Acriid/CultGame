@@ -8,7 +8,10 @@ public class InputManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogWarning("More than one instance of inputsystem.");
+            if (instance != this)
+            {
+                Debug.LogWarning("More than one instance of InputManager.");
+            }
         }
         instance = this;
         InitializeInput();

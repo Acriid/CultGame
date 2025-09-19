@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Volumepercentage: 100
   LookSensitivity: 30
+  MenuOpen: 0
+  activeMenu: {fileID: 0}

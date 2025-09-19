@@ -164,9 +164,8 @@ GameObject:
   - component: {fileID: 7099955375323867832}
   - component: {fileID: 5110047243877941216}
   - component: {fileID: 5096657444784757940}
-  - component: {fileID: 5224688764183582128}
   m_Layer: 0
-  m_Name: EscapeMenu
+  m_Name: EscapeMenuPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -232,25 +231,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5224688764183582128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3504001015765530912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0698f0d3afa8085419210335f5d79d19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Selectables:
-  - {fileID: 1672756780079386405}
-  - {fileID: 6849168741992481692}
-  - {fileID: 3942643003219524499}
-  _firstSelected: {fileID: 1672756780079386405}
-  navigateAction: {fileID: -7794348916194195535, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
-  selectAction: {fileID: -9021026004052246, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
 --- !u!1 &4646896646064313324
 GameObject:
   m_ObjectHideFlags: 0
@@ -818,6 +798,7 @@ GameObject:
   - component: {fileID: 3987168054007069284}
   - component: {fileID: 7349896412825353140}
   - component: {fileID: 844031044433277323}
+  - component: {fileID: 5083872250451757285}
   m_Layer: 0
   m_Name: EscapeMenu
   m_TagString: Untagged
@@ -908,6 +889,26 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5083872250451757285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7279141040055809106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0698f0d3afa8085419210335f5d79d19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Selectables:
+  - {fileID: 1672756780079386405}
+  - {fileID: 6849168741992481692}
+  - {fileID: 3942643003219524499}
+  _firstSelected: {fileID: 1672756780079386405}
+  navigateAction: {fileID: -7794348916194195535, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
+  selectAction: {fileID: -9021026004052246, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
+  playerSettingsSO: {fileID: 11400000, guid: e87b69904f19f134dbc7e94529dd2773, type: 2}
 --- !u!1 &8323352361772563706
 GameObject:
   m_ObjectHideFlags: 0

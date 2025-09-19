@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
     private InputAction jumpAction;
     #endregion
     public PlayerSettingsSO playerSettingsSO;
+    #region Camera
     [SerializeField] public float MaxLookRange = 90f;
     [SerializeField] public Transform cameraTransform;
     //Rotations
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour
     private float lookY = 0f;
     //InputActions
     private InputAction lookInput;
+    #endregion
     const float gravity = -9.81f;
     #region Basic Unity Functions
     void Start()
@@ -235,14 +237,7 @@ public class Player : MonoBehaviour
     #region OptionsAction
     void OpenOptionsMenu(InputAction.CallbackContext ctx)
     {
-        if (OptionsMenu.activeSelf)
-        {
-            OptionsMenu.SetActive(false);
-        }
-        else
-        {
-            OptionsMenu.SetActive(true);
-        }
+        OpenMenu(OptionsMenu);
     }
     #endregion
     #region JumpAction
@@ -315,5 +310,16 @@ public class Player : MonoBehaviour
     public void SetCharacterControllerHeight(float newValue)
     {
         characterController.height = newValue;
+    }
+    private void OpenMenu(GameObject menuObject)
+    {
+        if (menuObject.activeSelf)
+        {
+            menuObject.SetActive(false);
+        }
+        else
+        {
+            menuObject.SetActive(true);
+        }
     }
 }

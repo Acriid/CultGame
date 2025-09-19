@@ -21,6 +21,7 @@ public class CodeLockEvents : MenuEvents, iLocks
     }
     public override void OnEnable()
     {
+
         base.OnEnable();
     }
     public override void OnDisable()
@@ -66,7 +67,6 @@ public class CodeLockEvents : MenuEvents, iLocks
         SolvingAction(sendNumber);
 
     }
-
 
     public void UnlockAction()
     {
