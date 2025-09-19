@@ -65,7 +65,6 @@ public class InteractMechanic : MonoBehaviour
         else if (hitInteractable)
         {
             CurrentSelectedItem = itemHit.collider.gameObject;
-            Debug.Log("WOW");
             if (CurrentSelectedItem.CompareTag("PickUp"))
             {
                 if (!InventoryManager.instance.InventoryFull())

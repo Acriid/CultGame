@@ -272,7 +272,7 @@ MonoBehaviour:
   newDictionary:
     newDictionaryItems:
     - type: 1
-      menuObject: {fileID: 2144763848}
+      menuObject: {fileID: 1071730271}
 --- !u!4 &85022808
 Transform:
   m_ObjectHideFlags: 0

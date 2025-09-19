@@ -37,20 +37,22 @@ public class MenuManager : MonoBehaviour
         }
         Debug.Log(menuType);
         Debug.Log(currentMenu);
-        if (menuType == MenuType.None || currentMenu != menuType)
+        if (menuType == MenuType.None || currentMenu == menuType || (currentMenu != MenuType.None && menuType != MenuType.None))
         {
             Debug.Log("Clossing Current Menu");
             if (menus[currentMenu] != null)
             {
                 menus[currentMenu].SetActive(false);
+                currentMenu = MenuType.None;
             }
         }
         else
         {
             Debug.Log("Opening new Menu");
             menus[menuType].SetActive(true);
+            currentMenu = menuType;
         }
-        currentMenu = menuType;
+        
         
     }
     public void ReplaceMenu(MenuType menuType, GameObject menuObject)
