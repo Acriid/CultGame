@@ -52,7 +52,6 @@ public class MouseMovement : MonoBehaviour
             lookInput.started += LookMovement;
             lookInput.performed += LookMovement;
             lookInput.canceled += LookMovement;
-            lookInput.Enable();
         }
 
     }
@@ -64,8 +63,6 @@ public class MouseMovement : MonoBehaviour
             lookInput.started -= LookMovement;
             lookInput.performed -= LookMovement;
             lookInput.canceled -= LookMovement;
-            lookInput.Dispose();
-            lookInput.Disable();
             lookInput = null;
         }
     }

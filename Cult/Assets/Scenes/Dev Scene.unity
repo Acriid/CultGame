@@ -5361,14 +5361,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Menus
       objectReference: {fileID: 0}
-    - target: {fileID: 3016135810418026782, guid: 8e7b1e61fc256d444b92a5912040808a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3504001015765530912, guid: 8e7b1e61fc256d444b92a5912040808a, type: 3}
-      propertyPath: m_Name
-      value: EscapeMEnu
-      objectReference: {fileID: 0}
     - target: {fileID: 5451559844833257082, guid: 8e7b1e61fc256d444b92a5912040808a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0058731413
@@ -5408,18 +5400,6 @@ PrefabInstance:
     - target: {fileID: 5451559844833257082, guid: 8e7b1e61fc256d444b92a5912040808a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7279141040055809106, guid: 8e7b1e61fc256d444b92a5912040808a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7349896412825353140, guid: 8e7b1e61fc256d444b92a5912040808a, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7349896412825353140, guid: 8e7b1e61fc256d444b92a5912040808a, type: 3}
-      propertyPath: m_MatchWidthOrHeight
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

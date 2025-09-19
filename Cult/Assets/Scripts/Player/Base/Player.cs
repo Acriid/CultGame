@@ -6,28 +6,47 @@ using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
+    #region MovementVariables
     [Header("Player")]
     [SerializeField] public float playerSpeed = 1f;
     [SerializeField] public float jumpheight = 1f;
     const float PlayerSpeedOffset = 0.2f;
+    private Vector3 velocity = Vector3.zero;
+    private bool KyoteTime = true;
+    private float timeSinceGround = 0f;
+    public Vector2 moveInputValue { get; private set; }
+    #endregion
+    #region MouseVariables
     [Header("Oriantation Transform")]
     [SerializeField] public Transform oriantation;
     [SerializeField] public Transform cameratransform;
+    #endregion
+    #region Menus
     [Header("Menus")]
     [SerializeField] public GameObject OptionsMenu;
+    #endregion
     private CharacterController characterController;
+    #region StateMachine
     public PlayerStateMachine playerStateMachine { get; set; }
     public WalkingState walkingState { get; set; }
     public CrouchingState crouchingState { get; set; }
-    private Vector3 velocity = Vector3.zero;
+    #endregion
+    #region InputActions
     private InputAction crouchInput;
     private InputAction moveInput;
     private InputAction optionsAction;
     private InputAction jumpAction;
-    private bool KyoteTime = true;
-    private float timeSinceGround = 0f;
-    public Vector2 moveInputValue { get; private set; }
+    #endregion
     public PlayerSettingsSO playerSettingsSO;
+    [SerializeField] public float MaxLookRange = 90f;
+    [SerializeField] public Transform cameraTransform;
+    //Rotations
+    private float xRotation = 0f;
+    private float yRotation = 0f;
+    private float lookX = 0f;
+    private float lookY = 0f;
+    //InputActions
+    private InputAction lookInput;
     const float gravity = -9.81f;
     #region Basic Unity Functions
     void Start()
@@ -40,12 +59,19 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         playerStateMachine.Initialize(walkingState);
         InitializeInputs();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     void Awake()
     {
         playerStateMachine = new PlayerStateMachine();
         walkingState = new WalkingState(this, playerStateMachine);
         crouchingState = new CrouchingState(this, playerStateMachine);
+    }
+    void OnEnable()
+    {
+        Start();
     }
     void OnDisable()
     {
@@ -58,6 +84,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         playerStateMachine.CurrentPlayerState.UpdateLogic();
+        RotateCamera();
     }
     void FixedUpdate()
     {
@@ -71,13 +98,14 @@ public class Player : MonoBehaviour
         InitializeCrouchInput();
         InitializeMoveInput();
         InitializeOptionsAction();
-
+        InitializeMouseInput();
     }
     private void CleanUpInputs()
     {
         CleanUpCrouchInput();
         CleanUpMoveInput();
         CleanUpOptionsAction();
+        CleanUpMouseInput();
     }
     #endregion
     #region CrouchInput
@@ -140,6 +168,7 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    #region JumpInput
     public void InitializeJumpAction()
     {
         if (jumpAction == null)
@@ -156,6 +185,29 @@ public class Player : MonoBehaviour
             jumpAction = null;
         }
     }
+    #endregion
+    #region MouseInput
+    private void InitializeMouseInput()
+    {
+        if (lookInput == null)
+        {
+            lookInput = InputManager.instance.inputActions.Player.Look;
+            lookInput.started += LookMovement;
+            lookInput.performed += LookMovement;
+            lookInput.canceled += LookMovement;
+        }
+    }
+    private void CleanUpMouseInput()
+    {
+        if (lookInput != null)
+        {
+            lookInput.started -= LookMovement;
+            lookInput.performed -= LookMovement;
+            lookInput.canceled -= LookMovement;
+            lookInput = null;
+        }
+    }
+    #endregion
     #endregion
     #region All Actions
     #region CrouchAction
@@ -193,6 +245,7 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    #region JumpAction
     void OnJumpAction(InputAction.CallbackContext ctx)
     {
         if (KyoteTime)
@@ -201,6 +254,45 @@ public class Player : MonoBehaviour
             KyoteTime = false;
         }
     }
+    public void CheckIfCanJump()
+    {
+        if (characterController.isGrounded)
+        {
+            KyoteTime = true;
+            timeSinceGround = 0f;
+        }
+        else
+        {
+            timeSinceGround += Time.deltaTime;
+        }
+
+        if (timeSinceGround > 0.25f)
+        {
+            KyoteTime = false;
+            timeSinceGround = 0f;
+        }
+
+    }
+    #endregion
+    #region MouseMovement
+    void LookMovement(InputAction.CallbackContext ctx)
+    {
+        //Mouse Input
+        lookX = ctx.ReadValue<Vector2>().x * playerSettingsSO.LookSensitivity * Time.deltaTime;
+        lookY = ctx.ReadValue<Vector2>().y * playerSettingsSO.LookSensitivity * Time.deltaTime;
+
+        //Change the rotation
+        yRotation += lookX;
+        xRotation -= lookY;
+        xRotation = Mathf.Clamp(xRotation, -MaxLookRange, MaxLookRange);
+    }
+    void RotateCamera()
+    {
+        //Rotate 
+        cameraTransform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        oriantation.rotation = Quaternion.Euler(0f, yRotation, 0f);
+    }
+    #endregion
     #endregion
     #region Movement
     public void MovePlayer(Vector2 Direction)
@@ -223,24 +315,5 @@ public class Player : MonoBehaviour
     public void SetCharacterControllerHeight(float newValue)
     {
         characterController.height = newValue;
-    }
-    public void CheckIfCanJump()
-    {
-        if (characterController.isGrounded)
-        {
-            KyoteTime = true;
-            timeSinceGround = 0f;
-        }
-        else
-        {
-            timeSinceGround += Time.deltaTime;
-        }
-
-        if (timeSinceGround > 0.25f)
-        {
-            KyoteTime = false;
-            timeSinceGround = 0f;
-        }
-
     }
 }
