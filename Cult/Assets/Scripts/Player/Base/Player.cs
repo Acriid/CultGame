@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     #endregion
     #region Menus
     [Header("Menus")]
-    [SerializeField] public GameObject OptionsMenu;
     #endregion
     private CharacterController characterController;
     #region StateMachine
@@ -53,10 +52,10 @@ public class Player : MonoBehaviour
     #region Basic Unity Functions
     void Start()
     {
-        if (OptionsMenu == null)
-        {
-            Debug.LogWarning("Please put the menu prefab in the scene.");
-        }
+        // if (OptionsMenu == null)
+        // {
+        //     Debug.LogWarning("Please put the menu prefab in the scene.");
+        // }
 
         characterController = GetComponent<CharacterController>();
         playerStateMachine.Initialize(walkingState);
@@ -158,14 +157,14 @@ public class Player : MonoBehaviour
         if (optionsAction == null)
         {
             optionsAction = InputManager.instance.inputActions.Player.Options;
-            optionsAction.performed += OpenOptionsMenu;
+            optionsAction.started += OpenOptionsMenu;
         }
     }
     private void CleanUpOptionsAction()
     {
         if (optionsAction != null)
         {
-            optionsAction.performed -= OpenOptionsMenu;
+            optionsAction.started -= OpenOptionsMenu;
             optionsAction = null;
         }
     }
@@ -237,7 +236,7 @@ public class Player : MonoBehaviour
     #region OptionsAction
     void OpenOptionsMenu(InputAction.CallbackContext ctx)
     {
-        OpenMenu(OptionsMenu);
+        OpenMenu(MenuManager.MenuType.Settings);
     }
     #endregion
     #region JumpAction
@@ -311,15 +310,15 @@ public class Player : MonoBehaviour
     {
         characterController.height = newValue;
     }
-    private void OpenMenu(GameObject menuObject)
+    private void OpenMenu(MenuManager.MenuType menuType)
     {
-        if (menuObject.activeSelf)
+        if (MenuManager.instance.currentMenu == menuType)
         {
-            menuObject.SetActive(false);
+            MenuManager.instance.ChangeMenu(MenuManager.MenuType.None);
         }
         else
         {
-            menuObject.SetActive(true);
+            MenuManager.instance.ChangeMenu(menuType);
         }
     }
 }

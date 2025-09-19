@@ -23,7 +23,7 @@ public class MenuEvents : MonoBehaviour
     [SerializeField] protected PlayerSettingsSO playerSettingsSO;
     public virtual void Awake()
     {
-        Debug.Log(gameObject);
+        
         foreach (var selectable in Selectables)
         {
             AddSelectionListners(selectable);
@@ -31,6 +31,7 @@ public class MenuEvents : MonoBehaviour
     }
     public virtual void OnEnable()
     {
+        Debug.Log(gameObject);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 

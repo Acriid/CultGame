@@ -77,7 +77,7 @@ public class InteractMechanic : MonoBehaviour
             else if (CurrentSelectedItem.GetComponent<Interactable>() != null)
             {
                 Interactable interactable = CurrentSelectedItem.GetComponent<Interactable>();
-                if (interactable.CanvasShown())
+                if (MenuManager.instance.currentMenu != MenuManager.MenuType.None)
                 {
                     interactable.HideCanvas();
                 }

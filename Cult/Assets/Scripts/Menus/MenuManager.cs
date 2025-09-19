@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class MenuManager : MonoBehaviour
@@ -17,19 +18,44 @@ public class MenuManager : MonoBehaviour
         {
             Debug.LogWarning("More than one instance of MenuManager.");
         }
+        instance = this;
         menus = newDictionary.toDictionary();
+        menus.Add(currentMenu, null);
     }
     public void ChangeMenu(MenuType menuType)
     {
-        if (currentMenu != menuType)
+        if (menus == null)
         {
-            menus[currentMenu].SetActive(false);
+            Debug.Log("Something went wrong");
+            return;
+        }
+        Debug.Log("Called ChangeMenu");
+        if (!menus.ContainsKey(menuType))
+        {
+            Debug.Log("Added Menu");
+            menus.Add(menuType, null);
+        }
+        Debug.Log(menuType);
+        Debug.Log(currentMenu);
+        if (menuType == MenuType.None || currentMenu != menuType)
+        {
+            Debug.Log("Clossing Current Menu");
+            if (menus[currentMenu] != null)
+            {
+                menus[currentMenu].SetActive(false);
+            }
         }
         else
         {
+            Debug.Log("Opening new Menu");
             menus[menuType].SetActive(true);
         }
         currentMenu = menuType;
+        
+    }
+    public void ReplaceMenu(MenuType menuType, GameObject menuObject)
+    {
+        menus[menuType] = menuObject;
     }
     public enum MenuType
     {
