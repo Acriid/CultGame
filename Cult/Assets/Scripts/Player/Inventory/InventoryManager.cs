@@ -232,8 +232,6 @@ public class InventoryManager : MonoBehaviour
             interactMechanic.SetCarryItem(false);
         }
         interactMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
-
-        Debug.Log(activeItems[CurrentSelected]);
         changeText();
     }
     private List<Item> FindInventoryItems()

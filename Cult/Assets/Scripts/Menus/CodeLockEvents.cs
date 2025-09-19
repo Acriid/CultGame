@@ -8,7 +8,7 @@ using System.Collections;
 using TMPro;
 using System;
 
-public class CodeLockEvents : MenuEvents
+public class CodeLockEvents : MenuEvents, iLocks
 {
     [SerializeField] private int unlockCode;
     public override void Awake()
@@ -73,7 +73,7 @@ public class CodeLockEvents : MenuEvents
         //Todo - Add opening animation/ play sound
         //Temporary code will just make lock disappear
         //gameObject.SetActive(false);
-        Debug.Log("IT UNLOCKED WOOOOOW");
+        Debug.Log("Unlocked");
     }
     public void SolvingAction(GameObject solveObject)
     {

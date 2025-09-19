@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     private bool KyoteTime = true;
     private float timeSinceGround = 0f;
     public Vector2 moveInputValue { get; private set; }
+    public PlayerSettingsSO playerSettingsSO;
     const float gravity = -9.81f;
     #region Basic Unity Functions
     void Start()
