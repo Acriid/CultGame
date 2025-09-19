@@ -27,6 +27,7 @@ public class ItemLock : MonoBehaviour
         {
             UnlockAction();
         }
+        solveObject.transform.SetParent(gameObject.transform);
     }
     public void SolvingAction(int solveNumber)
     {   
