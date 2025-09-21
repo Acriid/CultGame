@@ -77,6 +77,7 @@ public class InteractMechanic : MonoBehaviour
             else if (CurrentSelectedItem.GetComponent<Interactable>() != null)
             {
                 Interactable interactable = CurrentSelectedItem.GetComponent<Interactable>();
+                
                 if (MenuManager.instance.currentMenu != MenuManager.MenuType.None)
                 {
                     interactable.HideCanvas();
@@ -126,12 +127,7 @@ public class InteractMechanic : MonoBehaviour
         itemToPickUp.transform.localPosition = Vector3.zero;
         itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
         carryItem = true;
-
-        //Gun Exception
-        if (itemToPickUp.name == "Gun")
-        {
-            itemToPickUp.GetComponent<ShootingMechanic>().enabled = true;
-        }
+        itemToPickUp.GetComponent<Item>().ActivateScript();
     }
     public void PutDownItem(GameObject itemToPutDown)
     {
@@ -143,12 +139,7 @@ public class InteractMechanic : MonoBehaviour
         itemToPutDown.transform.position = surfaceHit.point + new Vector3(0f, itemToPutDown.transform.localScale.y / 2f, 0f);
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
         carryItem = false;
-
-        //Gun Exception
-        if (itemToPutDown.name == "Gun")
-        {
-            itemToPutDown.GetComponent<ShootingMechanic>().enabled = false;
-        }
+        itemToPutDown.GetComponent<Item>().DeActivateScript();
     }
     public void SetCurrentSelected(GameObject currentselected)
     {
