@@ -1,7 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class InteractMechanic : MonoBehaviour
 {
@@ -104,8 +107,7 @@ public class InteractMechanic : MonoBehaviour
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
         hitInteractable = Physics.Raycast(ray, out itemHit, CheckLength, itemMask, QueryTriggerInteraction.UseGlobal);
-        
-        Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red, 0.2f);
+
         if (hitInteractable)
         {
             popupCanvas.SetActive(true);
