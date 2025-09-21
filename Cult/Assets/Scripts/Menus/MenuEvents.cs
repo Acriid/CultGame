@@ -22,12 +22,11 @@ public class MenuEvents : MonoBehaviour
     [SerializeField] protected InputActionReference selectAction;
     public virtual void Awake()
     {
+        Debug.Log(gameObject);
         foreach (var selectable in Selectables)
         {
             AddSelectionListners(selectable);
         }
-
-
     }
     public virtual void OnEnable()
     {

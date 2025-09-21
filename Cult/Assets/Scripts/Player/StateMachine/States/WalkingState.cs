@@ -12,14 +12,17 @@ public class WalkingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        player.InitializeJumpAction();
     }
     public override void ExitState()
     {
         base.ExitState();
+        player.CleanUpJumpAction();
     }
     public override void UpdateLogic()
     {
         base.UpdateLogic();
+        player.CheckIfCanJump();
     }
     public override void FixedUpdateLogic()
     {

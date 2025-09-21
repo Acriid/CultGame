@@ -1,27 +1,52 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
+    #region MovementVariables
     [Header("Player")]
     [SerializeField] public float playerSpeed = 1f;
+    [SerializeField] public float jumpheight = 1f;
     const float PlayerSpeedOffset = 0.2f;
+    private Vector3 velocity = Vector3.zero;
+    private bool KyoteTime = true;
+    private float timeSinceGround = 0f;
+    public Vector2 moveInputValue { get; private set; }
+    #endregion
+    #region MouseVariables
     [Header("Oriantation Transform")]
     [SerializeField] public Transform oriantation;
     [SerializeField] public Transform cameratransform;
+    #endregion
+    #region Menus
     [Header("Menus")]
     [SerializeField] public GameObject OptionsMenu;
+    #endregion
     private CharacterController characterController;
+    #region StateMachine
     public PlayerStateMachine playerStateMachine { get; set; }
     public WalkingState walkingState { get; set; }
     public CrouchingState crouchingState { get; set; }
-    private Vector3 velocity = Vector3.zero;
+    #endregion
+    #region InputActions
     private InputAction crouchInput;
     private InputAction moveInput;
     private InputAction optionsAction;
-    public Vector2 moveInputValue { get; private set; }
+    private InputAction jumpAction;
+    #endregion
+    public PlayerSettingsSO playerSettingsSO;
+    [SerializeField] public float MaxLookRange = 90f;
+    [SerializeField] public Transform cameraTransform;
+    //Rotations
+    private float xRotation = 0f;
+    private float yRotation = 0f;
+    private float lookX = 0f;
+    private float lookY = 0f;
+    //InputActions
+    private InputAction lookInput;
     const float gravity = -9.81f;
     #region Basic Unity Functions
     void Start()
@@ -33,7 +58,10 @@ public class Player : MonoBehaviour
 
         characterController = GetComponent<CharacterController>();
         playerStateMachine.Initialize(walkingState);
-        InitializeInputs();   
+        InitializeInputs();
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     void Awake()
     {
@@ -41,17 +69,22 @@ public class Player : MonoBehaviour
         walkingState = new WalkingState(this, playerStateMachine);
         crouchingState = new CrouchingState(this, playerStateMachine);
     }
+    void OnEnable()
+    {
+        Start();
+    }
     void OnDisable()
     {
         CleanUpInputs();
     }
     void OnDestroy()
     {
-        CleanUpInputs();
+        OnDisable();
     }
     void Update()
     {
         playerStateMachine.CurrentPlayerState.UpdateLogic();
+        RotateCamera();
     }
     void FixedUpdate()
     {
@@ -65,13 +98,14 @@ public class Player : MonoBehaviour
         InitializeCrouchInput();
         InitializeMoveInput();
         InitializeOptionsAction();
-
+        InitializeMouseInput();
     }
     private void CleanUpInputs()
     {
         CleanUpCrouchInput();
         CleanUpMoveInput();
         CleanUpOptionsAction();
+        CleanUpMouseInput();
     }
     #endregion
     #region CrouchInput
@@ -82,7 +116,6 @@ public class Player : MonoBehaviour
             crouchInput = InputManager.instance.inputActions.Player.Crouch;
             crouchInput.started += StartCrouch;
             crouchInput.canceled += CancelCrouch;
-            crouchInput.Enable();
         }
     }
     private void CleanUpCrouchInput()
@@ -91,8 +124,6 @@ public class Player : MonoBehaviour
         {
             crouchInput.started -= StartCrouch;
             crouchInput.canceled -= CancelCrouch;
-            crouchInput.Dispose();
-            crouchInput.Disable();
             crouchInput = null;
         }
     }
@@ -106,7 +137,6 @@ public class Player : MonoBehaviour
             moveInput.started += GetMoveValues;
             moveInput.performed += GetMoveValues;
             moveInput.canceled += GetMoveValues;
-            moveInput.Enable();
         }
     }
     private void CleanUpMoveInput()
@@ -116,8 +146,6 @@ public class Player : MonoBehaviour
             moveInput.started -= GetMoveValues;
             moveInput.performed -= GetMoveValues;
             moveInput.canceled -= GetMoveValues;
-            moveInput.Dispose();
-            moveInput.Disable();
             moveInput = null;
         }
     }
@@ -129,7 +157,6 @@ public class Player : MonoBehaviour
         {
             optionsAction = InputManager.instance.inputActions.Player.Options;
             optionsAction.performed += OpenOptionsMenu;
-            optionsAction.Enable();
         }
     }
     private void CleanUpOptionsAction()
@@ -137,9 +164,47 @@ public class Player : MonoBehaviour
         if (optionsAction != null)
         {
             optionsAction.performed -= OpenOptionsMenu;
-            optionsAction.Dispose();
-            optionsAction.Disable();
             optionsAction = null;
+        }
+    }
+    #endregion
+    #region JumpInput
+    public void InitializeJumpAction()
+    {
+        if (jumpAction == null)
+        {
+            jumpAction = InputManager.instance.inputActions.Player.Jump;
+            jumpAction.performed += OnJumpAction;
+        }
+    }
+    public void CleanUpJumpAction()
+    {
+        if (jumpAction != null)
+        {
+            jumpAction.performed -= OnJumpAction;
+            jumpAction = null;
+        }
+    }
+    #endregion
+    #region MouseInput
+    private void InitializeMouseInput()
+    {
+        if (lookInput == null)
+        {
+            lookInput = InputManager.instance.inputActions.Player.Look;
+            lookInput.started += LookMovement;
+            lookInput.performed += LookMovement;
+            lookInput.canceled += LookMovement;
+        }
+    }
+    private void CleanUpMouseInput()
+    {
+        if (lookInput != null)
+        {
+            lookInput.started -= LookMovement;
+            lookInput.performed -= LookMovement;
+            lookInput.canceled -= LookMovement;
+            lookInput = null;
         }
     }
     #endregion
@@ -167,7 +232,6 @@ public class Player : MonoBehaviour
         moveInputValue = ctx.ReadValue<Vector2>();
     }
     #endregion
-    #endregion
     #region OptionsAction
     void OpenOptionsMenu(InputAction.CallbackContext ctx)
     {
@@ -181,6 +245,55 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
+    #region JumpAction
+    void OnJumpAction(InputAction.CallbackContext ctx)
+    {
+        if (KyoteTime)
+        {
+            velocity.y = MathF.Sqrt(jumpheight * -gravity);
+            KyoteTime = false;
+        }
+    }
+    public void CheckIfCanJump()
+    {
+        if (characterController.isGrounded)
+        {
+            KyoteTime = true;
+            timeSinceGround = 0f;
+        }
+        else
+        {
+            timeSinceGround += Time.deltaTime;
+        }
+
+        if (timeSinceGround > 0.25f)
+        {
+            KyoteTime = false;
+            timeSinceGround = 0f;
+        }
+
+    }
+    #endregion
+    #region MouseMovement
+    void LookMovement(InputAction.CallbackContext ctx)
+    {
+        //Mouse Input
+        lookX = ctx.ReadValue<Vector2>().x * playerSettingsSO.LookSensitivity * Time.deltaTime;
+        lookY = ctx.ReadValue<Vector2>().y * playerSettingsSO.LookSensitivity * Time.deltaTime;
+
+        //Change the rotation
+        yRotation += lookX;
+        xRotation -= lookY;
+        xRotation = Mathf.Clamp(xRotation, -MaxLookRange, MaxLookRange);
+    }
+    void RotateCamera()
+    {
+        //Rotate 
+        cameraTransform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        oriantation.rotation = Quaternion.Euler(0f, yRotation, 0f);
+    }
+    #endregion
+    #endregion
     #region Movement
     public void MovePlayer(Vector2 Direction)
     {
@@ -189,7 +302,7 @@ public class Player : MonoBehaviour
 
         if (characterController.isGrounded && velocity.y < 0f) { velocity.y = -2f; }
         velocity.y += gravity * Time.deltaTime;
-        velocity.y = Mathf.Clamp(velocity.y, gravity, 0f);
+        velocity.y = Mathf.Clamp(velocity.y, gravity, jumpheight * -gravity);
 
         characterController.Move(velocity * PlayerSpeedOffset);
 
