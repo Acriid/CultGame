@@ -1,10 +1,9 @@
 using UnityEngine;
 using TMPro;
-using System.Runtime.CompilerServices;
 using UnityEngine.InputSystem;
 
 
-public class UpdateTextInteract : MonoBehaviour
+public class UpdateTextShoot : MonoBehaviour
 {
     [SerializeField] private TMP_Text label;
     const string Actionname = "Move";
@@ -24,7 +23,7 @@ public class UpdateTextInteract : MonoBehaviour
     {
         if (InputManager.instance == null || device == null) return;
 
-        var action = InputManager.instance.inputActions.Player.Interact;
+        var action = InputManager.instance.inputActions.Player.Attack;
         label.text = InputManager.instance.GetBindingDisplay(action);
     }
 }

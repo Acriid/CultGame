@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ShootAble : MonoBehaviour
 {
-    public void DestroyObject()
+    public void OnShoot()
     {
-        Destroy(this.gameObject);
+        gameObject.SetActive(false);
     }
 }
