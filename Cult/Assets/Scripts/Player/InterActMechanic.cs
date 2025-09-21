@@ -15,6 +15,7 @@ public class InteractMechanic : MonoBehaviour
     private RaycastHit surfaceHit;
     [Header("Pickup GameObject")]
     [SerializeField] private GameObject pickUpsGameObject;
+    [SerializeField] private Material outLineMaterial;
     private GameObject CurrentSelectedItem;
     private bool hitInteractable;
     private bool hitSurface;
