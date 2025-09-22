@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
     #endregion
     #region Menus
     [Header("Menus")]
-    [SerializeField] public GameObject OptionsMenu;
     #endregion
     private CharacterController characterController;
     #region StateMachine
@@ -38,6 +37,7 @@ public class Player : MonoBehaviour
     private InputAction jumpAction;
     #endregion
     public PlayerSettingsSO playerSettingsSO;
+    #region Camera
     [SerializeField] public float MaxLookRange = 90f;
     [SerializeField] public Transform cameraTransform;
     //Rotations
@@ -47,14 +47,15 @@ public class Player : MonoBehaviour
     private float lookY = 0f;
     //InputActions
     private InputAction lookInput;
+    #endregion
     const float gravity = -9.81f;
     #region Basic Unity Functions
     void Start()
     {
-        if (OptionsMenu == null)
-        {
-            Debug.LogWarning("Please put the menu prefab in the scene.");
-        }
+        // if (OptionsMenu == null)
+        // {
+        //     Debug.LogWarning("Please put the menu prefab in the scene.");
+        // }
 
         characterController = GetComponent<CharacterController>();
         playerStateMachine.Initialize(walkingState);
@@ -156,14 +157,14 @@ public class Player : MonoBehaviour
         if (optionsAction == null)
         {
             optionsAction = InputManager.instance.inputActions.Player.Options;
-            optionsAction.performed += OpenOptionsMenu;
+            optionsAction.started += OpenOptionsMenu;
         }
     }
     private void CleanUpOptionsAction()
     {
         if (optionsAction != null)
         {
-            optionsAction.performed -= OpenOptionsMenu;
+            optionsAction.started -= OpenOptionsMenu;
             optionsAction = null;
         }
     }
@@ -235,14 +236,7 @@ public class Player : MonoBehaviour
     #region OptionsAction
     void OpenOptionsMenu(InputAction.CallbackContext ctx)
     {
-        if (OptionsMenu.activeSelf)
-        {
-            OptionsMenu.SetActive(false);
-        }
-        else
-        {
-            OptionsMenu.SetActive(true);
-        }
+        OpenMenu(MenuManager.MenuType.Settings);
     }
     #endregion
     #region JumpAction
@@ -315,5 +309,16 @@ public class Player : MonoBehaviour
     public void SetCharacterControllerHeight(float newValue)
     {
         characterController.height = newValue;
+    }
+    private void OpenMenu(MenuManager.MenuType menuType)
+    {
+        if (MenuManager.instance.currentMenu == menuType)
+        {
+            MenuManager.instance.ChangeMenu(MenuManager.MenuType.None);
+        }
+        else
+        {
+            MenuManager.instance.ChangeMenu(menuType);
+        }
     }
 }

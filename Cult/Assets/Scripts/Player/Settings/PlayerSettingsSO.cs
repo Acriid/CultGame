@@ -6,6 +6,4 @@ public class PlayerSettingsSO : ScriptableObject
     public float Volumepercentage = 100f;
     [Range(0.01f, 1000f)]
     public float LookSensitivity = 30f;
-    public bool MenuOpen = false;
-    public GameObject activeMenu;  
 }

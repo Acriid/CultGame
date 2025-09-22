@@ -20,9 +20,10 @@ public class MenuEvents : MonoBehaviour
     [Header("Controls")]
     [SerializeField] protected InputActionReference navigateAction;
     [SerializeField] protected InputActionReference selectAction;
+    [SerializeField] protected PlayerSettingsSO playerSettingsSO;
     public virtual void Awake()
     {
-        Debug.Log(gameObject);
+        
         foreach (var selectable in Selectables)
         {
             AddSelectionListners(selectable);
@@ -30,6 +31,7 @@ public class MenuEvents : MonoBehaviour
     }
     public virtual void OnEnable()
     {
+        Debug.Log(gameObject);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
@@ -41,6 +43,7 @@ public class MenuEvents : MonoBehaviour
     }
     public virtual void OnDisable()
     {
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 

@@ -64,8 +64,7 @@ public class ShootingMechanic : MonoBehaviour
             shootable = hitObject.GetComponent<ShootAble>();
             if (shootable != null)
             {
-                shootable.gameObject.SetActive(false);
-                StartCoroutine(waitForRespawn());
+                shootable.OnShoot();
             }
         }
     }
@@ -86,21 +85,12 @@ public class ShootingMechanic : MonoBehaviour
             }
         }
     }
-    private IEnumerator waitForRespawn()
-    {
-        yield return new WaitForSeconds(3f);
-        shootable.gameObject.SetActive(true);
-    }
 
     private void SafetyDisable()
     {
-        if (popupCanvas.activeInHierarchy)
+        if (popupCanvas.activeInHierarchy && popupCanvas != null)
         {
             popupCanvas.SetActive(false);
-        }
-        if (shootable != null && !shootable.gameObject.activeInHierarchy )
-        {
-            shootable.gameObject.SetActive(true);
         }
     }
 }

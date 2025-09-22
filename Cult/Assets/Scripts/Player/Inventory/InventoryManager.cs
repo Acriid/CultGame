@@ -21,8 +21,6 @@ public class InventoryManager : MonoBehaviour
     public int inventorysizeLimit = 9;
     [Header("HoldTransform")]
     public GameObject PickUpHolder;
-    [Header("Menus")]
-    [SerializeField] public GameObject InventoryMenu;
     private InteractMechanic interactMechanic;
     private int CurrentSelected = 0;
     private Dictionary<int, GameObject> activeItems = new Dictionary<int, GameObject>() { };
@@ -86,31 +84,33 @@ public class InventoryManager : MonoBehaviour
         if (inventoryAction == null)
         {
             inventoryAction = InputManager.instance.inputActions.Player.Inventory;
-            inventoryAction.performed += OpenInventory;
+            inventoryAction.performed += InventoryAction;
         }
     }
     private void CleanupInventoryAction()
     {
         if (inventoryAction != null)
         {
-            inventoryAction.performed -= OpenInventory;
+            inventoryAction.performed -= InventoryAction;
             inventoryAction = null;
 
         }
     }
     #endregion
     #region InventoryAction
-    void OpenInventory(InputAction.CallbackContext ctx)
+    void InventoryAction(InputAction.CallbackContext ctx)
     {
-        if (InventoryMenu.activeSelf)
+        OpenInventory(MenuManager.MenuType.Inventory);
+    }
+    private void OpenInventory(MenuManager.MenuType menuType)
+    {
+        if (MenuManager.instance.currentMenu == menuType)
         {
-            InventoryMenu.SetActive(false);
-            InitializeScrollInput();
+            MenuManager.instance.ChangeMenu(MenuManager.MenuType.None);
         }
         else
         {
-            InventoryMenu.SetActive(true);
-            CleanupScrollInput();
+            MenuManager.instance.ChangeMenu(menuType);
         }
     }
     #endregion

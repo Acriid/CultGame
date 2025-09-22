@@ -1,7 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class InteractMechanic : MonoBehaviour
 {
@@ -15,6 +18,7 @@ public class InteractMechanic : MonoBehaviour
     private RaycastHit surfaceHit;
     [Header("Pickup GameObject")]
     [SerializeField] private GameObject pickUpsGameObject;
+    [SerializeField] private Material outLineMaterial;
     private GameObject CurrentSelectedItem;
     private bool hitInteractable;
     private bool hitSurface;
@@ -65,7 +69,6 @@ public class InteractMechanic : MonoBehaviour
         else if (hitInteractable)
         {
             CurrentSelectedItem = itemHit.collider.gameObject;
-            Debug.Log("WOW");
             if (CurrentSelectedItem.CompareTag("PickUp"))
             {
                 if (!InventoryManager.instance.InventoryFull())
@@ -77,7 +80,7 @@ public class InteractMechanic : MonoBehaviour
             else if (CurrentSelectedItem.GetComponent<Interactable>() != null)
             {
                 Interactable interactable = CurrentSelectedItem.GetComponent<Interactable>();
-                if (interactable.CanvasShown())
+                if (MenuManager.instance.currentMenu != MenuManager.MenuType.None)
                 {
                     interactable.HideCanvas();
                 }
@@ -104,8 +107,7 @@ public class InteractMechanic : MonoBehaviour
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         hitSurface = Physics.Raycast(ray, out surfaceHit, CheckLength, surfaceMask);
         hitInteractable = Physics.Raycast(ray, out itemHit, CheckLength, itemMask, QueryTriggerInteraction.UseGlobal);
-        
-        Debug.DrawRay(ray.origin, ray.direction * CheckLength, Color.red, 0.2f);
+
         if (hitInteractable)
         {
             popupCanvas.SetActive(true);
@@ -126,12 +128,7 @@ public class InteractMechanic : MonoBehaviour
         itemToPickUp.transform.localPosition = Vector3.zero;
         itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
         carryItem = true;
-
-        //Gun Exception
-        if (itemToPickUp.name == "Gun")
-        {
-            itemToPickUp.GetComponent<ShootingMechanic>().enabled = true;
-        }
+        itemToPickUp.GetComponent<Item>().ActivateScript();
     }
     public void PutDownItem(GameObject itemToPutDown)
     {
@@ -143,12 +140,7 @@ public class InteractMechanic : MonoBehaviour
         itemToPutDown.transform.position = surfaceHit.point + new Vector3(0f, itemToPutDown.transform.localScale.y / 2f, 0f);
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
         carryItem = false;
-
-        //Gun Exception
-        if (itemToPutDown.name == "Gun")
-        {
-            itemToPutDown.GetComponent<ShootingMechanic>().enabled = false;
-        }
+        itemToPutDown.GetComponent<Item>().DeActivateScript();
     }
     public void SetCurrentSelected(GameObject currentselected)
     {
