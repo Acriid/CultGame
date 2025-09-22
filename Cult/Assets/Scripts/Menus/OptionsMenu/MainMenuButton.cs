@@ -7,7 +7,7 @@ public class MainMenuButton : MonoBehaviour
 
     public void OnClick()
     {
-       if(!mainMenu.activeSelf) mainMenu.SetActive(true);
        if(optionsMenu.activeSelf) optionsMenu.SetActive(false);
+       if(!mainMenu.activeSelf) mainMenu.SetActive(true);
     }
 }

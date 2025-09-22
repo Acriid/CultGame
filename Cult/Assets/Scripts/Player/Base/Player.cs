@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
     #endregion
     public PlayerSettingsSO playerSettingsSO;
     private float SensitivityOffset = 1f;
-    const string Actionname = "Look";
     #region Camera
     [SerializeField] public float MaxLookRange = 90f;
     [SerializeField] public Transform cameraTransform;
@@ -82,6 +81,7 @@ public class Player : MonoBehaviour
     void OnDisable()
     {
         CleanUpInputs();
+        InputManager.OnDeviceChanged -= UpdateSensitivityOffset;
     }
     void OnDestroy()
     {

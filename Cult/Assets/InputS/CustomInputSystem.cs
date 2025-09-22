@@ -514,7 +514,7 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e60c910c-624d-4680-8a22-44f15bea9674"",
-                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";GamePad"",
