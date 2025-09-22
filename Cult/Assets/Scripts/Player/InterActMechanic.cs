@@ -133,6 +133,10 @@ public class InteractMechanic : MonoBehaviour
         itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
         carryItem = true;
         itemToPickUp.GetComponent<Item>().ActivateScript();
+        if (itemToPickUp.name == "Gun")
+        {
+            itemToPickUp.transform.localRotation = Quaternion.Euler(-90f, 180f, 0f);
+        }
     }
     public void PutDownItem(GameObject itemToPutDown)
     {
@@ -145,7 +149,7 @@ public class InteractMechanic : MonoBehaviour
         itemToPutDown.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
         itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
         itemToPutDown.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        itemToPutDown.transform.position = surfaceHit.point + new Vector3(0f, 1f, 0f);
+        itemToPutDown.transform.position = surfaceHit.point + Vector3.up * 0.1f;
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
         carryItem = false;
         itemToPutDown.GetComponent<Item>().DeActivateScript();
