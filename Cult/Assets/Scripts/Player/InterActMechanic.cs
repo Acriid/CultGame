@@ -126,6 +126,7 @@ public class InteractMechanic : MonoBehaviour
         itemToPickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
         itemToPickUp.transform.SetParent(this.transform);
         itemToPickUp.transform.localPosition = Vector3.zero;
+        itemToPickUp.transform.localRotation = Quaternion.identity;
         itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
         carryItem = true;
         itemToPickUp.GetComponent<Item>().ActivateScript();
@@ -137,6 +138,7 @@ public class InteractMechanic : MonoBehaviour
         itenRigidbody.freezeRotation = false;
         itemToPutDown.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
         itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
+        itemToPutDown.transform.localRotation = Quaternion.identity;
         itemToPutDown.transform.position = surfaceHit.point + new Vector3(0f, itemToPutDown.transform.localScale.y / 2f, 0f);
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
         carryItem = false;
