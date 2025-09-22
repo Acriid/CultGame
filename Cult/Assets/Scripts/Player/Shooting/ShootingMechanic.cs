@@ -88,7 +88,7 @@ public class ShootingMechanic : MonoBehaviour
 
     private void SafetyDisable()
     {
-        if (popupCanvas.activeInHierarchy && popupCanvas != null)
+        if (popupCanvas != null && popupCanvas.activeInHierarchy)
         {
             popupCanvas.SetActive(false);
         }

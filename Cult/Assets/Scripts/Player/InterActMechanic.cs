@@ -120,24 +120,36 @@ public class InteractMechanic : MonoBehaviour
     public void PickUpItem(GameObject itemToPickUp)
     {
         Rigidbody itenRigidbody = itemToPickUp.GetComponent<Rigidbody>();
-        itenRigidbody.useGravity = false;
-        itenRigidbody.linearVelocity = Vector3.zero;
-        itenRigidbody.freezeRotation = true;
+        if (itenRigidbody != null)
+        {
+            itenRigidbody.useGravity = false;
+            itenRigidbody.linearVelocity = Vector3.zero;
+            itenRigidbody.freezeRotation = true;
+        }
         itemToPickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
         itemToPickUp.transform.SetParent(this.transform);
         itemToPickUp.transform.localPosition = Vector3.zero;
+        itemToPickUp.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
         carryItem = true;
         itemToPickUp.GetComponent<Item>().ActivateScript();
+        if (itemToPickUp.name == "Gun")
+        {
+            itemToPickUp.transform.localRotation = Quaternion.Euler(-90f, 180f, 0f);
+        }
     }
     public void PutDownItem(GameObject itemToPutDown)
     {
         Rigidbody itenRigidbody = itemToPutDown.GetComponent<Rigidbody>();
-        itenRigidbody.useGravity = true;
-        itenRigidbody.freezeRotation = false;
+        if (itenRigidbody != null)
+        {
+            itenRigidbody.useGravity = true;
+            itenRigidbody.freezeRotation = false;
+        }
         itemToPutDown.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
         itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
-        itemToPutDown.transform.position = surfaceHit.point + new Vector3(0f, itemToPutDown.transform.localScale.y / 2f, 0f);
+        itemToPutDown.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        itemToPutDown.transform.position = surfaceHit.point + Vector3.up * 0.1f;
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
         carryItem = false;
         itemToPutDown.GetComponent<Item>().DeActivateScript();

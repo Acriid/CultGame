@@ -6,10 +6,12 @@ public class ShowHidden : MonoBehaviour
 
     void OnEnable()
     {
+        if (camerahidden == null) return;
         camerahidden.SetActive(true);
     }
     void OnDisable()
     {
+        if (camerahidden == null) return;
         camerahidden.SetActive(false);
     }
 }
