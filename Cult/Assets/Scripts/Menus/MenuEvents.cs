@@ -142,6 +142,9 @@ public class MenuEvents : MonoBehaviour
 
     protected virtual void OnButtonPress(InputAction.CallbackContext ctx)
     {
-        EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>().onClick.Invoke();
+        if (EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>() != null)
+        {
+            EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>().onClick.Invoke(); 
+        }
     }
 }

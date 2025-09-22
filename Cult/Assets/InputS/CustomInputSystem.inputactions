@@ -428,7 +428,7 @@
                 {
                     "name": "",
                     "id": "e60c910c-624d-4680-8a22-44f15bea9674",
-                    "path": "<Gamepad>/{Menu}",
+                    "path": "<Gamepad>/select",
                     "interactions": "",
                     "processors": "",
                     "groups": ";GamePad",
@@ -541,6 +541,15 @@
                     "type": "Button",
                     "id": "80fe5807-0081-4167-bf20-37db44186746",
                     "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NavigateHotbar",
+                    "type": "PassThrough",
+                    "id": "c1b73249-fc38-4d8e-b7b3-812997f28b67",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -896,6 +905,50 @@
                     "processors": "",
                     "groups": ";GamePad",
                     "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Gamepad",
+                    "id": "f9856df8-bd67-4d92-85d7-b7344b78e1de",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NavigateHotbar",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Up",
+                    "id": "e936af85-b98f-4f07-8ff1-6d833e42a49c",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;GamePad",
+                    "action": "NavigateHotbar",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "c02ab53a-1046-42be-81fa-1ba1d1b65de5",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad;GamePad",
+                    "action": "NavigateHotbar",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "901a9421-ad24-4e38-a56e-6a2a71bff14b",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse;Keyboard",
+                    "action": "NavigateHotbar",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

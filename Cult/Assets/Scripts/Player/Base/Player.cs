@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     private InputAction jumpAction;
     #endregion
     public PlayerSettingsSO playerSettingsSO;
+    private float SensitivityOffset = 1f;
     #region Camera
     [SerializeField] public float MaxLookRange = 90f;
     [SerializeField] public Transform cameraTransform;
@@ -63,6 +64,9 @@ public class Player : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        InputManager.OnDeviceChanged += UpdateSensitivityOffset;
+        UpdateSensitivityOffset(InputManager.LastUsedDevice);
     }
     void Awake()
     {
@@ -77,6 +81,7 @@ public class Player : MonoBehaviour
     void OnDisable()
     {
         CleanUpInputs();
+        InputManager.OnDeviceChanged -= UpdateSensitivityOffset;
     }
     void OnDestroy()
     {
@@ -272,8 +277,8 @@ public class Player : MonoBehaviour
     void LookMovement(InputAction.CallbackContext ctx)
     {
         //Mouse Input
-        lookX = ctx.ReadValue<Vector2>().x * playerSettingsSO.LookSensitivity * Time.deltaTime;
-        lookY = ctx.ReadValue<Vector2>().y * playerSettingsSO.LookSensitivity * Time.deltaTime;
+        lookX = ctx.ReadValue<Vector2>().x * playerSettingsSO.LookSensitivity * Time.deltaTime * SensitivityOffset;
+        lookY = ctx.ReadValue<Vector2>().y * playerSettingsSO.LookSensitivity * Time.deltaTime * SensitivityOffset;
 
         //Change the rotation
         yRotation += lookX;
@@ -319,6 +324,20 @@ public class Player : MonoBehaviour
         else
         {
             MenuManager.instance.ChangeMenu(menuType);
+        }
+    }
+
+    private void UpdateSensitivityOffset(InputDevice device)
+    {
+        if (InputManager.instance == null || device == null) return;
+
+        if (device is Mouse || device is Keyboard)
+        {
+            SensitivityOffset = 1f;
+        }
+        else if (device is Gamepad)
+        {
+            SensitivityOffset = 10f;
         }
     }
 }

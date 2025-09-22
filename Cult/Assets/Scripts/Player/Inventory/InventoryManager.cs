@@ -65,7 +65,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (scrollInput == null)
         {
-            scrollInput = InputManager.instance.inputActions.UI.ScrollWheel;
+            scrollInput = InputManager.instance.inputActions.UI.NavigateHotbar;
             scrollInput.performed += ReadScrollValue;
         }
     }
@@ -196,43 +196,7 @@ public class InventoryManager : MonoBehaviour
     private void ReadScrollValue(InputAction.CallbackContext ctx)
     {
         Vector2 ScrollValue = ctx.ReadValue<Vector2>();
-        activeItems.TryGetValue(CurrentSelected, out GameObject result);
-        _hotBar[CurrentSelected].color = Color.white;
-        if (activeItems.ContainsKey(CurrentSelected) && result != null)
-        {
-            activeItems[CurrentSelected].SetActive(false);
-            _hotBar[CurrentSelected].color = Color.blue;
-        }
-
-        CurrentSelected += (int)ScrollValue.y;
-        CurrentSelected = Mathf.Clamp(CurrentSelected, 0, hotBarSizeLimit);
-
-        if (!activeItems.ContainsKey(CurrentSelected))
-        {
-            CurrentSelected -= (int)ScrollValue.y;
-        }
-
-        activeItems.TryGetValue(CurrentSelected, out result);
-        if (activeItems.ContainsKey(CurrentSelected))
-        {
-            if (result != null)
-            {
-                activeItems[CurrentSelected].SetActive(true);
-            }
-            interactMechanic.SetCarryItem(false);
-        }
-        _hotBar[CurrentSelected].color = Color.red;
-
-        if (activeItems[CurrentSelected] != null)
-        {
-            interactMechanic.SetCarryItem(true);
-        }
-        else
-        {
-            interactMechanic.SetCarryItem(false);
-        }
-        interactMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
-        changeText();
+        ChangeSelectedItem((int)ScrollValue.y);
     }
     private List<Item> FindInventoryItems()
     {
@@ -259,6 +223,45 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
+    private void ChangeSelectedItem(int changeValue)
+    {
+        activeItems.TryGetValue(CurrentSelected, out GameObject result);
+        _hotBar[CurrentSelected].color = Color.white;
+        if (activeItems.ContainsKey(CurrentSelected) && result != null)
+        {
+            activeItems[CurrentSelected].SetActive(false);
+            _hotBar[CurrentSelected].color = Color.blue;
+        }
 
+        CurrentSelected += changeValue;
+        CurrentSelected = Mathf.Clamp(CurrentSelected, 0, hotBarSizeLimit);
+
+        if (!activeItems.ContainsKey(CurrentSelected))
+        {
+            CurrentSelected -= changeValue;
+        }
+
+        activeItems.TryGetValue(CurrentSelected, out result);
+        if (activeItems.ContainsKey(CurrentSelected))
+        {
+            if (result != null)
+            {
+                activeItems[CurrentSelected].SetActive(true);
+            }
+            interactMechanic.SetCarryItem(false);
+        }
+        _hotBar[CurrentSelected].color = Color.red;
+
+        if (activeItems[CurrentSelected] != null)
+        {
+            interactMechanic.SetCarryItem(true);
+        }
+        else
+        {
+            interactMechanic.SetCarryItem(false);
+        }
+        interactMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
+        changeText();
+    }
 
 }

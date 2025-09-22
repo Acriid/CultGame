@@ -514,7 +514,7 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e60c910c-624d-4680-8a22-44f15bea9674"",
-                    ""path"": ""<Gamepad>/{Menu}"",
+                    ""path"": ""<Gamepad>/select"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";GamePad"",
@@ -627,6 +627,15 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""80fe5807-0081-4167-bf20-37db44186746"",
                     ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NavigateHotbar"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""c1b73249-fc38-4d8e-b7b3-812997f28b67"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -984,6 +993,50 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Escape"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""f9856df8-bd67-4d92-85d7-b7344b78e1de"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NavigateHotbar"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Up"",
+                    ""id"": ""e936af85-b98f-4f07-8ff1-6d833e42a49c"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;GamePad"",
+                    ""action"": ""NavigateHotbar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Down"",
+                    ""id"": ""c02ab53a-1046-42be-81fa-1ba1d1b65de5"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad;GamePad"",
+                    ""action"": ""NavigateHotbar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""901a9421-ad24-4e38-a56e-6a2a71bff14b"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse;Keyboard"",
+                    ""action"": ""NavigateHotbar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -1042,6 +1095,7 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
         m_UI_MiddleClick = m_UI.FindAction("MiddleClick", throwIfNotFound: true);
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_Escape = m_UI.FindAction("Escape", throwIfNotFound: true);
+        m_UI_NavigateHotbar = m_UI.FindAction("NavigateHotbar", throwIfNotFound: true);
     }
 
     ~@CustomInputSystem()
@@ -1338,6 +1392,7 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_MiddleClick;
     private readonly InputAction m_UI_ScrollWheel;
     private readonly InputAction m_UI_Escape;
+    private readonly InputAction m_UI_NavigateHotbar;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -1385,6 +1440,10 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/Escape".
         /// </summary>
         public InputAction @Escape => m_Wrapper.m_UI_Escape;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/NavigateHotbar".
+        /// </summary>
+        public InputAction @NavigateHotbar => m_Wrapper.m_UI_NavigateHotbar;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1438,6 +1497,9 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
             @Escape.started += instance.OnEscape;
             @Escape.performed += instance.OnEscape;
             @Escape.canceled += instance.OnEscape;
+            @NavigateHotbar.started += instance.OnNavigateHotbar;
+            @NavigateHotbar.performed += instance.OnNavigateHotbar;
+            @NavigateHotbar.canceled += instance.OnNavigateHotbar;
         }
 
         /// <summary>
@@ -1476,6 +1538,9 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
             @Escape.started -= instance.OnEscape;
             @Escape.performed -= instance.OnEscape;
             @Escape.canceled -= instance.OnEscape;
+            @NavigateHotbar.started -= instance.OnNavigateHotbar;
+            @NavigateHotbar.performed -= instance.OnNavigateHotbar;
+            @NavigateHotbar.canceled -= instance.OnNavigateHotbar;
         }
 
         /// <summary>
@@ -1690,5 +1755,12 @@ public partial class @CustomInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEscape(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "NavigateHotbar" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnNavigateHotbar(InputAction.CallbackContext context);
     }
 }
