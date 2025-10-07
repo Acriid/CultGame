@@ -7,6 +7,7 @@ public class ItemSO : ScriptableObject
     public string ItemDescription;
     public Sprite ItemSprite;
     public bool IsInInventory;
+    public bool PritoryItem;
 }
 
 public enum ItemType

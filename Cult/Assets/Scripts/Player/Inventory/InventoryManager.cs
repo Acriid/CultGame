@@ -17,7 +17,7 @@ public class InventoryManager : MonoBehaviour
     private InputAction scrollInput;
     private InputAction inventoryAction;
     [Header("InventorySize Limit")]
-    public int hotBarSizeLimit = 4;
+    private int hotBarSizeLimit = 4;
     public int inventorysizeLimit = 9;
     [Header("HoldTransform")]
     public GameObject PickUpHolder;
@@ -149,6 +149,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
         _hotBar[CurrentSelected].color = Color.red;
+        _hotBar[hotBarSizeLimit].color = Color.grey;
         changeText();
     }
 
@@ -159,6 +160,15 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i <= hotBarSizeLimit; i++)
         {
+            if (addingItem.itemSO.PritoryItem)
+            {
+                DebugMessage = "Added Item to Inventory";
+                _hotBar[CurrentSelected].color = Color.white;
+                addingItem.itemSO.IsInInventory = true;
+                activeItems[hotBarSizeLimit] = addingItem.gameObject;
+                changeText();
+                break;
+            }
             if (activeItems[i] == null)
             {
 
@@ -226,7 +236,8 @@ public class InventoryManager : MonoBehaviour
     private void ChangeSelectedItem(int changeValue)
     {
         activeItems.TryGetValue(CurrentSelected, out GameObject result);
-        _hotBar[CurrentSelected].color = Color.white;
+        if (CurrentSelected != hotBarSizeLimit) { _hotBar[CurrentSelected].color = Color.white; }
+        else{_hotBar[CurrentSelected].color = Color.grey;}
         if (activeItems.ContainsKey(CurrentSelected) && result != null)
         {
             activeItems[CurrentSelected].SetActive(false);
