@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 
 //using Microsoft.Unity.VisualStudio.Editor;
@@ -25,7 +26,6 @@ public class InventoryManager : MonoBehaviour
     private int CurrentSelected = 0;
     private Dictionary<int, GameObject> activeItems = new Dictionary<int, GameObject>() { };
     public static InventoryManager instance { get; private set; }
-
     void Awake()
     {
         if (instance != null)
@@ -117,12 +117,18 @@ public class InventoryManager : MonoBehaviour
     #endregion
     private void InitializeInventory()
     {
+        GameObject pritoryItem = null;
         int loopvariable = 0;
         _inventoryList = FindInventoryItems();
         interactMechanic = PickUpHolder.GetComponent<InteractMechanic>();
 
         foreach (Item item in _inventoryList)
         {
+            if (item.itemSO.PritoryItem && item.itemSO.IsInInventory)
+            {
+                pritoryItem = item.gameObject;
+                continue;
+            }
             if (item.itemSO.IsInInventory)
             {
                 activeItems.Add(loopvariable, item.gameObject);
@@ -134,22 +140,34 @@ public class InventoryManager : MonoBehaviour
                 else
                 {
                     interactMechanic.SetCurrentSelected(item.gameObject);
-
                 }
-                Debug.Log(activeItems[loopvariable].name);
                 _hotBar[loopvariable].color = Color.blue;
                 loopvariable++;
             }
         }
-        for (int i = 0; i <= inventorysizeLimit; i++)
+
+        for (int i = 0; i <=  hotBarSizeLimit; i++)
         {
             if (!activeItems.ContainsKey(i))
             {
+                if (i == hotBarSizeLimit && pritoryItem != null)
+                {
+                    activeItems.Add(i, pritoryItem);
+                    interactMechanic.PickUpItem(pritoryItem);
+                    _hotBar[i].color = Color.black;
+                    CurrentSelected = hotBarSizeLimit;
+                    break;
+                }
                 activeItems.Add(i, null);
             }
         }
+
         _hotBar[CurrentSelected].color = Color.red;
-        _hotBar[hotBarSizeLimit].color = Color.grey;
+        if (!(activeItems.ContainsKey(hotBarSizeLimit) && activeItems[hotBarSizeLimit] != null))
+        {
+            _hotBar[hotBarSizeLimit].color = Color.grey;
+        }
+
         changeText();
     }
 
