@@ -165,7 +165,9 @@ public class InventoryManager : MonoBehaviour
                 DebugMessage = "Added Item to Inventory";
                 _hotBar[CurrentSelected].color = Color.white;
                 addingItem.itemSO.IsInInventory = true;
-                activeItems[hotBarSizeLimit] = addingItem.gameObject;
+                CurrentSelected = hotBarSizeLimit;
+                activeItems[CurrentSelected] = addingItem.gameObject;
+                _hotBar[CurrentSelected].color = Color.black;
                 changeText();
                 break;
             }
@@ -241,7 +243,8 @@ public class InventoryManager : MonoBehaviour
         if (activeItems.ContainsKey(CurrentSelected) && result != null)
         {
             activeItems[CurrentSelected].SetActive(false);
-            _hotBar[CurrentSelected].color = Color.blue;
+            if (CurrentSelected != hotBarSizeLimit) { _hotBar[CurrentSelected].color = Color.blue; }
+            else{_hotBar[CurrentSelected].color = Color.black;}
         }
 
         CurrentSelected += changeValue;

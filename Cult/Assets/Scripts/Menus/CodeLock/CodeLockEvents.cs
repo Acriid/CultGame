@@ -11,13 +11,11 @@ using System;
 public class CodeLockEvents : MenuEvents, iLocks
 {
     [SerializeField] private int unlockCode;
+    private int codeLengthLimit = 5;
+    [SerializeField] private TMP_Text codeText;
     public override void Awake()
     {
         base.Awake();
-        if (unlockCode.ToString().Length != Selectables.Count)
-        {
-            Debug.LogError("Unlock Code not equal to selectables count");
-        }
     }
     public override void OnEnable()
     {
@@ -43,29 +41,6 @@ public class CodeLockEvents : MenuEvents, iLocks
     protected override void OnNavigate(InputAction.CallbackContext ctx)
     {
         base.OnNavigate(ctx);
-        int newnumber = int.Parse(EventSystem.current.currentSelectedGameObject.
-        GetComponentInChildren<TMP_Text>().text) + (int)ctx.ReadValue<Vector2>().y;
-
-        if (newnumber > 9) newnumber = 0;
-        else if (newnumber < 0) newnumber = 9;
-
-        EventSystem.current.currentSelectedGameObject.
-        GetComponentInChildren<TMP_Text>().text = newnumber.ToString();
-
-
-        string sendNumberstring = Selectables[0].GetComponentInChildren<TMP_Text>().text;
-        int sendNumber;
-        for (int i = 1; i < Selectables.Count; i++)
-        {
-            if (Selectables[i].GetComponentInChildren<TMP_Text>() != null)
-            {
-                sendNumberstring = string.Concat(sendNumberstring, (string)Selectables[i].GetComponentInChildren<TMP_Text>().text);
-            }
-
-        }
-        sendNumber = int.Parse(sendNumberstring);
-        SolvingAction(sendNumber);
-
     }
 
     public void UnlockAction()
@@ -81,5 +56,26 @@ public class CodeLockEvents : MenuEvents, iLocks
     public void SolvingAction(int solveNumber)
     {
         if (solveNumber == unlockCode) UnlockAction();
+        else return;
+    }
+    public void ShowCurrentCode(int addedNumber)
+    {
+        if (addedNumber == 10)
+        {
+            SolvingAction(int.Parse(codeText.text));
+            return;
+        }
+        else if (addedNumber == -1)
+        {
+            codeText.text = codeText.text.Substring(0, codeText.text.Length - 1);
+            return;
+        }
+        if (codeText.text.Length == codeLengthLimit)
+        {
+            //ToDo - Call a "Full" function
+            return;
+        }
+        codeText.text = codeText.text + addedNumber.ToString();
+
     }
 }
