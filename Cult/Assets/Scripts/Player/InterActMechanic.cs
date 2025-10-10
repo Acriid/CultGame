@@ -19,7 +19,7 @@ public class InteractMechanic : MonoBehaviour
     [Header("Pickup GameObject")]
     [SerializeField] private GameObject pickUpsGameObject;
     [SerializeField] private Material outLineMaterial;
-    private GameObject CurrentSelectedItem;
+    public GameObject CurrentSelectedItem;
     private bool hitInteractable;
     private bool hitSurface;
     private bool carryItem = false;
@@ -127,6 +127,7 @@ public class InteractMechanic : MonoBehaviour
             itenRigidbody.freezeRotation = true;
         }
         itemToPickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
+        itemToPickUp.transform.localScale = itemToPickUp.transform.localScale / 2;
         itemToPickUp.transform.SetParent(this.transform);
         itemToPickUp.transform.localPosition = Vector3.zero;
         itemToPickUp.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
@@ -147,6 +148,7 @@ public class InteractMechanic : MonoBehaviour
             itenRigidbody.freezeRotation = false;
         }
         itemToPutDown.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
+        itemToPutDown.transform.localScale = itemToPutDown.transform.localScale * 2;
         itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
         itemToPutDown.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         itemToPutDown.transform.position = surfaceHit.point + Vector3.up * 0.1f;

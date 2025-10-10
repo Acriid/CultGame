@@ -19,11 +19,10 @@ public class InventoryManager : MonoBehaviour
     private InputAction inventoryAction;
     [Header("InventorySize Limit")]
     private int hotBarSizeLimit = 4;
-    public int inventorysizeLimit = 9;
     [Header("HoldTransform")]
     public GameObject PickUpHolder;
     private InteractMechanic interactMechanic;
-    private int CurrentSelected = 0;
+    public int CurrentSelected = 0;
     private Dictionary<int, GameObject> activeItems = new Dictionary<int, GameObject>() { };
     public static InventoryManager instance { get; private set; }
     void Awake()
@@ -246,7 +245,7 @@ public class InventoryManager : MonoBehaviour
     }
     public bool InventoryFull()
     {
-        for (int i = 0; i < inventorysizeLimit; i++)
+        for (int i = 0; i < hotBarSizeLimit; i++)
         {
             if (activeItems[i] == null) return false;
         }
