@@ -123,6 +123,7 @@ public class InventoryManager : MonoBehaviour
 
         foreach (Item item in _inventoryList)
         {
+            Debug.Log(item.gameObject.name);
             if (item.itemSO.PritoryItem && item.itemSO.IsInInventory)
             {
                 pritoryItem = item.gameObject;
@@ -153,6 +154,13 @@ public class InventoryManager : MonoBehaviour
             {
                 if (i == hotBarSizeLimit && pritoryItem != null)
                 {
+                    if (!activeItems.ContainsKey(i))
+                    {
+                        activeItems[CurrentSelected].SetActive(false);
+                        activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false; 
+                    }
+
+
                     if (activeItems.ContainsKey(i)) { activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false; }
                     activeItems.Add(i, pritoryItem);
                     interactMechanic.PickUpItem(pritoryItem);

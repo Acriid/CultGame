@@ -15,4 +15,8 @@ public class Interactable : MonoBehaviour
         if (objectCanvas == null) return;
         MenuManager.instance.ChangeMenu(MenuManager.MenuType.None);
     }
+    public void OpenDoor()
+    {
+        
+    }
 }
