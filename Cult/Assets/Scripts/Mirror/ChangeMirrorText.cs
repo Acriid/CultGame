@@ -8,6 +8,10 @@ public class ChangeMirrorText : MonoBehaviour
     void OnEnable()
     {
         itemSO.OnIsInInventoryChange += ChangeText;
+        if(itemSO.IsInInventory)
+        {
+            ChangeText(itemSO.IsInInventory);
+        }
     }
     void OnDisable()
     {

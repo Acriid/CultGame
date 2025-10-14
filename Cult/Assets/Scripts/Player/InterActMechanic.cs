@@ -62,6 +62,7 @@ public class InteractMechanic : MonoBehaviour
 
         if (carryItem && hitSurface)
         {
+            if(CurrentSelectedItem.GetComponent<Item>().itemSO.PritoryItem){ return; }
             PutDownItem(CurrentSelectedItem);
             InventoryManager.instance.RemoveFromInventory();
             CurrentSelectedItem = null;
