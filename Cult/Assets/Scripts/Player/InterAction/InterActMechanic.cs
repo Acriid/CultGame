@@ -78,20 +78,10 @@ public class InteractMechanic : MonoBehaviour
                     InventoryManager.instance.AddtoInventory(CurrentSelectedItem.GetComponent<Item>());
                 }
             }
-            else if (CurrentSelectedItem.GetComponent<Interactable>() != null)
+            else if (CurrentSelectedItem.TryGetComponent<Interactable>(out Interactable interactable))
             {
-                Interactable interactable = CurrentSelectedItem.GetComponent<Interactable>();
-                if (MenuManager.instance.currentMenu != MenuManager.MenuType.None)
-                {
-                    interactable.HideCanvas();
-                }
-                else
-                {
-                    interactable.ShowCanvas();
-                }
-
+                interactable.Interact();
             }
-
         }
 
     }
