@@ -22,6 +22,20 @@ public class ItemSO : ScriptableObject
         }
     }
     public bool PritoryItem;
+    public event Action<bool> OnIsEquipedChange;
+    [SerializeField] private bool _isEquiped;
+    public bool IsEquiped
+    {
+        get { return _isEquiped; }
+        set
+        {
+            if(_isEquiped != value)
+            {
+                _isEquiped = value;
+                OnIsEquipedChange?.Invoke(_isEquiped);
+            }
+        }
+    }
 }
 
 public enum ItemType

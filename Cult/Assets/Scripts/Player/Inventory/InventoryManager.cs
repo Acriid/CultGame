@@ -188,6 +188,7 @@ public class InventoryManager : MonoBehaviour
                 changeText();
                 break;
             }
+
             if (activeItems[i] == null)
             {
 
@@ -201,6 +202,7 @@ public class InventoryManager : MonoBehaviour
                 break;
                 // interactMechanic.SetCurrentSelected(addingItem.gameObject);
             }
+            addingItem.itemSO.IsEquiped = true;
         }
         Debug.Log(DebugMessage);
 
@@ -232,6 +234,7 @@ public class InventoryManager : MonoBehaviour
         IEnumerable<Item> inventoryList = FindObjectsByType<Item>(FindObjectsSortMode.None);
         return new List<Item>(inventoryList);
     }
+
     private void changeText()
     {
         if (activeItems[CurrentSelected] != null)
@@ -243,6 +246,7 @@ public class InventoryManager : MonoBehaviour
             inventoryText.text = "Empty";
         }
     }
+
     public bool InventoryFull()
     {
         for (int i = 0; i < hotBarSizeLimit; i++)
@@ -255,13 +259,18 @@ public class InventoryManager : MonoBehaviour
     private void ChangeSelectedItem(int changeValue)
     {
         activeItems.TryGetValue(CurrentSelected, out GameObject result);
+
         if (CurrentSelected != hotBarSizeLimit) { _hotBar[CurrentSelected].color = Color.white; }
-        else{_hotBar[CurrentSelected].color = Color.grey;}
+        else { _hotBar[CurrentSelected].color = Color.grey; }
+        
         if (activeItems.ContainsKey(CurrentSelected) && result != null)
         {
             activeItems[CurrentSelected].SetActive(false);
+            activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false;
             if (CurrentSelected != hotBarSizeLimit) { _hotBar[CurrentSelected].color = Color.blue; }
-            else{_hotBar[CurrentSelected].color = Color.black;}
+            else { _hotBar[CurrentSelected].color = Color.black; }
+            
+
         }
 
         CurrentSelected += changeValue;
@@ -273,11 +282,13 @@ public class InventoryManager : MonoBehaviour
         }
 
         activeItems.TryGetValue(CurrentSelected, out result);
+
         if (activeItems.ContainsKey(CurrentSelected))
         {
             if (result != null)
             {
                 activeItems[CurrentSelected].SetActive(true);
+                activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = true;
             }
             interactMechanic.SetCarryItem(false);
         }
@@ -291,6 +302,7 @@ public class InventoryManager : MonoBehaviour
         {
             interactMechanic.SetCarryItem(false);
         }
+
         interactMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
         changeText();
     }
