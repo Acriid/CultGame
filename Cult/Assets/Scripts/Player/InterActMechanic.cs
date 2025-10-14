@@ -134,6 +134,7 @@ public class InteractMechanic : MonoBehaviour
         itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
         carryItem = true;
         itemToPickUp.GetComponent<Item>().ActivateScript();
+        itemToPickUp.GetComponent<Item>().itemSO.IsEquiped = true;
         if (itemToPickUp.name == "Gun")
         {
             itemToPickUp.transform.localRotation = Quaternion.Euler(-90f, 180f, 0f);
@@ -155,6 +156,7 @@ public class InteractMechanic : MonoBehaviour
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
         carryItem = false;
         itemToPutDown.GetComponent<Item>().DeActivateScript();
+        itemToPutDown.GetComponent<Item>().itemSO.IsEquiped = false;
     }
     public void SetCurrentSelected(GameObject currentselected)
     {

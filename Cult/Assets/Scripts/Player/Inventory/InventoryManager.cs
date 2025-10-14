@@ -135,10 +135,12 @@ public class InventoryManager : MonoBehaviour
                 if (loopvariable != CurrentSelected)
                 {
                     activeItems[loopvariable].SetActive(false);
+                    activeItems[loopvariable].GetComponent<Item>().itemSO.IsEquiped = false;
                 }
                 else
                 {
                     interactMechanic.SetCurrentSelected(item.gameObject);
+                    activeItems[loopvariable].GetComponent<Item>().itemSO.IsEquiped = true;
                 }
                 _hotBar[loopvariable].color = Color.blue;
                 loopvariable++;
@@ -151,8 +153,10 @@ public class InventoryManager : MonoBehaviour
             {
                 if (i == hotBarSizeLimit && pritoryItem != null)
                 {
+                    if (activeItems.ContainsKey(i)) { activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false; }
                     activeItems.Add(i, pritoryItem);
                     interactMechanic.PickUpItem(pritoryItem);
+                    pritoryItem.GetComponent<Item>().itemSO.IsEquiped = true;
                     _hotBar[i].color = Color.black;
                     CurrentSelected = hotBarSizeLimit;
                     break;
@@ -185,6 +189,7 @@ public class InventoryManager : MonoBehaviour
                 CurrentSelected = hotBarSizeLimit;
                 activeItems[CurrentSelected] = addingItem.gameObject;
                 _hotBar[CurrentSelected].color = Color.black;
+                addingItem.itemSO.IsEquiped = true;
                 changeText();
                 break;
             }
@@ -199,10 +204,11 @@ public class InventoryManager : MonoBehaviour
                 _hotBar[CurrentSelected].color = Color.red;
                 activeItems[CurrentSelected] = addingItem.gameObject;
                 changeText();
+                addingItem.itemSO.IsEquiped = true;
                 break;
                 // interactMechanic.SetCurrentSelected(addingItem.gameObject);
             }
-            addingItem.itemSO.IsEquiped = true;
+            
         }
         Debug.Log(DebugMessage);
 
