@@ -123,7 +123,6 @@ public class InventoryManager : MonoBehaviour
 
         foreach (Item item in _inventoryList)
         {
-            Debug.Log(item.gameObject.name);
             if (item.itemSO.PritoryItem && item.itemSO.IsInInventory)
             {
                 pritoryItem = item.gameObject;
@@ -143,7 +142,7 @@ public class InventoryManager : MonoBehaviour
                     interactMechanic.SetCurrentSelected(item.gameObject);
                     activeItems[loopvariable].GetComponent<Item>().itemSO.IsEquiped = true;
                 }
-                _hotBar[loopvariable].color = Color.blue;
+                _hotBar[loopvariable].color = Color.white;
                 loopvariable++;
             }
         }
@@ -154,7 +153,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (i == hotBarSizeLimit && pritoryItem != null)
                 {
-                    if (!activeItems.ContainsKey(i))
+                    if (activeItems.ContainsKey(i))
                     {
                         activeItems[CurrentSelected].SetActive(false);
                         activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false; 
@@ -165,7 +164,7 @@ public class InventoryManager : MonoBehaviour
                     activeItems.Add(i, pritoryItem);
                     interactMechanic.PickUpItem(pritoryItem);
                     pritoryItem.GetComponent<Item>().itemSO.IsEquiped = true;
-                    _hotBar[i].color = Color.black;
+                    _hotBar[i].color = Color.white;
                     CurrentSelected = hotBarSizeLimit;
                     break;
                 }
@@ -173,12 +172,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        _hotBar[CurrentSelected].color = Color.red;
-        if (!(activeItems.ContainsKey(hotBarSizeLimit) && activeItems[hotBarSizeLimit] != null))
-        {
-            _hotBar[hotBarSizeLimit].color = Color.grey;
-        }
-
+        _hotBar[CurrentSelected].color = Color.white;
         changeText();
     }
 
@@ -196,7 +190,7 @@ public class InventoryManager : MonoBehaviour
                 addingItem.itemSO.IsInInventory = true;
                 CurrentSelected = hotBarSizeLimit;
                 activeItems[CurrentSelected] = addingItem.gameObject;
-                _hotBar[CurrentSelected].color = Color.black;
+                _hotBar[CurrentSelected].color = Color.white;
                 addingItem.itemSO.IsEquiped = true;
                 changeText();
                 break;
@@ -209,7 +203,7 @@ public class InventoryManager : MonoBehaviour
                 _hotBar[CurrentSelected].color = Color.white;
                 addingItem.itemSO.IsInInventory = true;
                 CurrentSelected = i;
-                _hotBar[CurrentSelected].color = Color.red;
+                _hotBar[CurrentSelected].color = Color.white;
                 activeItems[CurrentSelected] = addingItem.gameObject;
                 changeText();
                 addingItem.itemSO.IsEquiped = true;
@@ -275,14 +269,13 @@ public class InventoryManager : MonoBehaviour
         activeItems.TryGetValue(CurrentSelected, out GameObject result);
 
         if (CurrentSelected != hotBarSizeLimit) { _hotBar[CurrentSelected].color = Color.white; }
-        else { _hotBar[CurrentSelected].color = Color.grey; }
+        else { _hotBar[CurrentSelected].color = Color.blue; }
         
         if (activeItems.ContainsKey(CurrentSelected) && result != null)
         {
             activeItems[CurrentSelected].SetActive(false);
             activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false;
-            if (CurrentSelected != hotBarSizeLimit) { _hotBar[CurrentSelected].color = Color.blue; }
-            else { _hotBar[CurrentSelected].color = Color.black; }
+            _hotBar[CurrentSelected].color = Color.white;
             
 
         }
@@ -306,7 +299,7 @@ public class InventoryManager : MonoBehaviour
             }
             interactMechanic.SetCarryItem(false);
         }
-        _hotBar[CurrentSelected].color = Color.red;
+        _hotBar[CurrentSelected].color = Color.blue;
 
         if (activeItems[CurrentSelected] != null)
         {

@@ -13,14 +13,14 @@ public class DoorInteraction : Interactable
 
     private void OpenDoor()
     {
-        doorAnimation.ResetTrigger("Close");
-        doorAnimation.SetTrigger("Open");
+        doorAnimation.SetBool("Open", true);
+        doorAnimation.SetBool("Close", false);
         DoorOpen = true;
     }
     private void CloseDoor()
     {
-        doorAnimation.ResetTrigger("Open");
-        doorAnimation.SetTrigger("Close");
+        doorAnimation.SetBool("Close", true);
+        doorAnimation.SetBool("Open", false);
         DoorOpen = false;
     }
 }
