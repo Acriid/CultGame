@@ -56,7 +56,11 @@ public class CodeLockEvents : MenuEvents, iLocks
     public void SolvingAction(int solveNumber)
     {
         if (solveNumber == unlockCode) UnlockAction();
-        else return;
+        else
+        {
+            codeText.text = "";
+            return;
+        }
     }
     public void ShowCurrentCode(int addedNumber)
     {
@@ -65,7 +69,7 @@ public class CodeLockEvents : MenuEvents, iLocks
             SolvingAction(int.Parse(codeText.text));
             return;
         }
-        else if (addedNumber == -1)
+        else if (addedNumber == -1 && codeText.text.Length != 0)
         {
             codeText.text = codeText.text.Substring(0, codeText.text.Length - 1);
             return;

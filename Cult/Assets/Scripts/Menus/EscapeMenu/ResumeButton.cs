@@ -8,7 +8,7 @@ public class ResumeButton : MonoBehaviour
     {
         if (GameMenu.activeSelf)
         {
-            GameMenu.SetActive(false);
+            MenuManager.instance.ChangeMenu(MenuManager.MenuType.None);
         }
     }
 }

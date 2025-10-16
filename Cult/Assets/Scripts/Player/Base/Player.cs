@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     private InputAction jumpAction;
     #endregion
     public PlayerSettingsSO playerSettingsSO;
-    private float SensitivityOffset = 1f;
+    private float SensitivityOffset = 0.25f;
     #region Camera
     [SerializeField] public float MaxLookRange = 90f;
     [SerializeField] public Transform cameraTransform;
@@ -333,7 +333,7 @@ public class Player : MonoBehaviour
 
         if (device is Mouse || device is Keyboard)
         {
-            SensitivityOffset = 1f;
+            SensitivityOffset = 0.25f;
         }
         else if (device is Gamepad)
         {
