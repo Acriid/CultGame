@@ -3,7 +3,8 @@ using UnityEngine;
 public class RitualObjects : Interactable
 {
     public GameObject ritualObject;
-    public bool CorrectObject;
+    public RitualBase ritualBase;
+    public bool CorrectObject = false;
     private bool HasObject = false;
     public GameObject ritualObjectHolder;
     private GameObject HeldObject;
@@ -15,6 +16,7 @@ public class RitualObjects : Interactable
             InventoryManager.instance.AddtoInventory(HeldObject.GetComponent<Item>());
             InteractMechanic.instance.PickUpItem(HeldObject);
             HasObject = false;
+            CorrectObject = false;
             return;
         }
         else if (InventoryManager.instance.getCurrentHeldObject() != null)
@@ -28,7 +30,13 @@ public class RitualObjects : Interactable
             TempObject.transform.localPosition = Vector3.zero;
             HeldObject = TempObject;
             HasObject = true;
-        }  
-        
+
+
+            if(HeldObject == ritualObject)
+            {
+                CorrectObject = true;
+            }
+        }
+        ritualBase.CheckRitualProgress();
     }
 }
