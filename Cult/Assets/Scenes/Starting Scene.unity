@@ -30116,7 +30116,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: eedce4866e01bce4f9b79998e2c533e1, type: 3}
       propertyPath: m_Name
-      value: BottleRitual
+      value: Empty Bottle
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: eedce4866e01bce4f9b79998e2c533e1, type: 3}
       propertyPath: m_Layer

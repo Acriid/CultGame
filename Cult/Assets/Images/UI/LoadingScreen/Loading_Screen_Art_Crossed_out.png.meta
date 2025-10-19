@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a077c6aef7adebf45b66a9800127509a
+guid: 313f533f71942ba4fa42f13582a2c211
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Return General_0
+      name: Loading_Screen_Art_Crossed_out_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 226
-        width: 1866
-        height: 659
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 342dd086cc544ec4fb787050bab13395
-      internalID: -886260101
+      spriteID: 40fe254025b87b2429db52a73b0d5b2e
+      internalID: 2080674879
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 7a89dd711360dcb47a3559e5169c93ab
+    spriteID: 013fcb9e27a30574ca9809049829fa82
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +132,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Return General_0: -886260101
+      Loading_Screen_Art_Crossed_out_0: 2080674879
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
