@@ -75,14 +75,14 @@ public class ShootingMechanic : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
             Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
             bool CheckHit = Physics.Raycast(ray, out bulletHit, gunRange, targetMask);
-            if (CheckHit)
-            {
-                popupCanvas.SetActive(true);
-            }
-            else
-            {
-                popupCanvas.SetActive(false);
-            }
+            // if (CheckHit)
+            // {
+            //     popupCanvas.SetActive(true);
+            // }
+            // else
+            // {
+            //     popupCanvas.SetActive(false);
+            // }
         }
     }
 

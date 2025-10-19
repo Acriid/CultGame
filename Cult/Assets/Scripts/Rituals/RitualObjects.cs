@@ -4,6 +4,7 @@ public class RitualObjects : Interactable
 {
     public GameObject ritualObject;
     public RitualBase ritualBase;
+    public GameObject Rituallight;
     public bool CorrectObject = false;
     private bool HasObject = false;
     public GameObject ritualObjectHolder;
@@ -17,6 +18,7 @@ public class RitualObjects : Interactable
             InteractMechanic.instance.PickUpItem(HeldObject);
             HasObject = false;
             CorrectObject = false;
+            Rituallight.SetActive(false);
             return;
         }
         else if (InventoryManager.instance.getCurrentHeldObject() != null)
@@ -38,5 +40,13 @@ public class RitualObjects : Interactable
             }
         }
         ritualBase.CheckRitualProgress();
+        if (CorrectObject)
+        {
+            Rituallight.SetActive(true);
+        }
+        else
+        {
+            Rituallight.SetActive(false);
+        }
     }
 }
