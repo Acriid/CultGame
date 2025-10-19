@@ -21,6 +21,7 @@ public class MenuEvents : MonoBehaviour
     [SerializeField] protected InputActionReference navigateAction;
     [SerializeField] protected InputActionReference selectAction;
     [SerializeField] protected PlayerSettingsSO playerSettingsSO;
+    private bool CanInteract = true;
     public virtual void Awake()
     {
         
@@ -142,9 +143,25 @@ public class MenuEvents : MonoBehaviour
 
     protected virtual void OnButtonPress(InputAction.CallbackContext ctx)
     {
-        if (EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>() != null)
+        if (EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>() != null && CanInteract)
         {
-            EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>().onClick.Invoke(); 
+            CanInteract = false;
+            Button currentButton = EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>();
+            currentButton.onClick.Invoke();
+            if(this.gameObject.activeSelf)
+            {
+                StartCoroutine(EnableAfterDelay());
+            }
+            else
+            {
+                CanInteract = true;
+            }
         }
+    }
+
+    IEnumerator EnableAfterDelay()
+    {
+        yield return new WaitForSeconds(0.25f);
+        CanInteract = true;
     }
 }

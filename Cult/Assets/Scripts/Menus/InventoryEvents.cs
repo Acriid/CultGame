@@ -1,10 +1,13 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class InventoryEvents : MenuEvents
 {
+
     public override void Awake()
     {
         base.Awake();

@@ -240,10 +240,10 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2815
+    m_Bits: 3839
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -280,8 +280,8 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras:
-  - {fileID: 4427277565250035979}
   - {fileID: 3703236066150866297}
+  - {fileID: 4427277565250035979}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -381,7 +381,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1280
+    m_Bits: 256
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1123,7 +1123,6 @@ MonoBehaviour:
   - {fileID: 435233207773588772}
   - {fileID: 8486959248476682732}
   inventoryText: {fileID: 5098764000563766232}
-  hotBarSizeLimit: 4
   inventorysizeLimit: 9
   PickUpHolder: {fileID: 7988278049850185233}
 --- !u!1 &7011429833627791691

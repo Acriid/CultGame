@@ -16,9 +16,15 @@ public class Draw : MonoBehaviour
     private Vector3 lastMousePosition = Vector3.zero;
     private bool MouseDown = false;
     public float LineThickness = 0.05f;
+    public bool onFloor;
+    public bool onZWall;
+    public bool onXWall;
     void Awake()
     {
         InitializeMouseInput();
+        if (onFloor) { this.transform.localPosition = new Vector3(0f, 0.001f, 0f); }
+        else if (onZWall) { this.transform.localPosition = new Vector3(0f, 0f, -0.001f); }
+        else if (onXWall) { this.transform.localPosition = new Vector3(-0.001f, 0f, 0f); }
     }
     void OnEnable()
     {
@@ -54,9 +60,11 @@ public class Draw : MonoBehaviour
                 int vIndex1 = vIndex + 1;
                 int vIndex2 = vIndex + 2;
                 int vIndex3 = vIndex + 3;
-
+                Vector3 normal = Vector3.zero;
                 Vector3 mouseForwardVector = (hit.point - lastMousePosition).normalized;
-                Vector3 normal = new Vector3(0f, 0f, -1f);
+                if (onFloor) { normal = new Vector3(0f, 1f, 0f); }
+                if(onZWall) { normal = new Vector3(0f, 0f, -1f); }
+                if (onXWall) { normal = new Vector3(-1f, 0f, 0f); }
                 Vector3 newVertexUp = hit.point + Vector3.Cross(mouseForwardVector, normal) * LineThickness;
                 Vector3 newVertexDown = hit.point + Vector3.Cross(mouseForwardVector, -normal) * LineThickness;
 

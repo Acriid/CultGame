@@ -19,8 +19,8 @@ TagManager:
   - Drawing
   - PuzzleItem
   - Hidden
-  - 
-  - 
+  - HideFromMirror
+  - OnlyMirror
   - 
   - 
   - 
