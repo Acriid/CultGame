@@ -1,16 +1,34 @@
 using UnityEngine;
 
-public class RitualObjects : MonoBehaviour
+public class RitualObjects : Interactable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject ritualObject;
+    public bool CorrectObject;
+    private bool HasObject = false;
+    public GameObject ritualObjectHolder;
+    private GameObject HeldObject;
+    public override void Interact()
     {
-        
-    }
+        if(HasObject)
+        {
+            Debug.Log("WOW");
+            InventoryManager.instance.AddtoInventory(HeldObject.GetComponent<Item>());
+            InteractMechanic.instance.PickUpItem(HeldObject);
+            HasObject = false;
+            return;
+        }
+        else if (InventoryManager.instance.getCurrentHeldObject() != null)
+        {
 
-    // Update is called once per frame
-    void Update()
-    {
+            GameObject TempObject = InventoryManager.instance.getCurrentHeldObject();
+            InventoryManager.instance.RemoveFromInventory();
+            if (TempObject.GetComponent<Item>().itemSO.PritoryItem) return;
+            InteractMechanic.instance.PutDownItem(TempObject);
+            TempObject.transform.SetParent(ritualObjectHolder.transform);
+            TempObject.transform.localPosition = Vector3.zero;
+            HeldObject = TempObject;
+            HasObject = true;
+        }  
         
     }
 }

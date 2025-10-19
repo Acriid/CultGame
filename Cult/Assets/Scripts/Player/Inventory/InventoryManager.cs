@@ -21,7 +21,6 @@ public class InventoryManager : MonoBehaviour
     private int hotBarSizeLimit = 4;
     [Header("HoldTransform")]
     public GameObject PickUpHolder;
-    private InteractMechanic interactMechanic;
     public int CurrentSelected = 0;
     private Dictionary<int, GameObject> activeItems = new Dictionary<int, GameObject>() { };
     public static InventoryManager instance { get; private set; }
@@ -119,7 +118,6 @@ public class InventoryManager : MonoBehaviour
         GameObject pritoryItem = null;
         int loopvariable = 0;
         _inventoryList = FindInventoryItems();
-        interactMechanic = PickUpHolder.GetComponent<InteractMechanic>();
 
         foreach (Item item in _inventoryList)
         {
@@ -131,7 +129,7 @@ public class InventoryManager : MonoBehaviour
             if (item.itemSO.IsInInventory)
             {
                 activeItems.Add(loopvariable, item.gameObject);
-                interactMechanic.PickUpItem(item.gameObject);
+                InteractMechanic.instance.PickUpItem(item.gameObject);
                 if (loopvariable != CurrentSelected)
                 {
                     activeItems[loopvariable].SetActive(false);
@@ -139,7 +137,7 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    interactMechanic.SetCurrentSelected(item.gameObject);
+                    InteractMechanic.instance.SetCurrentSelected(item.gameObject);
                     activeItems[loopvariable].GetComponent<Item>().itemSO.IsEquiped = true;
                 }
                 _hotBar[loopvariable].color = Color.white;
@@ -162,7 +160,7 @@ public class InventoryManager : MonoBehaviour
 
                     if (activeItems.ContainsKey(i)) { activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false; }
                     activeItems.Add(i, pritoryItem);
-                    interactMechanic.PickUpItem(pritoryItem);
+                    InteractMechanic.instance.PickUpItem(pritoryItem);
                     pritoryItem.GetComponent<Item>().itemSO.IsEquiped = true;
                     _hotBar[i].color = Color.white;
                     CurrentSelected = hotBarSizeLimit;
@@ -208,7 +206,7 @@ public class InventoryManager : MonoBehaviour
                 changeText();
                 addingItem.itemSO.IsEquiped = true;
                 break;
-                // interactMechanic.SetCurrentSelected(addingItem.gameObject);
+                // InteractMechanic.instance.SetCurrentSelected(addingItem.gameObject);
             }
             
         }
@@ -270,13 +268,13 @@ public class InventoryManager : MonoBehaviour
 
         if (CurrentSelected != hotBarSizeLimit) { _hotBar[CurrentSelected].color = Color.white; }
         else { _hotBar[CurrentSelected].color = Color.blue; }
-        
+
         if (activeItems.ContainsKey(CurrentSelected) && result != null)
         {
             activeItems[CurrentSelected].SetActive(false);
             activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false;
             _hotBar[CurrentSelected].color = Color.white;
-            
+
 
         }
 
@@ -297,21 +295,26 @@ public class InventoryManager : MonoBehaviour
                 activeItems[CurrentSelected].SetActive(true);
                 activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = true;
             }
-            interactMechanic.SetCarryItem(false);
+            InteractMechanic.instance.SetCarryItem(false);
         }
         _hotBar[CurrentSelected].color = Color.blue;
 
         if (activeItems[CurrentSelected] != null)
         {
-            interactMechanic.SetCarryItem(true);
+            InteractMechanic.instance.SetCarryItem(true);
         }
         else
         {
-            interactMechanic.SetCarryItem(false);
+            InteractMechanic.instance.SetCarryItem(false);
         }
 
-        interactMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
+        InteractMechanic.instance.SetCurrentSelected(activeItems[CurrentSelected]);
         changeText();
+    }
+    
+    public GameObject getCurrentHeldObject()
+    {
+        return activeItems[CurrentSelected];
     }
 
 }
