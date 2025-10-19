@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TestPoints : Interactable
 {
@@ -9,5 +10,6 @@ public class TestPoints : Interactable
     public override void Interact()
     {
         DrawComparison.MeshSimilar2D(drawing, outline, threshold, ratio);
+        outline.gameObject.GetComponent<MeshRenderer>().material = drawing.GetComponent<MeshRenderer>().material;
     }
 }

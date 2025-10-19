@@ -14,6 +14,7 @@ public class Draw : MonoBehaviour
     public LayerMask uiLayerMask;
     private InputAction MouseInput;
     private Vector3 lastMousePosition = Vector3.zero;
+    private MeshCollider meshCollider;
     private bool MouseDown = false;
     public float LineThickness = 0.05f;
     public bool onFloor;
@@ -151,6 +152,7 @@ public class Draw : MonoBehaviour
             mesh.MarkDynamic();
 
             GetComponent<MeshFilter>().mesh = mesh;
+            GetComponent<MeshCollider>().sharedMesh = mesh;
         }
     }
     void MouseUp(InputAction.CallbackContext ctx)
