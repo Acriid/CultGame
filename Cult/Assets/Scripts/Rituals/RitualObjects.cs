@@ -21,8 +21,8 @@ public class RitualObjects : Interactable
         {
 
             GameObject TempObject = InventoryManager.instance.getCurrentHeldObject();
-            InventoryManager.instance.RemoveFromInventory();
             if (TempObject.GetComponent<Item>().itemSO.PritoryItem) return;
+            InventoryManager.instance.RemoveFromInventory();
             InteractMechanic.instance.PutDownItem(TempObject);
             TempObject.transform.SetParent(ritualObjectHolder.transform);
             TempObject.transform.localPosition = Vector3.zero;

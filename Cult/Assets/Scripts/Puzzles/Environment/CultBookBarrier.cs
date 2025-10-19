@@ -12,10 +12,7 @@ public class CultBookBarrier : MonoBehaviour
     {
         ColorValues = originalMaterial.GetColor("_Base_Color");
         meshCollider = this.GetComponent<MeshCollider>();
-        if(bookSO.IsEquiped)
-        {
-            OnBookEquip(bookSO.IsEquiped);
-        }
+        OnBookEquip(bookSO.IsEquiped);
     }
     void OnEnable()
     {
