@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CultBook
   m_EditorClassIdentifier: 
   ItemDescription: 
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -1241141716, guid: d8917c3c2aa60824a87cde5b4ba9a23f, type: 3}
   _isInInventory: 0
   PritoryItem: 1
   _isEquiped: 0

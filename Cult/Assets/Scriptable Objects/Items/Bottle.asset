@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bottle
   m_EditorClassIdentifier: 
   ItemDescription: Empty
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -728399810, guid: 13b97c162a13b404d968fa9d91cf546a, type: 3}
   _isInInventory: 0
   PritoryItem: 0
   _isEquiped: 0

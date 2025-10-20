@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ritual Sphere
   m_EditorClassIdentifier: 
   ItemDescription: 
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: 468152170, guid: 8ba85649db593b84f8d9345a7f937394, type: 3}
   _isInInventory: 0
   PritoryItem: 0
   _isEquiped: 0
