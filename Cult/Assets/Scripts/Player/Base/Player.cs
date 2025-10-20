@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     //InputActions
     private InputAction lookInput;
     #endregion
+    public Animator animator;
     const float gravity = -9.81f;
     #region Basic Unity Functions
     void Start()
@@ -339,6 +340,14 @@ public class Player : MonoBehaviour
         else if (device is Gamepad)
         {
             SensitivityOffset = 10f;
+        }
+    }
+    public void AnimatePlayer(Vector2 direction)
+    {
+        animator.SetBool("Walking", false);
+        if(direction != Vector2.zero)
+        {
+            animator.SetBool("Walking", true);
         }
     }
 }

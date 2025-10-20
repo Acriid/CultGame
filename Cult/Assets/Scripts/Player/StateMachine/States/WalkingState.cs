@@ -23,6 +23,7 @@ public class WalkingState : PlayerState
     {
         base.UpdateLogic();
         player.CheckIfCanJump();
+        player.AnimatePlayer(player.moveInputValue);
     }
     public override void FixedUpdateLogic()
     {
