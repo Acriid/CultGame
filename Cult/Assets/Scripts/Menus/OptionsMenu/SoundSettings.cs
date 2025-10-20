@@ -7,10 +7,10 @@ public class SoundSettings : PlayerSettings
     void Awake()
     {
         slider = gameObject.GetComponent<Slider>();
-        slider.value = playerSettingsSO.Volumepercentage;
+        slider.value = playerSettingsSO.VolumePercentage;
     }
     public void OnChangeSound()
     {
-        playerSettingsSO.Volumepercentage = slider.value;
+        playerSettingsSO.VolumePercentage = slider.value;
     }
 }

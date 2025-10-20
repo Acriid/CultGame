@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
     //InputActions
     private InputAction lookInput;
     #endregion
+    public Animator animator;
     const float gravity = -9.81f;
     #region Basic Unity Functions
     void Start()
@@ -290,6 +291,7 @@ public class Player : MonoBehaviour
         //Rotate 
         cameraTransform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
         oriantation.rotation = Quaternion.Euler(0f, yRotation, 0f);
+        transform.rotation = Quaternion.Euler(0f, yRotation, 0f);
     }
     #endregion
     #endregion
@@ -338,6 +340,14 @@ public class Player : MonoBehaviour
         else if (device is Gamepad)
         {
             SensitivityOffset = 10f;
+        }
+    }
+    public void AnimatePlayer(Vector2 direction)
+    {
+        animator.SetBool("Walking", false);
+        if(direction != Vector2.zero)
+        {
+            animator.SetBool("Walking", true);
         }
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class InteractMechanic : MonoBehaviour
 {
+    public static InteractMechanic instance;
     [Header("Camera Transform")]
     [SerializeField] private new Camera camera;
     [Header("LayerMasks")]
@@ -27,6 +28,11 @@ public class InteractMechanic : MonoBehaviour
     public GameObject popupCanvas;
     void Awake()
     {
+        if (instance != null)
+        {
+            Debug.LogError("More than one InterActMechanic instance");
+        }
+        instance = this;
         StartCoroutine(SendRayCast());
         InitializeInteractAction();
     }
@@ -117,6 +123,8 @@ public class InteractMechanic : MonoBehaviour
             itenRigidbody.linearVelocity = Vector3.zero;
             itenRigidbody.freezeRotation = true;
         }
+
+        //Item characteristic changes
         itemToPickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
         itemToPickUp.transform.localScale = itemToPickUp.transform.localScale / 2;
         itemToPickUp.transform.SetParent(this.transform);
@@ -124,6 +132,8 @@ public class InteractMechanic : MonoBehaviour
         itemToPickUp.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
         itemToPickUp.layer = LayerMask.NameToLayer("Equipped");
         carryItem = true;
+
+
         itemToPickUp.GetComponent<Item>().ActivateScript();
         itemToPickUp.GetComponent<Item>().itemSO.IsEquiped = true;
         if (itemToPickUp.name == "Gun")
@@ -139,6 +149,7 @@ public class InteractMechanic : MonoBehaviour
             itenRigidbody.useGravity = true;
             itenRigidbody.freezeRotation = false;
         }
+        //Item characteristic changes
         itemToPutDown.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
         itemToPutDown.transform.localScale = itemToPutDown.transform.localScale * 2;
         itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
@@ -146,6 +157,8 @@ public class InteractMechanic : MonoBehaviour
         itemToPutDown.transform.position = surfaceHit.point + Vector3.up * 0.1f;
         itemToPutDown.layer = LayerMask.NameToLayer("PickUp");
         carryItem = false;
+
+
         itemToPutDown.GetComponent<Item>().DeActivateScript();
         itemToPutDown.GetComponent<Item>().itemSO.IsEquiped = false;
     }

@@ -5,6 +5,7 @@ public class DoorInteraction : Interactable
 {
     private bool DoorOpen = false;
     public Animator doorAnimation;
+    public AudioClip audioClip;
     public override void Interact()
     {
         if (DoorOpen) { CloseDoor(); }
@@ -13,12 +14,14 @@ public class DoorInteraction : Interactable
 
     private void OpenDoor()
     {
+        SoundManager.instance.PlaySoundClip(audioClip, transform, 1f);
         doorAnimation.SetBool("Open", true);
         doorAnimation.SetBool("Close", false);
         DoorOpen = true;
     }
     private void CloseDoor()
     {
+        SoundManager.instance.PlaySoundClip(audioClip, transform, 1f);
         doorAnimation.SetBool("Close", true);
         doorAnimation.SetBool("Open", false);
         DoorOpen = false;

@@ -64,6 +64,7 @@ public class MenuManager : MonoBehaviour
         Interactable,
         Settings,
         Inventory,
+        Book,
         None
     }
 }

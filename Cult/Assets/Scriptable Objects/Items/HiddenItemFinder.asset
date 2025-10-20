@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: HiddenItemFinder
   m_EditorClassIdentifier: 
   ItemDescription: HiddenItemFinder
-  ItemSprite: {fileID: 0}
-  IsInInventory: 0
+  ItemSprite: {fileID: -1651380367, guid: 25c0f254634d7724986ba0fc8500072e, type: 3}
+  _isInInventory: 0
+  PritoryItem: 0
+  _isEquiped: 1

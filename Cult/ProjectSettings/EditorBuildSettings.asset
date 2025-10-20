@@ -6,8 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Grey boxing.unity
-    guid: e6dac1b997b64d445bd0b01f17049a1a
+    path: Assets/Scenes/Main Menu.unity
+    guid: 211a6513b18169546943739f16ae303c
+  - enabled: 1
+    path: Assets/Scenes/Starting Scene.unity
+    guid: 08831b6cf5d92a04ab54ac13cedb236f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 0571d4a3937ef094cabef0497ddd293a, type: 3}
   m_UseUCBPForAssetBundles: 0

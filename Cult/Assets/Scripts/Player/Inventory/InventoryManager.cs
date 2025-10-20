@@ -13,6 +13,7 @@ public class InventoryManager : MonoBehaviour
     private List<Item> _inventoryList;
     [Header("Hotbar")]
     [SerializeField] private List<Image> _hotBar;
+    [SerializeField] private List<Image> _hotBarImage;
     [SerializeField] private TMP_Text inventoryText;
     [Header("InputAction")]
     private InputAction scrollInput;
@@ -21,7 +22,6 @@ public class InventoryManager : MonoBehaviour
     private int hotBarSizeLimit = 4;
     [Header("HoldTransform")]
     public GameObject PickUpHolder;
-    private InteractMechanic interactMechanic;
     public int CurrentSelected = 0;
     private Dictionary<int, GameObject> activeItems = new Dictionary<int, GameObject>() { };
     public static InventoryManager instance { get; private set; }
@@ -41,6 +41,7 @@ public class InventoryManager : MonoBehaviour
     void OnDisable()
     {
         CleanUpActions();
+        RemoveIninventory();
     }
     void OnDestroy()
     {
@@ -51,12 +52,12 @@ public class InventoryManager : MonoBehaviour
     void InitializeActions()
     {
         InitializeScrollInput();
-        InitializeInventoryAction();
+       // InitializeInventoryAction();
     }
     void CleanUpActions()
     {
         CleanupScrollInput();
-        CleanupInventoryAction();
+        //CleanupInventoryAction();
     }
     #endregion
     #region ScrollWheel
@@ -116,63 +117,25 @@ public class InventoryManager : MonoBehaviour
     #endregion
     private void InitializeInventory()
     {
-        GameObject pritoryItem = null;
         int loopvariable = 0;
         _inventoryList = FindInventoryItems();
-        interactMechanic = PickUpHolder.GetComponent<InteractMechanic>();
-
+        for (int i = 0; i <= hotBarSizeLimit; i++)
+        {
+            activeItems.Add(i, null);
+        }
+        
         foreach (Item item in _inventoryList)
         {
-            if (item.itemSO.PritoryItem && item.itemSO.IsInInventory)
+            if (activeItems[loopvariable] == null && item.itemSO.IsInInventory)
             {
-                pritoryItem = item.gameObject;
-                continue;
+                InteractMechanic.instance.PickUpItem(item.gameObject);
+                AddtoInventory(item);
             }
-            if (item.itemSO.IsInInventory)
-            {
-                activeItems.Add(loopvariable, item.gameObject);
-                interactMechanic.PickUpItem(item.gameObject);
-                if (loopvariable != CurrentSelected)
-                {
-                    activeItems[loopvariable].SetActive(false);
-                    activeItems[loopvariable].GetComponent<Item>().itemSO.IsEquiped = false;
-                }
-                else
-                {
-                    interactMechanic.SetCurrentSelected(item.gameObject);
-                    activeItems[loopvariable].GetComponent<Item>().itemSO.IsEquiped = true;
-                }
-                _hotBar[loopvariable].color = Color.white;
-                loopvariable++;
-            }
+            loopvariable++;
         }
 
-        for (int i = 0; i <=  hotBarSizeLimit; i++)
-        {
-            if (!activeItems.ContainsKey(i))
-            {
-                if (i == hotBarSizeLimit && pritoryItem != null)
-                {
-                    if (activeItems.ContainsKey(i))
-                    {
-                        activeItems[CurrentSelected].SetActive(false);
-                        activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false; 
-                    }
 
 
-                    if (activeItems.ContainsKey(i)) { activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false; }
-                    activeItems.Add(i, pritoryItem);
-                    interactMechanic.PickUpItem(pritoryItem);
-                    pritoryItem.GetComponent<Item>().itemSO.IsEquiped = true;
-                    _hotBar[i].color = Color.white;
-                    CurrentSelected = hotBarSizeLimit;
-                    break;
-                }
-                activeItems.Add(i, null);
-            }
-        }
-
-        _hotBar[CurrentSelected].color = Color.white;
         changeText();
     }
 
@@ -183,32 +146,23 @@ public class InventoryManager : MonoBehaviour
 
         for (int i = 0; i <= hotBarSizeLimit; i++)
         {
-            if (addingItem.itemSO.PritoryItem)
+            if(activeItems[CurrentSelected] != null)
             {
-                DebugMessage = "Added Item to Inventory";
-                _hotBar[CurrentSelected].color = Color.white;
-                addingItem.itemSO.IsInInventory = true;
-                CurrentSelected = hotBarSizeLimit;
-                activeItems[CurrentSelected] = addingItem.gameObject;
-                _hotBar[CurrentSelected].color = Color.white;
-                addingItem.itemSO.IsEquiped = true;
-                changeText();
-                break;
+                activeItems[CurrentSelected].SetActive(false);
+                addingItem.itemSO.IsEquiped = false;
             }
-
             if (activeItems[i] == null)
             {
-
                 DebugMessage = "Added Item to Inventory";
-                _hotBar[CurrentSelected].color = Color.white;
                 addingItem.itemSO.IsInInventory = true;
-                CurrentSelected = i;
-                _hotBar[CurrentSelected].color = Color.white;
+                if (addingItem.itemSO.PritoryItem) { CurrentSelected = hotBarSizeLimit; }
+                else{CurrentSelected = i;}
+                _hotBarImage[CurrentSelected].sprite = addingItem.itemSO.ItemSprite;
+                ChangeColor(true);
                 activeItems[CurrentSelected] = addingItem.gameObject;
                 changeText();
                 addingItem.itemSO.IsEquiped = true;
                 break;
-                // interactMechanic.SetCurrentSelected(addingItem.gameObject);
             }
             
         }
@@ -227,6 +181,8 @@ public class InventoryManager : MonoBehaviour
         {
             activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsInInventory = false;
             activeItems[CurrentSelected] = null;
+            _hotBarImage[CurrentSelected].sprite = null;
+            ChangeColor(false);
         }
         changeText();
 
@@ -269,15 +225,13 @@ public class InventoryManager : MonoBehaviour
         activeItems.TryGetValue(CurrentSelected, out GameObject result);
 
         if (CurrentSelected != hotBarSizeLimit) { _hotBar[CurrentSelected].color = Color.white; }
-        else { _hotBar[CurrentSelected].color = Color.blue; }
-        
-        if (activeItems.ContainsKey(CurrentSelected) && result != null)
+        else { _hotBar[CurrentSelected].color = Color.green; }
+
+        if (result != null)
         {
             activeItems[CurrentSelected].SetActive(false);
             activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false;
             _hotBar[CurrentSelected].color = Color.white;
-            
-
         }
 
         CurrentSelected += changeValue;
@@ -290,28 +244,43 @@ public class InventoryManager : MonoBehaviour
 
         activeItems.TryGetValue(CurrentSelected, out result);
 
-        if (activeItems.ContainsKey(CurrentSelected))
+        if (result != null)
         {
-            if (result != null)
-            {
-                activeItems[CurrentSelected].SetActive(true);
-                activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = true;
-            }
-            interactMechanic.SetCarryItem(false);
+            activeItems[CurrentSelected].SetActive(true);
+            activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = true;
         }
+            
+        InteractMechanic.instance.SetCarryItem(false);
+            
         _hotBar[CurrentSelected].color = Color.blue;
 
         if (activeItems[CurrentSelected] != null)
         {
-            interactMechanic.SetCarryItem(true);
+            InteractMechanic.instance.SetCarryItem(true);
         }
         else
         {
-            interactMechanic.SetCarryItem(false);
+            InteractMechanic.instance.SetCarryItem(false);
         }
 
-        interactMechanic.SetCurrentSelected(activeItems[CurrentSelected]);
+        InteractMechanic.instance.SetCurrentSelected(activeItems[CurrentSelected]);
         changeText();
     }
-
+    
+    public GameObject getCurrentHeldObject()
+    {
+        return activeItems[CurrentSelected];
+    }
+    private void ChangeColor(bool value)
+    {
+        _hotBarImage[CurrentSelected].enabled = value;
+    }
+    private void RemoveIninventory()
+    {
+        foreach(Item item in _inventoryList)
+        {
+            item.itemSO.IsInInventory = false;
+            item.itemSO.IsEquiped = false;
+        }
+    }
 }
