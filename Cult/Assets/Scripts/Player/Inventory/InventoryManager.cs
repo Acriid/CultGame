@@ -41,6 +41,7 @@ public class InventoryManager : MonoBehaviour
     void OnDisable()
     {
         CleanUpActions();
+        RemoveIninventory();
     }
     void OnDestroy()
     {
@@ -51,12 +52,12 @@ public class InventoryManager : MonoBehaviour
     void InitializeActions()
     {
         InitializeScrollInput();
-        InitializeInventoryAction();
+       // InitializeInventoryAction();
     }
     void CleanUpActions()
     {
         CleanupScrollInput();
-        CleanupInventoryAction();
+        //CleanupInventoryAction();
     }
     #endregion
     #region ScrollWheel
@@ -272,6 +273,13 @@ public class InventoryManager : MonoBehaviour
     }
     private void ChangeColor(bool value)
     {
-         _hotBarImage[CurrentSelected].enabled = value;
+        _hotBarImage[CurrentSelected].enabled = value;
+    }
+    private void RemoveIninventory()
+    {
+        foreach(Item item in _inventoryList)
+        {
+            item.itemSO.IsInInventory = false;
+        }
     }
 }
