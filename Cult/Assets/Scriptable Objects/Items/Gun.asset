@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Gun
   m_EditorClassIdentifier: 
   ItemDescription: Gun
-  ItemSprite: {fileID: 0}
-  IsInInventory: 0
+  ItemSprite: {fileID: -1224579006, guid: 40f7850fbe985384eba95dcdd15b0ffe, type: 3}
+  _isInInventory: 1
+  PritoryItem: 0
+  _isEquiped: 0

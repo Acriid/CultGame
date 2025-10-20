@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemDescription: 
   ItemSprite: {fileID: 0}
-  _isInInventory: 1
+  _isInInventory: 0
   PritoryItem: 1
   _isEquiped: 0

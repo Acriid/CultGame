@@ -3005,7 +3005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3210,7 +3210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9954,7 +9954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -19688,7 +19688,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -21383,6 +21383,30 @@ PrefabInstance:
       propertyPath: pickUpsGameObject
       value: 
       objectReference: {fileID: 753528750}
+    - target: {fileID: 5406518027175009787, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+      propertyPath: _hotBarImage.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5406518027175009787, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+      propertyPath: '_hotBarImage.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1409003394}
+    - target: {fileID: 5406518027175009787, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+      propertyPath: '_hotBarImage.Array.data[1]'
+      value: 
+      objectReference: {fileID: 122693817}
+    - target: {fileID: 5406518027175009787, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+      propertyPath: '_hotBarImage.Array.data[2]'
+      value: 
+      objectReference: {fileID: 904227765}
+    - target: {fileID: 5406518027175009787, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+      propertyPath: '_hotBarImage.Array.data[3]'
+      value: 
+      objectReference: {fileID: 459780401}
+    - target: {fileID: 5406518027175009787, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
+      propertyPath: '_hotBarImage.Array.data[4]'
+      value: 
+      objectReference: {fileID: 108679335}
     - target: {fileID: 5607386593342863787, guid: e6bc25798f0d30c4cab2dd8bfe07587f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.085
@@ -30493,7 +30517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
