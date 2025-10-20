@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     #region Menus
     [Header("Menus")]
     #endregion
-    private CharacterController characterController;
+    public CharacterController characterController;
     #region StateMachine
     public PlayerStateMachine playerStateMachine { get; set; }
     public WalkingState walkingState { get; set; }

@@ -12,12 +12,12 @@ public class CrouchingState : WalkingState
     public override void EnterState()
     {
         player.SetPlayerSpeed(player.playerSpeed / speedDifference);
-        player.SetCharacterControllerHeight(1f);
+        player.SetCharacterControllerHeight(player.characterController.height/2f);
     }
     public override void ExitState()
     {
         player.SetPlayerSpeed(player.playerSpeed * speedDifference);
-        player.SetCharacterControllerHeight(2f);
+        player.SetCharacterControllerHeight(player.characterController.height*2f);
     }
     public override void UpdateLogic()
     {
