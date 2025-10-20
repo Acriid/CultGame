@@ -280,6 +280,7 @@ public class InventoryManager : MonoBehaviour
         foreach(Item item in _inventoryList)
         {
             item.itemSO.IsInInventory = false;
+            item.itemSO.IsEquiped = false;
         }
     }
 }
