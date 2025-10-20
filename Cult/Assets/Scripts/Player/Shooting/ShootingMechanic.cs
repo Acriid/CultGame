@@ -7,6 +7,7 @@ public class ShootingMechanic : MonoBehaviour
     [Header("Camera Transform")]
     [SerializeField] private new Camera camera;
     private RaycastHit bulletHit;
+    public AudioClip audioClip;
     private bool hit;
     private InputAction shootAction;
     [Header("GunRange")]
@@ -54,6 +55,7 @@ public class ShootingMechanic : MonoBehaviour
 
     void OnShootAction(InputAction.CallbackContext ctx)
     {
+        SoundManager.instance.PlaySoundClip(audioClip, transform, 0.5f);
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
         hit = Physics.Raycast(ray, out bulletHit, gunRange, targetMask);
 

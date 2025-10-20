@@ -1,16 +1,22 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundMixerManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private AudioMixer audioMixer;
+    public PlayerSettingsSO playerSettingsSO;
+    void OnEnable()
     {
-        
+        playerSettingsSO.OnVolumePercentageChange += SetMasterVolume;
+        SetMasterVolume(playerSettingsSO.VolumePercentage); 
+    }
+    void OnDisable()
+    {
+        playerSettingsSO.OnVolumePercentageChange -= SetMasterVolume;
+    }
+    public void SetMasterVolume(float level)
+    {
+        audioMixer.SetFloat("masterVolume", Mathf.Log10(level)*20f);
     }
 }

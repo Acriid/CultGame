@@ -7530,6 +7530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 988938547}
+  audioClip: {fileID: 8300000, guid: b9abf676048e70543ab3f227aac316cc, type: 3}
   gunRange: 100
   popupCanvas: {fileID: 1652222732}
   targetMask:
@@ -34875,6 +34876,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1597408307 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7954238695214872996, guid: fea6008d23ae95d44b3bcee59cb0233a, type: 3}
+  m_PrefabInstance: {fileID: 1723720943}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ccf3d3e2f179b747b9278c85915cd27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1602724288
 GameObject:
   m_ObjectHideFlags: 0
@@ -38566,6 +38578,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -162.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5115328825288127923, guid: fea6008d23ae95d44b3bcee59cb0233a, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115328825288127923, guid: fea6008d23ae95d44b3bcee59cb0233a, type: 3}
+      propertyPath: m_MaxValue
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115328825288127923, guid: fea6008d23ae95d44b3bcee59cb0233a, type: 3}
+      propertyPath: m_MinValue
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115328825288127923, guid: fea6008d23ae95d44b3bcee59cb0233a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1597408307}
+    - target: {fileID: 5115328825288127923, guid: fea6008d23ae95d44b3bcee59cb0233a, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChangeSound
+      objectReference: {fileID: 0}
     - target: {fileID: 5264791157585578384, guid: fea6008d23ae95d44b3bcee59cb0233a, type: 3}
       propertyPath: 'Selectables.Array.data[2]'
       value: 
@@ -40131,6 +40163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorAnimation: {fileID: 2038813281}
+  audioClip: {fileID: 8300000, guid: 77c68578937771f4e8edaec4b7b507cc, type: 3}
 --- !u!1001 &1803502677
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45664,6 +45697,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4f8f61ee452bdea4ab70f2c4f65ce126, type: 3}
   m_PrefabInstance: {fileID: 1415687103}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2079766192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2079766194}
+  - component: {fileID: 2079766193}
+  m_Layer: 0
+  m_Name: SoundMixerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2079766193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079766192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a8b3cb05eef5b4e9cb2d3cd138cb50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: d434098eee580fc40bfef8c7e1b5dff4, type: 2}
+  playerSettingsSO: {fileID: 11400000, guid: e87b69904f19f134dbc7e94529dd2773, type: 2}
+--- !u!4 &2079766194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079766192}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 682.409, y: -333.6966, z: -562.65393}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2081248111
 GameObject:
   m_ObjectHideFlags: 0
@@ -46745,3 +46824,4 @@ SceneRoots:
   - {fileID: 875549827}
   - {fileID: 1603849113}
   - {fileID: 1602724290}
+  - {fileID: 2079766194}
