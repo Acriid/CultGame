@@ -13,6 +13,7 @@ public class CodeLockEvents : MenuEvents, iLocks
     [SerializeField] private int unlockCode;
     private int codeLengthLimit = 5;
     [SerializeField] private TMP_Text codeText;
+    public GameObject door;
     public override void Awake()
     {
         base.Awake();
@@ -47,7 +48,7 @@ public class CodeLockEvents : MenuEvents, iLocks
     {
         //Todo - Add opening animation/ play sound
         //Temporary code will just make lock disappear
-        gameObject.transform.parent.gameObject.SetActive(false);
+        door.SetActive(false);
         Debug.Log("Unlocked");
     }
     public void SolvingAction(GameObject solveObject)
@@ -76,7 +77,7 @@ public class CodeLockEvents : MenuEvents, iLocks
         }
         if (codeText.text.Length == codeLengthLimit)
         {
-            //ToDo - Call a "Full" function
+            //ToDo - Call a "Full" function for juice
             return;
         }
         codeText.text = codeText.text + addedNumber.ToString();
