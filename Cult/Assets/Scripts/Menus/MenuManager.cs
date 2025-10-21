@@ -29,17 +29,12 @@ public class MenuManager : MonoBehaviour
             Debug.Log("Something went wrong");
             return;
         }
-        Debug.Log("Called ChangeMenu");
         if (!menus.ContainsKey(menuType))
         {
-            Debug.Log("Added Menu");
             menus.Add(menuType, null);
         }
-        Debug.Log(menuType);
-        Debug.Log(currentMenu);
         if (menuType == MenuType.None || currentMenu == menuType || (currentMenu != MenuType.None && menuType != MenuType.None))
         {
-            Debug.Log("Clossing Current Menu");
             if (menus[currentMenu] != null)
             {
                 menus[currentMenu].SetActive(false);
@@ -48,7 +43,6 @@ public class MenuManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Opening new Menu");
             menus[menuType].SetActive(true);
             currentMenu = menuType;
         }

@@ -32,7 +32,6 @@ public class MenuEvents : MonoBehaviour
     }
     public virtual void OnEnable()
     {
-        Debug.Log(gameObject);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
