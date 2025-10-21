@@ -13,9 +13,9 @@ public class RitualObjects : Interactable
     {
         if(HasObject)
         {
-            Debug.Log("WOW");
             InventoryManager.instance.AddtoInventory(HeldObject.GetComponent<Item>());
             InteractMechanic.instance.PickUpItem(HeldObject);
+            HeldObject = null;
             HasObject = false;
             CorrectObject = false;
             Rituallight.SetActive(false);

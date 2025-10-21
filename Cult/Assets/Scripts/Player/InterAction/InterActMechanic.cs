@@ -125,7 +125,7 @@ public class InteractMechanic : MonoBehaviour
         }
 
         //Item characteristic changes
-        itemToPickUp.GetComponent<BoxCollider>().excludeLayers = LayerMask.NameToLayer("Everything");
+        itemToPickUp.GetComponent<Collider>().excludeLayers = LayerMask.NameToLayer("Everything");
         itemToPickUp.transform.localScale = itemToPickUp.transform.localScale / 2;
         itemToPickUp.transform.SetParent(this.transform);
         itemToPickUp.transform.localPosition = Vector3.zero;
@@ -150,7 +150,7 @@ public class InteractMechanic : MonoBehaviour
             itenRigidbody.freezeRotation = false;
         }
         //Item characteristic changes
-        itemToPutDown.GetComponent<BoxCollider>().excludeLayers = LayerMask.GetMask("Nothing");
+        itemToPutDown.GetComponent<Collider>().excludeLayers = LayerMask.GetMask("Nothing");
         itemToPutDown.transform.localScale = itemToPutDown.transform.localScale * 2;
         itemToPutDown.transform.SetParent(pickUpsGameObject.transform);
         itemToPutDown.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
