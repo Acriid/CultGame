@@ -143,14 +143,14 @@ public class InventoryManager : MonoBehaviour
     public void AddtoInventory(Item addingItem)
     {
         string DebugMessage = "Inventory Full";
-
+        if(activeItems[CurrentSelected] != null)
+        {
+            activeItems[CurrentSelected].SetActive(false);
+            activeItems[CurrentSelected].GetComponent<Item>().itemSO.IsEquiped = false;
+        }
         for (int i = 0; i <= hotBarSizeLimit; i++)
         {
-            if(activeItems[CurrentSelected] != null)
-            {
-                activeItems[CurrentSelected].SetActive(false);
-                addingItem.itemSO.IsEquiped = false;
-            }
+
             if (activeItems[i] == null)
             {
                 DebugMessage = "Added Item to Inventory";
@@ -277,10 +277,18 @@ public class InventoryManager : MonoBehaviour
     }
     private void RemoveIninventory()
     {
-        foreach(Item item in _inventoryList)
+        foreach (Item item in _inventoryList)
         {
             item.itemSO.IsInInventory = false;
             item.itemSO.IsEquiped = false;
+        }
+    }
+    public void EmptyInventory()
+    {
+        for(int i = 0; i< hotBarSizeLimit; i++)
+        {
+            CurrentSelected = i;
+            RemoveFromInventory();
         }
     }
 }
