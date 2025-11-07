@@ -39,7 +39,7 @@ AnimatorStateMachine:
     m_Position: {x: 360, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6852150703736669451}
-    m_Position: {x: 598.5959, y: -66.91092, z: 0}
+    m_Position: {x: 390, y: -60, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -138,7 +138,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Armature_001|Walk Cycle
-  m_Speed: 2
+  m_Speed: 4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8753599973066343389}

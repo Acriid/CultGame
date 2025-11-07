@@ -344,10 +344,10 @@ public class Player : MonoBehaviour
     }
     public void AnimatePlayer(Vector2 direction)
     {
-        animator.SetBool("Walking", false);
+        animator.SetBool("Walking", true);
         if(direction != Vector2.zero)
         {
-            animator.SetBool("Walking", true);
+            animator.SetBool("Walking", false);
         }
     }
 }
