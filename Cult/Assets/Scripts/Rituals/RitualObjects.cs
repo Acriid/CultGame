@@ -15,6 +15,10 @@ public class RitualObjects : Interactable
         {
             InventoryManager.instance.AddtoInventory(HeldObject.GetComponent<Item>());
             InteractMechanic.instance.PickUpItem(HeldObject);
+            foreach(Collider collider in HeldObject.GetComponents<Collider>())
+            {
+                collider.enabled = false;
+            }
             HeldObject = null;
             HasObject = false;
             CorrectObject = false;
@@ -30,6 +34,12 @@ public class RitualObjects : Interactable
             InteractMechanic.instance.PutDownItem(TempObject);
             TempObject.transform.SetParent(ritualObjectHolder.transform);
             TempObject.transform.localPosition = Vector3.zero;
+            TempObject.GetComponent<Rigidbody>().useGravity = false;
+            foreach (Collider collider in TempObject.GetComponents<Collider>())
+            {
+                collider.enabled = false;
+            }
+            TempObject.GetComponent<Rigidbody>();
             HeldObject = TempObject;
             HasObject = true;
 
