@@ -1,5 +1,11 @@
+//How to Add a Field of View for Your Enemies [Unity Tutorial]
+//Comp-3 Interactive
+//2015/11/08
+//1
+//https://www.youtube.com/watch?v=j1-OyLo77ss
 using System.Collections;
 using UnityEngine;
+
 
 public class AiDetection : MonoBehaviour
 {
