@@ -8,16 +8,22 @@ public class AiPatrolling : MonoBehaviour
     public Animator animator;
     private int currentPoint = 0;
     private AnimatorClipInfo[] animatorStateInfo;
+    public AiDetection aiDetection;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnEnable()
     {
-        agent = GetComponent<NavMeshAgent>();
+        if (agent == null)
+            agent = GetComponent<NavMeshAgent>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        animatorStateInfo = animator.GetCurrentAnimatorClipInfo(0);
+        if(aiDetection.canSeePlayer) { return; }
+        if(patrolPoints.Length == 0) { return; }
+        //animatorStateInfo = animator.GetCurrentAnimatorClipInfo(0);
+        
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
         {
             currentPoint++;
