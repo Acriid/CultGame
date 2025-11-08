@@ -57,8 +57,7 @@ public class ShootingMechanic : MonoBehaviour
     {
         SoundManager.instance.PlaySoundClip(audioClip, transform, 0.5f);
         Ray ray = camera.ScreenPointToRay(Mouse.current.position.ReadValue());
-        hit = Physics.Raycast(ray, out bulletHit, gunRange, targetMask);
-
+        hit = Physics.Raycast(ray, out bulletHit, gunRange, targetMask, QueryTriggerInteraction.Collide);
         if (hit)
         {
             hitObject = bulletHit.collider.gameObject;

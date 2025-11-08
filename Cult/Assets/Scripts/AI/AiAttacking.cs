@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,7 +13,7 @@ public class AiAttacking : MonoBehaviour
     }
     void Update()
     {
-        if(aiDetection.canSeePlayer)
+        if (aiDetection.canSeePlayer)
         {
             agent.SetDestination(aiDetection.playerRef.transform.position);
         }

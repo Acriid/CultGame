@@ -13,7 +13,7 @@ public class CultistAttack : MonoBehaviour
     }
     void KillPlayer()
     {
-
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
