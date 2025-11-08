@@ -26,6 +26,7 @@ public class InteractMechanic : MonoBehaviour
     private bool carryItem = false;
     public float CheckLength = 10f;
     public GameObject popupCanvas;
+    public Player player;
     void Awake()
     {
         if (instance != null)
@@ -116,6 +117,7 @@ public class InteractMechanic : MonoBehaviour
     }
     public void PickUpItem(GameObject itemToPickUp)
     {
+        //player.animator.SetTrigger("PickUp");
         Rigidbody itenRigidbody = itemToPickUp.GetComponent<Rigidbody>();
         if (itenRigidbody != null)
         {

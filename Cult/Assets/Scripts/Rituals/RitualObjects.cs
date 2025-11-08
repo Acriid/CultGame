@@ -34,7 +34,10 @@ public class RitualObjects : Interactable
             InteractMechanic.instance.PutDownItem(TempObject);
             TempObject.transform.SetParent(ritualObjectHolder.transform);
             TempObject.transform.localPosition = Vector3.zero;
-            TempObject.GetComponent<Rigidbody>().useGravity = false;
+            if(TempObject.GetComponent<Rigidbody>() != null)
+            {
+                TempObject.GetComponent<Rigidbody>().useGravity = false;
+            }
             foreach (Collider collider in TempObject.GetComponents<Collider>())
             {
                 collider.enabled = false;
