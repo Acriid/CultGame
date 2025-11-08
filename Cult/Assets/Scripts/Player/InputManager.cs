@@ -59,7 +59,14 @@ public class InputManager : MonoBehaviour
             inputActions = null;
         }
     }
-
+    public void StopInput()
+    {
+        CleanUpInput();
+    }
+    public void StartInput()
+    {
+        InitializeInput();
+    }
     public string GetBindingDisplay(InputAction action)
     {
         if (action == null || LastUsedDevice == null)

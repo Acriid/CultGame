@@ -17,7 +17,9 @@ public class LoadScene : MonoBehaviour
     IEnumerator LoadSceneAsync(int scenceID)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(scenceID);
-        mainMenu.SetActive(false);
+        if (mainMenu != null)
+            mainMenu.SetActive(false);
+        if(loadingScreen != null)
         loadingScreen.SetActive(true);
 
         while(!operation.isDone)

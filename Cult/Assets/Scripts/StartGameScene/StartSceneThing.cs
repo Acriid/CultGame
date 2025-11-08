@@ -6,11 +6,18 @@ using UnityEngine.EventSystems;
 public class StartSceneThing : MonoBehaviour
 {
     public string[] Sentence;
+    public PlayerSettingsSO playerSettingsSO;
     public TMP_Text[] tmptext;
     public GameObject button;
     public GameObject[] canvases;
-    void Start()
+    public CloseCanvas closeCanvas;
+    void OnEnable()
     {
+        if(playerSettingsSO.EnableScene)
+        {
+            closeCanvas.OnClick();
+            return;
+        }
         StartCoroutine(LoadScene1(Sentence[0]));
     }
     IEnumerator LoadScene1(string loadSentence)

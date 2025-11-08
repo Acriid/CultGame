@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class CultistAttack : MonoBehaviour
 {
+    public GameObject deathScreen;
     void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
@@ -13,7 +14,8 @@ public class CultistAttack : MonoBehaviour
     }
     void KillPlayer()
     {
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        InputManager.instance.StopInput();
+        deathScreen.SetActive(true);
+
     }
 }

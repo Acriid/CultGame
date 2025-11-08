@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Player", menuName = "Scriptable Objects/PlayerSettings")]
 public class PlayerSettingsSO : ScriptableObject
 {
+    public bool EnableScene;
     [Range(0.0001f, 1f)]
     [SerializeField] private float _volumePercentage;
     public float VolumePercentage
