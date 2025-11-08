@@ -49,6 +49,7 @@ public class CodeLockEvents : MenuEvents, iLocks
         //Todo - Add opening animation/ play sound
         //Temporary code will just make lock disappear
         door.SetActive(false);
+        this.gameObject.SetActive(false);
         Debug.Log("Unlocked");
     }
     public void SolvingAction(GameObject solveObject)
