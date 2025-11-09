@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Knife
   m_EditorClassIdentifier: 
   ItemDescription: 
-  ItemSprite: {fileID: 0}
+  ItemSprite: {fileID: -1496997189, guid: c1738a732b2111344bc8925c5cdd73a1, type: 3}
   _isInInventory: 0
   PritoryItem: 0
   _isEquiped: 0
