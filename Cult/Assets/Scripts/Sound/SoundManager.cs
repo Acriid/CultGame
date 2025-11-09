@@ -32,4 +32,15 @@ public class SoundManager : MonoBehaviour
         float clipLength = audioSource.clip.length;
         Destroy(audioSource.gameObject, clipLength);
     }
+    public void PlayRandomSoundClip(AudioClip[] audioClip, Transform spawnTransform, float volume,int spatialBlend)
+    {
+        int rand = Random.Range(0, audioClip.Length);
+        AudioSource audioSource = Instantiate(soundObject, spawnTransform.position, Quaternion.identity);
+        audioSource.clip = audioClip[rand];
+        audioSource.volume = volume;
+        audioSource.spatialBlend = spatialBlend;
+        audioSource.Play();
+        float clipLength = audioSource.clip.length;
+        Destroy(audioSource.gameObject, clipLength);
+    }
 }

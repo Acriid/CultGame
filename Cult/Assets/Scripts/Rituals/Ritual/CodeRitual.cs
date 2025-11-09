@@ -24,7 +24,6 @@ public class CodeRitual : RitualBase
 
         if(allHaveObject && !RitualDone)
         {
-            allHaveObject = false;
             SoundManager.instance.PlaySoundClip(PuzzleIncorrect, playerTransform, 1f);
         }
         if (RitualDone)
@@ -37,7 +36,6 @@ public class CodeRitual : RitualBase
         {
             codeCanvas.SetActive(false);
         }
-
     }
     public override void FinishRitual()
     {

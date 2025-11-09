@@ -9,6 +9,8 @@ public class RitualObjects : Interactable
     public bool HasObject = false;
     public GameObject ritualObjectHolder;
     public GameObject HeldObject;
+    public AudioClip[] narrWrong;
+    public Transform playerTransform;
     public override void Interact()
     {
         if(HasObject)
@@ -52,6 +54,11 @@ public class RitualObjects : Interactable
             }
         }
         ritualBase.CheckRitualProgress();
+
+        if(!CorrectObject && HeldObject != null)
+        {
+            SoundManager.instance.PlayRandomSoundClip(narrWrong, playerTransform, 1f);
+        }
         if (CorrectObject)
         {
             Rituallight.SetActive(true);
