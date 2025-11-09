@@ -6,6 +6,7 @@ public class StartSceneAudio : MonoBehaviour
     public AudioClip[] NarratorAudios;
     public AudioClip[] DetectiveAudios;
     public AudioClip[] Carnoises;
+    public AudioClip bookFlip;
     public AudioClip CultistAudios;
     public AudioClip[] DetectiveKO;
     public Transform playerObject;
@@ -21,6 +22,7 @@ public class StartSceneAudio : MonoBehaviour
     }
     IEnumerator PlayAudio2()
     {
+        SoundManager.instance.PlaySoundClip(bookFlip, playerObject, 1f);
         SoundManager.instance.PlaySoundClip(DetectiveAudios[0], playerObject, 1f);
         yield return new WaitForSecondsRealtime(4f);
         SoundManager.instance.PlaySoundClip(DetectiveAudios[1], playerObject, 1f);
