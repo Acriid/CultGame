@@ -11,13 +11,14 @@ public class RitualObjects : Interactable
     public GameObject HeldObject;
     public AudioClip[] narrWrong;
     public Transform playerTransform;
+    public float timetoSound = 15f;
     public override void Interact()
     {
-        if(HasObject)
+        if (HasObject)
         {
             InventoryManager.instance.AddtoInventory(HeldObject.GetComponent<Item>());
             InteractMechanic.instance.PickUpItem(HeldObject);
-            foreach(Collider collider in HeldObject.GetComponents<Collider>())
+            foreach (Collider collider in HeldObject.GetComponents<Collider>())
             {
                 collider.enabled = false;
             }
@@ -35,7 +36,7 @@ public class RitualObjects : Interactable
             InteractMechanic.instance.PutDownItem(TempObject);
             TempObject.transform.SetParent(ritualObjectHolder.transform);
             TempObject.transform.localPosition = Vector3.zero;
-            if(TempObject.GetComponent<Rigidbody>() != null)
+            if (TempObject.GetComponent<Rigidbody>() != null)
             {
                 TempObject.GetComponent<Rigidbody>().useGravity = false;
             }
@@ -48,15 +49,16 @@ public class RitualObjects : Interactable
             HasObject = true;
 
 
-            if(HeldObject == ritualObject)
+            if (HeldObject == ritualObject)
             {
                 CorrectObject = true;
             }
         }
         ritualBase.CheckRitualProgress();
 
-        if(!CorrectObject && HeldObject != null)
+        if (!CorrectObject && HeldObject != null && timetoSound > 15f)
         {
+            timetoSound = 0f;
             SoundManager.instance.PlayRandomSoundClip(narrWrong, playerTransform, 1f);
         }
         if (CorrectObject)
@@ -67,5 +69,9 @@ public class RitualObjects : Interactable
         {
             Rituallight.SetActive(false);
         }
+    }
+    void Update()
+    {
+        timetoSound += Time.deltaTime;
     }
 }

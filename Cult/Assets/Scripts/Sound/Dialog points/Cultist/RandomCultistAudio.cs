@@ -6,6 +6,7 @@ public class RandomCultistAudio : MonoBehaviour
     public AudioClip[] randomCultAudio;
     public AudioClip[] randomChaseAudio;
     public AiDetection aiDetection;
+    public float AudioCooldown = 10f;
     void OnEnable()
     {
         StartCoroutine(PlayRandomAudioClip());
@@ -25,11 +26,12 @@ public class RandomCultistAudio : MonoBehaviour
     IEnumerator PlayChaseAudio()
     {
         bool PlayedSound = false;
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(1f);
-            if (aiDetection.canSeePlayer && !PlayedSound)
+            if (aiDetection.canSeePlayer && !PlayedSound && AudioCooldown > 10f)
             {
+                AudioCooldown = 0f;
                 PlayedSound = true;
                 SoundManager.instance.PlayRandomSoundClip(randomChaseAudio, aiDetection.gameObject.transform, 1f);
             }
@@ -37,7 +39,11 @@ public class RandomCultistAudio : MonoBehaviour
             {
                 PlayedSound = false;
             }
-            
+
         }
+    }
+    void Update()
+    {
+        AudioCooldown += Time.deltaTime;
     }
 }
