@@ -27,6 +27,10 @@ public class InteractMechanic : MonoBehaviour
     public float CheckLength = 10f;
     public GameObject popupCanvas;
     public Player player;
+    [Header("Audio Clips")]
+    public AudioClip BookPickup;
+    public AudioClip[] GeneralPickUp;
+    public AudioClip SecretCubePickup;
     void Awake()
     {
         if (instance != null)
@@ -81,6 +85,18 @@ public class InteractMechanic : MonoBehaviour
             {
                 if (!InventoryManager.instance.InventoryFull())
                 {
+                    if (CurrentSelectedItem.name == "CultBook")
+                    {
+                        SoundManager.instance.PlaySoundClip(BookPickup, this.transform, 1f);
+                    }
+                    else if (CurrentSelectedItem.name == "Cube of Secrets")
+                    {
+                        SoundManager.instance.PlaySoundClip(SecretCubePickup, this.transform, 1f);
+                    }
+                    else
+                    {
+                        SoundManager.instance.PlayRandomSoundClip(GeneralPickUp, this.transform, 1f);
+                    }                   
                     PickUpItem(CurrentSelectedItem);
                     InventoryManager.instance.AddtoInventory(CurrentSelectedItem.GetComponent<Item>());
                 }
@@ -117,6 +133,7 @@ public class InteractMechanic : MonoBehaviour
     }
     public void PickUpItem(GameObject itemToPickUp)
     {
+
         //player.animator.SetTrigger("PickUp");
         Rigidbody itenRigidbody = itemToPickUp.GetComponent<Rigidbody>();
         if (itenRigidbody != null)

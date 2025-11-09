@@ -18,74 +18,121 @@ public class StartSceneThing : MonoBehaviour
             closeCanvas.OnClick();
             return;
         }
-        StartCoroutine(LoadScene1(Sentence[0]));
+        StartCoroutine(LoadScene1(Sentence[0],11f));
     }
-    IEnumerator LoadScene1(string loadSentence)
+    IEnumerator LoadScene1(string loadSentence,float WaitTime)
     {
         int i = 0;
         while (i < loadSentence.Length)
         {
-            yield return new WaitForSecondsRealtime(3f / loadSentence.Length);
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
             tmptext[0].text = tmptext[0].text + loadSentence[i];
             i++;
         }
-        yield return new WaitForSecondsRealtime(2f);
         canvases[0].SetActive(false);
         canvases[1].SetActive(true);
-        StartCoroutine(LoadScene2(Sentence[1]));
+        StartCoroutine(LoadScene2(Sentence[1],12f));
     }
-    IEnumerator LoadScene2(string loadSentence)
+    IEnumerator LoadScene2(string loadSentence,float WaitTime)
     {
         int i = 0;
         while (i < loadSentence.Length)
         {
-            yield return new WaitForSecondsRealtime(3f / loadSentence.Length);
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
             tmptext[1].text = tmptext[1].text + loadSentence[i];
             i++;
         }
-        yield return new WaitForSecondsRealtime(2f);
         canvases[1].SetActive(false);
         canvases[2].SetActive(true);
-        StartCoroutine(LoadScene3(Sentence[2]));
+        StartCoroutine(LoadScene3(Sentence[2],13f));
     }
-    IEnumerator LoadScene3(string loadSentence)
+    IEnumerator LoadScene3(string loadSentence,float WaitTime)
     {
         int i = 0;
         while (i < loadSentence.Length)
         {
-            yield return new WaitForSecondsRealtime(3f / loadSentence.Length);
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
             tmptext[2].text = tmptext[2].text + loadSentence[i];
             i++;
         }
-        yield return new WaitForSecondsRealtime(2f);
         canvases[2].SetActive(false);
         canvases[3].SetActive(true);
-        StartCoroutine(LoadScene4(Sentence[3]));
+        StartCoroutine(LoadScene4(Sentence[3],3f));
     }
-    IEnumerator LoadScene4(string loadSentence)
+    IEnumerator LoadScene4(string loadSentence,float WaitTime)
     {
         int i = 0;
         while (i < loadSentence.Length)
         {
-            yield return new WaitForSecondsRealtime(3f / loadSentence.Length);
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
             tmptext[3].text = tmptext[3].text + loadSentence[i];
             i++;
         }
-        yield return new WaitForSecondsRealtime(2f);
         canvases[3].SetActive(false);
         canvases[4].SetActive(true);
-        StartCoroutine(LoadScene5(Sentence[4]));
+        StartCoroutine(LoadScene5(Sentence[4],7f));
     }
-    IEnumerator LoadScene5(string loadSentence)
+    IEnumerator LoadScene5(string loadSentence,float WaitTime)
     {
         int i = 0;
         while (i < loadSentence.Length)
         {
-            yield return new WaitForSecondsRealtime(2f / loadSentence.Length);
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
             tmptext[4].text = tmptext[4].text + loadSentence[i];
             i++;
         }
-        yield return new WaitForSecondsRealtime(4f);
+        canvases[4].SetActive(false);
+        canvases[5].SetActive(true);
+        StartCoroutine(LoadScene6(Sentence[5],5f));
+    }
+    IEnumerator LoadScene6(string loadSentence,float WaitTime)
+    {
+        int i = 0;
+        while (i < loadSentence.Length)
+        {
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
+            tmptext[5].text = tmptext[5].text + loadSentence[i];
+            i++;
+        }
+        canvases[5].SetActive(false);
+        canvases[6].SetActive(true);
+        StartCoroutine(LoadScene7(Sentence[6],10f));
+    }
+    IEnumerator LoadScene7(string loadSentence,float WaitTime)
+    {
+        int i = 0;
+        while (i < loadSentence.Length)
+        {
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
+            tmptext[6].text = tmptext[6].text + loadSentence[i];
+            i++;
+        }
+        canvases[6].SetActive(false);
+        canvases[7].SetActive(true);
+        StartCoroutine(LoadScene8(Sentence[7],10f));
+    }
+    IEnumerator LoadScene8(string loadSentence,float WaitTime)
+    {
+        int i = 0;
+        while (i < loadSentence.Length)
+        {
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
+            tmptext[7].text = tmptext[7].text + loadSentence[i];
+            i++;
+        }
+        canvases[7].SetActive(false);
+        canvases[8].SetActive(true);
+        StartCoroutine(LoadScene9(Sentence[8],10f));
+    }
+    IEnumerator LoadScene9(string loadSentence,float WaitTime)
+    {
+        int i = 0;
+        while (i < loadSentence.Length)
+        {
+            yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
+            tmptext[8].text = tmptext[8].text + loadSentence[i];
+            i++;
+        }
         ShowButton();
     }
     

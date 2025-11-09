@@ -6,9 +6,9 @@ public class RitualObjects : Interactable
     public RitualBase ritualBase;
     public GameObject Rituallight;
     public bool CorrectObject = false;
-    private bool HasObject = false;
+    public bool HasObject = false;
     public GameObject ritualObjectHolder;
-    private GameObject HeldObject;
+    public GameObject HeldObject;
     public override void Interact()
     {
         if(HasObject)
@@ -23,7 +23,6 @@ public class RitualObjects : Interactable
             HasObject = false;
             CorrectObject = false;
             Rituallight.SetActive(false);
-            return;
         }
         else if (InventoryManager.instance.getCurrentHeldObject() != null)
         {
