@@ -36699,6 +36699,8 @@ MonoBehaviour:
   canvas: {fileID: 875549823}
   canvas2: {fileID: 550903010}
   hotbar: {fileID: 77195652}
+  WakingUp: {fileID: 8300000, guid: 16f619813de01784daf961b3f7d323d7, type: 3}
+  playerTransform: {fileID: 1541037405}
 --- !u!114 &527533301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51286,7 +51288,7 @@ MonoBehaviour:
   - "But make no mistake, the cultist\u2019s are there. Hiding amongst them. Lurking.
     Waiting\u2026 They wait for the day they can summon their Deity\u2026"
   - The Blood God
-  - "More missing people cases in Cult City. Guess I\u2019ll have to go investigate
+  - "More missing people cases in Cult City. Guess I\u2019ll have to go look into
     this myself."
   - ...
   - "But the current cult are not the sharpest tools in the shed\u2026"
@@ -51350,8 +51352,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NarratorAudios:
   - {fileID: 8300000, guid: 79024b89355f70940b632eedc7b13a05, type: 3}
-  DetectiveAudios: []
-  CultistAudios: {fileID: 0}
+  - {fileID: 8300000, guid: 7b176275112d8d348914741eb28232cf, type: 3}
+  - {fileID: 8300000, guid: 1055df115a4bc25409164784dbed0fcd, type: 3}
+  - {fileID: 8300000, guid: 7f3265617c5fa594c81cc31677a76700, type: 3}
+  DetectiveAudios:
+  - {fileID: 8300000, guid: 12db02ba99312ab4492c72b4a5608c6e, type: 3}
+  - {fileID: 8300000, guid: 037e10bc6701fe549ade347119b27eef, type: 3}
+  Carnoises:
+  - {fileID: 8300000, guid: e1fdc7f5e5fdf4844898bbab528f4520, type: 3}
+  - {fileID: 8300000, guid: f229244a1d017174b86016d3276a48f0, type: 3}
+  CultistAudios: {fileID: 8300000, guid: e260d709d9f1c0f4fbf656435b27fe8a, type: 3}
+  DetectiveKO:
+  - {fileID: 8300000, guid: bad0ed9a082ad1847aaa3636b0811f41, type: 3}
+  - {fileID: 8300000, guid: e141bdcec213e38409223e1bf85b4b69, type: 3}
   playerObject: {fileID: 1541037405}
 --- !u!43 &875835988
 Mesh:

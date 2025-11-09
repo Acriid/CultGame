@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class StartSceneThing : MonoBehaviour
 {
@@ -96,7 +97,7 @@ public class StartSceneThing : MonoBehaviour
         }
         canvases[5].SetActive(false);
         canvases[6].SetActive(true);
-        StartCoroutine(LoadScene7(Sentence[6],10f));
+        StartCoroutine(LoadScene7(Sentence[6],8f));
     }
     IEnumerator LoadScene7(string loadSentence,float WaitTime)
     {
@@ -109,7 +110,7 @@ public class StartSceneThing : MonoBehaviour
         }
         canvases[6].SetActive(false);
         canvases[7].SetActive(true);
-        StartCoroutine(LoadScene8(Sentence[7],10f));
+        StartCoroutine(LoadScene8(Sentence[7],25f));
     }
     IEnumerator LoadScene8(string loadSentence,float WaitTime)
     {
@@ -122,7 +123,7 @@ public class StartSceneThing : MonoBehaviour
         }
         canvases[7].SetActive(false);
         canvases[8].SetActive(true);
-        StartCoroutine(LoadScene9(Sentence[8],10f));
+        StartCoroutine(LoadScene9(Sentence[8],13f));
     }
     IEnumerator LoadScene9(string loadSentence,float WaitTime)
     {
@@ -132,13 +133,20 @@ public class StartSceneThing : MonoBehaviour
             yield return new WaitForSecondsRealtime(WaitTime / loadSentence.Length);
             tmptext[8].text = tmptext[8].text + loadSentence[i];
             i++;
-        }
+        };
+        yield return new WaitForSecondsRealtime(4f);
         ShowButton();
     }
-    
+
     private void ShowButton()
     {
         button.SetActive(true);
+        StartCoroutine(ButtonFailsafe());
+    }
+    IEnumerator ButtonFailsafe()
+    {
+        yield return new WaitForSecondsRealtime(20f);
         EventSystem.current.SetSelectedGameObject(button);
+        EventSystem.current.currentSelectedGameObject.gameObject.GetComponent<Button>().onClick.Invoke();
     }
 }
