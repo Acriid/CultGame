@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class FinishGame : MonoBehaviour
 {
     public GameObject[] Canvas;
-
+    public AudioClip[] EndAudio;
+    public Transform playerTransform;
     void OnTriggerEnter(Collider other)
     {
         Cursor.lockState = CursorLockMode.None;
@@ -17,7 +18,8 @@ public class FinishGame : MonoBehaviour
     }
     IEnumerator EndGame()
     {
-        yield return new WaitForSecondsRealtime(3f);
+        SoundManager.instance.PlayRandomSoundClip(EndAudio, playerTransform, 1f);
+        yield return new WaitForSecondsRealtime(30f);
         Canvas[0].SetActive(false);
         Canvas[1].SetActive(true);
         yield return new WaitForSecondsRealtime(3f);
