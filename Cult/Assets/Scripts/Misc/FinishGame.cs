@@ -22,10 +22,10 @@ public class FinishGame : MonoBehaviour
         yield return new WaitForSecondsRealtime(30f);
         Canvas[0].SetActive(false);
         Canvas[1].SetActive(true);
-        yield return new WaitForSecondsRealtime(3f);
+        yield return new WaitForSecondsRealtime(2f);
         Canvas[1].SetActive(false);
         Canvas[2].SetActive(true);
-        yield return new WaitForSecondsRealtime(10f);
+        yield return new WaitForSecondsRealtime(5f);
         InputManager.instance.StartInput();
         SceneManager.LoadScene(0);
     }
